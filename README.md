@@ -4,7 +4,7 @@
  Not ready yet.
  
 ## Documentation
-  Probably this is the best [source](https://bizico.github.io/react-bizico-components/components).
+  Probably this is the best [source](https://vbait.github.io/vb-react-form/components).
  
 ## Contributing
  You can start with `yarn` or `npm install`

@@ -2,15 +2,15 @@
   "name": "react-bizico-components",
   "version": "1.0.0",
   "private": true,
-  "description": "React components build by Bizico team.",
+  "description": "React form components",
   "main": "index.js",
   "files": [
     "es",
     "umd"
   ],
-  "global": "bComponents",
-  "repository": "https://github.com/Bizico/react-bizico-components.git",
-  "author": "Maksym Ridush <mridush@bizico.com>",
+  "global": "vbComponents",
+  "repository": "hhttps://github.com/vbait/vb-react-form.git",
+  "author": "Vitalii Baitaliuk <flampschelsea@gmail.com>",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --env=pages.dev --progress --profile --colors",

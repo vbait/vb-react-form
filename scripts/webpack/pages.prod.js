@@ -12,7 +12,7 @@ module.exports = () => (
     output: {
       path: path.resolve(__dirname, '../../docs'),
       filename: '[hash].[name].js',
-      publicPath: '/react-bizico-components',
+      publicPath: '/vb-react-form',
     },
     devtool: 'source-map',
     plugins: [
