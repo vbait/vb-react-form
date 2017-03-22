@@ -1,0 +1,9 @@
+.idea/
+.env
+es/
+umd/
+
+demo/dist/*
+
+node_modules/
+coverage/

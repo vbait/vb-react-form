@@ -1,0 +1,45 @@
+{
+  "simpleData": [
+    {
+      "name": "John Doe",
+      "status": "employed"
+    },
+    {
+      "name": "Vasya Pupkin",
+      "status": "unemployed"
+    }
+  ],
+  "orderingData": [
+    {
+      "name": "John Doe",
+      "status": "employed",
+      "accountBalance": 100
+    },
+    {
+      "name": "Vasya Pupkin",
+      "status": "unemployed",
+      "accountBalance": 22
+    },
+    {
+      "name": "Hillary Clinton",
+      "status": "unemployed",
+      "accountBalance": 37
+    },
+    {
+      "name": "Donald Trump",
+      "status": "employed",
+      "accountBalance": 87
+    },
+    {
+      "name": "Pepe the frog",
+      "status": "employed",
+      "accountBalance": 56
+    },
+    {
+      "name": "Dimon Octagon",
+      "status": "employed",
+      "accountBalance": 22
+    }
+
+  ]
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bizico React Components</title>
+    <script>
+        (function(){
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect != location.href) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
+    </script>
+<link href="/react-bizico-components/styles.css" rel="stylesheet"></head>
+<body>
+<div id="root"></div>
+<script type="text/javascript" src="/react-bizico-components/837b791726f3a5e6c27f.main.js"></script></body>
+</html>
