@@ -6490,7 +6490,8 @@ table.b-data-table tbody tr.expanded td {
   animation: fadein 0.2s ease-in-out;
   padding-left: 3em; }
 .navbar.demo-nav {
-  background-color: #ff3232; }
+  background-color: #ff3232;
+  margin-bottom: 0; }
   .navbar.demo-nav .navbar-header a, .navbar.demo-nav .navbar-collapse a {
     color: #ffffff; }
 
