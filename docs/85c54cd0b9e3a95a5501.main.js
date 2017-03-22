@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/react-bizico-components";
+/******/ 	__webpack_require__.p = "/vb-react-form";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 717);
@@ -62823,4 +62823,4 @@ module.exports = __webpack_require__(223);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=4b6b5d652938f60e81bb.main.js.map
+//# sourceMappingURL=85c54cd0b9e3a95a5501.main.js.map
