@@ -12,14 +12,14 @@ const Components = ({ routes }) => (
     </Jumbotron>
     <div className="container">
       <Row>
-        <Col md={3}>
+        <Col md={2}>
           <ul className="nav nav-stacked nav-pills">
             {routes.map(route => (
               <NavBarLink key={route.title} to={route.path}>{route.title}</NavBarLink>
             ))}
           </ul>
         </Col>
-        <Col md={9}>
+        <Col md={10}>
           {routes.map(route => (
             <RouteWithSubRoutes key={route.title} {...route} />
           ))}

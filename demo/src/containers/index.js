@@ -4,6 +4,7 @@ import { Navbar } from 'react-bootstrap';
 
 import Components from './Components';
 import DataTableDemo from './Components/DataTableDemo';
+import FormsDemo from './Components/FormsDemo';
 import Home from './Home';
 import { RouteWithSubRoutes, NavBarLink } from '../components';
 
@@ -28,6 +29,11 @@ const routes = [
         path: '/components/data-table',
         Component: DataTableDemo,
         title: 'DataTable',
+      },
+      {
+        path: '/components/forms',
+        Component: FormsDemo,
+        title: 'Forms',
       },
     ],
   },
