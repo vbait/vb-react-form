@@ -1,5 +1,6 @@
 export { Validator, RequiredValidator } from './validators';
 export { Field } from './fields';
+export { ModelField } from './model-fields';
 import React from 'react';
 
 class Form extends React.Component {

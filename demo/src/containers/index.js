@@ -5,8 +5,7 @@ import { Navbar } from 'react-bootstrap';
 import Components from './Components';
 import DataTableDemo from './Components/DataTableDemo';
 import FormsDemo from './Components/FormsDemo';
-import Home from './Home';
-import { RouteWithSubRoutes, NavBarLink } from '../components';
+import { RouteWithSubRoutes } from '../components';
 
 
 const NotFound = () => (
@@ -18,20 +17,15 @@ const NotFound = () => (
 const routes = [
   {
     path: '/',
-    Component: Home,
-    exact: true,
-  },
-  {
-    path: '/components',
     Component: Components,
     routes: [
       {
-        path: '/components/data-table',
+        path: '/data-table',
         Component: DataTableDemo,
         title: 'DataTable',
       },
       {
-        path: '/components/forms',
+        path: '/forms',
         Component: FormsDemo,
         title: 'Forms',
       },
@@ -43,21 +37,19 @@ const routes = [
 ];
 
 const Demo = () => (
-  <Router basename="/react-bizico-components">
+  <Router basename="/">
     <div>
       <Navbar className="demo-nav">
         <Navbar.Header>
           <Navbar.Brand>
-            <Link to="/">React-Bizico-Components</Link>
+            <Link to="/">React Forms</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <ul className="nav navbar-nav">
-            <NavBarLink to="/guide">Guide</NavBarLink>
-            <NavBarLink to="/components">Components</NavBarLink>
             <li>
-              <a href="https://github.com/Bizico/react-bizico-components" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/vbait/vb-react-form" target="_blank" rel="noopener noreferrer">
                 GitHub
               </a>
             </li>

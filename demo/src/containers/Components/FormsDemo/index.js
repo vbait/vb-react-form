@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageHeader, Panel } from 'react-bootstrap';
-import { Form, Field, RequiredValidator } from '../../../../../src';
+import { Field, ModelField, RequiredValidator } from '../../../../../src';
 
 class FieldInput extends React.Component {
   onChange = (event) => {
@@ -22,6 +22,7 @@ export default class FormDemo extends React.Component {
     super(props);
     this.state = {
       value: 'Vitalii',
+      model: {}
     };
   }
 
@@ -60,17 +61,24 @@ export default class FormDemo extends React.Component {
 
         <Panel header="Basic example">
           <button onClick={this.updateState}>{this.state.value}</button>
-          <Field name="firstName"
-                 value={this.state.value}
-                 validators={[new RequiredValidator()]}
-                 onInit={this.onInit}
-                 onChange={this.onChange}
-                 onFocus={this.onFocus}
-                 onBlur={this.onBlur}
-                 onUpdate={this.onUpdate}
-                 onRemove={this.onRemove}
-                 component={FieldInput}>
-          </Field>
+          <Field
+            name="firstName"
+            value={this.state.value}
+            validators={[new RequiredValidator()]}
+            onInit={this.onInit}
+            onChange={this.onChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            onUpdate={this.onUpdate}
+            onRemove={this.onRemove}
+            component={FieldInput}
+          />
+
+          <ModelField
+            name="username"
+            model={this.state.model}
+            component={Field.Input}
+          />
         </Panel>
         <h6>Better examples and docs coming soon™</h6>
       </div>
