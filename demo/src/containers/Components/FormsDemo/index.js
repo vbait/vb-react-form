@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageHeader, Panel } from 'react-bootstrap';
 import { Field, ModelField, RequiredValidator } from '../../../../../src';
+import {Form} from "../../../../../src/forms/index";
 
 class FieldInput extends React.Component {
   onChange = (event) => {
@@ -23,6 +24,9 @@ export default class FormDemo extends React.Component {
     this.state = {
       value: 'Vitalii',
       model: {}
+    };
+    this.form = {
+
     };
   }
 
@@ -74,11 +78,17 @@ export default class FormDemo extends React.Component {
             component={FieldInput}
           />
 
-          <ModelField
-            name="username"
-            model={this.state.model}
-            component={Field.Input}
-          />
+          <Form name="Test1">
+            <div>
+              <ModelField
+                name="username"
+                value={this.state.value}
+                component={Field.Input}
+                validators={[new RequiredValidator()]}
+                form={this.form}
+              />
+            </div>
+          </Form>
         </Panel>
         <h6>Better examples and docs coming soon™</h6>
       </div>
