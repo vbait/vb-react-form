@@ -3,6 +3,7 @@ import { Validator } from './validators';
 import { getElementProps } from './utils';
 
 export class FieldAttr {
+  instance;
   name = '';
   value = '';
   validators = [];
@@ -11,7 +12,8 @@ export class FieldAttr {
   dirty = false;
   pristine = true;
 
-  constructor(name = '', value = '', validators = []) {
+  constructor(instance, name = '', value = '', validators = []) {
+    this.instance = instance;
     this.name = name;
     this.value = value;
     this.validators = validators;
@@ -50,7 +52,9 @@ export class FieldAttr {
 }
 
 class FieldInput extends React.Component {
-  onChange = (event) => {this.props.onChange(event.target.value, event);};
+  onChange = (event) => {
+    this.props.onChange(event.target.value, event);
+  };
   render() {
     return (
       <input type="text" {...this.props} onChange={this.onChange} />
@@ -64,7 +68,7 @@ class Field extends React.Component {
   constructor(props) {
     super(props);
     const {name, value = '', validators = [], onInit = () => {}} = this.props;
-    this.field = new FieldAttr(name, value, validators);
+    this.field = new FieldAttr(this, name, value, validators);
     this.field.validate();
     this.state = {
       value: this.field.value,
@@ -106,6 +110,17 @@ class Field extends React.Component {
     onChange(this.field, event);
   };
 
+  reset = () => {
+    const {name, value = '', validators = [], onInit = () => {}} = this.props;
+    this.field = new FieldAttr(this, name, value, validators);
+    this.field.validate();
+    this.setState({
+      value: this.field.value
+    }, () => {
+      onInit(this.field);
+    });
+  };
+
   updateState = () => {
     this.setState({value: this.field.value});
   };
@@ -122,6 +137,7 @@ class Field extends React.Component {
     });
   };
 }
+
 Field.propTypes = {
   name: React.PropTypes.string.isRequired,
   component: React.PropTypes.func,
@@ -134,10 +150,6 @@ Field.propTypes = {
   value: React.PropTypes.any,
 };
 
-Field.Input = (props) => {
-  return (
-    <Field {...props} component={FieldInput}/>
-  )
-};
+Field.Input = FieldInput;
 
 export {Field}

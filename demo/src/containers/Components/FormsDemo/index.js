@@ -30,32 +30,12 @@ export default class FormDemo extends React.Component {
     };
   }
 
-  onInit = (field) => {
-    console.log('onInit', field);
-  };
-
-  onFocus = (field) => {
-    console.log('onFocus', field);
-  };
-
-  onBlur = (field) => {
-    console.log('onBlur', field);
-  };
-
-  onChange = (field) => {
-    console.log('onChange', field);
-  };
-
-  onUpdate = (field) => {
-    console.log('onUpdate', field);
-  };
-
-  onRemove = (field) => {
-    console.log('onRemove', field);
-  };
-
   updateState = () => {
     this.setState({value: 'Baitaliuk'});
+  };
+
+  onSubmit = (values) => {
+    console.log('onSubmit', values);
   };
 
   render() {
@@ -65,29 +45,17 @@ export default class FormDemo extends React.Component {
 
         <Panel header="Basic example">
           <button onClick={this.updateState}>{this.state.value}</button>
-          <Field
-            name="firstName"
-            value={this.state.value}
-            validators={[new RequiredValidator()]}
-            onInit={this.onInit}
-            onChange={this.onChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            onUpdate={this.onUpdate}
-            onRemove={this.onRemove}
-            component={FieldInput}
-          />
 
-          <Form name="Test1">
+          <Form name="Test" onSubmit={this.onSubmit}>
             <div>
               <ModelField
                 name="username"
                 value={this.state.value}
                 component={Field.Input}
                 validators={[new RequiredValidator()]}
-                form={this.form}
               />
             </div>
+            <button type="submit">Send</button>
           </Form>
         </Panel>
         <h6>Better examples and docs coming soon™</h6>

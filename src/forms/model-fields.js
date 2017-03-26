@@ -10,7 +10,7 @@ class ModelField extends React.Component {
   onInit = (field) => {
     const form = this.getForm();
     console.log('onInit', field);
-    form.addField(field);
+    form.onInitField(field);
   };
 
   onFocus = (field) => {
@@ -39,7 +39,6 @@ class ModelField extends React.Component {
   };
 
   render() {
-    console.log(2222, this.props, this.context);
     const {form, ...other} = this.props;
     return (
       <Field
@@ -55,9 +54,7 @@ class ModelField extends React.Component {
   };
 }
 
-ModelField.propTypes = {
-  form: React.PropTypes.any,
-};
+ModelField.propTypes = {};
 
 ModelField.contextTypes = {
   form: React.PropTypes.any.isRequired,
