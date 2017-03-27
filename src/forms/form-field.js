@@ -1,48 +1,56 @@
 import React from 'react';
-import { Field } from './fields';
+import { Field } from './field';
 
-class ModelField extends React.Component {
+class FormField extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   onInit = (field) => {
-    const form = this.getForm();
     console.log('onInit', field);
+    const form = this.getForm();
     form.onInitField(field);
   };
 
   onFocus = (field) => {
     console.log('onFocus', field);
+    const form = this.getForm();
+    form.onFocusField(field);
   };
 
   onBlur = (field) => {
     console.log('onBlur', field);
+    const form = this.getForm();
+    form.onBlurField(field);
   };
 
   onChange = (field) => {
     console.log('onChange', field);
+    const form = this.getForm();
+    form.onChangeField(field);
   };
 
   onUpdate = (field) => {
     console.log('onUpdate', field);
+    const form = this.getForm();
+    form.onUpdateField(field);
   };
 
   onRemove = (field) => {
     console.log('onRemove', field);
+    const form = this.getForm();
+    form.onRemoveField(field);
   };
 
   getForm() {
-    const {form} = this.context;
-    return form;
+    return this.context.form;
   };
 
   render() {
-    const {form, ...other} = this.props;
     return (
       <Field
-        {...other}
+        {...this.props}
         onInit={this.onInit}
         onChange={this.onChange}
         onFocus={this.onFocus}
@@ -54,10 +62,10 @@ class ModelField extends React.Component {
   };
 }
 
-ModelField.propTypes = {};
+FormField.propTypes = {};
 
-ModelField.contextTypes = {
-  form: React.PropTypes.any.isRequired,
+FormField.contextTypes = {
+  form: React.PropTypes.object.isRequired,
 };
 
-export {ModelField}
+export {FormField};

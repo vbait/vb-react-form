@@ -1,37 +1,24 @@
 import React from 'react';
 import { PageHeader, Panel } from 'react-bootstrap';
-import { Field, ModelField, RequiredValidator } from '../../../../../src';
-import {Form} from "../../../../../src/forms/index";
-
-class FieldInput extends React.Component {
-  onChange = (event) => {
-    this.props.onChange(event.target.value, event);
-  };
-  render() {
-    return (
-      <input type="text" {...this.props} onChange={this.onChange} />
-    )
-  };
-}
-
-FieldInput.propTypes = {
-  onChange: React.PropTypes.func,
-};
+import { Field, FormField, RequiredValidator, Form, FormFieldValidator } from '../../../../../src/forms';
 
 export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Vitalii',
+      value: '',
       model: {}
-    };
-    this.form = {
-
     };
   }
 
   updateState = () => {
     this.setState({value: 'Baitaliuk'});
+  };
+
+  reset = () => {
+    this.form.reset({
+      username: 'Reset Value',
+    });
   };
 
   onSubmit = (values) => {
@@ -44,18 +31,19 @@ export default class FormDemo extends React.Component {
         <PageHeader>Forms Demo</PageHeader>
 
         <Panel header="Basic example">
-          <button onClick={this.updateState}>{this.state.value}</button>
+          <button onClick={this.updateState}>Initialize Form</button>
+          <button onClick={this.reset}>Reset Form</button>
 
-          <Form name="Test" onSubmit={this.onSubmit}>
-            <div>
-              <ModelField
-                name="username"
-                value={this.state.value}
-                component={Field.Input}
-                validators={[new RequiredValidator()]}
-              />
-            </div>
-            <button type="submit">Send</button>
+          <Form name="Test" onSubmit={this.onSubmit} ref={(form) => this.form = form}>
+            <FormField
+              className="form-control"
+              name="username"
+              value={this.state.value}
+              component={Field.Input}
+              validators={[new RequiredValidator()]}
+            />
+            <FormFieldValidator name="username" />
+            <button className="btn" type="submit">Send</button>
           </Form>
         </Panel>
         <h6>Better examples and docs coming soon™</h6>
