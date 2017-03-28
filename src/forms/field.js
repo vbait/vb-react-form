@@ -12,6 +12,7 @@ export class FieldAttr {
   touched = false;
   dirty = false;
   pristine = true;
+  focused = false;
 
   constructor(instance, name = '', value = '', validators = []) {
     this.instance = instance;
@@ -39,6 +40,10 @@ export class FieldAttr {
 
   setTouched(touched) {
     this.touched = !!touched;
+  }
+
+  setFocus(focused) {
+    this.focused = focused;
   }
 
   validate() {
@@ -91,11 +96,13 @@ class Field extends React.Component {
   onFocus = (event) => {
     const {onFocus = () => {}} = this.props;
     this.field.setTouched(true);
+    this.field.setFocus(true);
     onFocus(this.field, event);
   };
 
   onBlur = (event) => {
     const {onBlur = () => {}} = this.props;
+    this.field.setFocus(false);
     onBlur(this.field, event);
   };
 
@@ -126,12 +133,15 @@ class Field extends React.Component {
     });
   };
 
+  getField = () => {
+    return this.field;
+  };
+
   updateState = () => {
     this.setState({value: this.field.value});
   };
 
   render() {
-    console.log(11111111111, this.props);
     const {component} = this.props;
     const {value} = this.state;
     return React.createElement(component || FieldInput, {

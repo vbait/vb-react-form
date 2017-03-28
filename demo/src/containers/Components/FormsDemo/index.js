@@ -1,18 +1,39 @@
 import React from 'react';
-import { PageHeader, Panel } from 'react-bootstrap';
+import { Panel, FormGroup, ControlLabel, FormControl, HelpBlock, Overlay, OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import { Field, FormField, RequiredValidator, Form, FormFieldValidator } from '../../../../../src/forms';
+
+const FieldGroup = ({ id, label, help, ...props }) => {
+  const popoverFocus = (<Popover id="popover-trigger-focus">{help}</Popover>);
+
+  let validationState = null;
+  if (this.field) {
+    const fieldAttr = this.field.getFieldAttr();
+    if (fieldAttr.dirty && fieldAttr.errors.length) {
+      validationState = 'error';
+    }
+  }
+  return (
+    <FormGroup controlId={id} validationState={validationState}>
+      <ControlLabel>{label}</ControlLabel>
+      <OverlayTrigger trigger="focus" placement="left" overlay={popoverFocus}>
+        <FormField className="form-control" {...props} ref={(field) => this.field = field} />
+      </OverlayTrigger>
+      <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
+    </FormGroup>
+  );
+};
 
 export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
-      model: {}
+      username: '',
+      email: '',
     };
   }
 
   updateState = () => {
-    this.setState({value: 'Baitaliuk'});
+    this.setState({username: 'Baitaliuk'});
   };
 
   reset = () => {
@@ -27,27 +48,34 @@ export default class FormDemo extends React.Component {
 
   render() {
     return (
-      <div >
-        <PageHeader>Forms Demo</PageHeader>
+      <Panel header="Basic example">
+        <button onClick={this.updateState}>Initialize Form</button>
+        <button onClick={this.reset}>Reset Form</button>
 
-        <Panel header="Basic example">
-          <button onClick={this.updateState}>Initialize Form</button>
-          <button onClick={this.reset}>Reset Form</button>
-
-          <Form name="Test" onSubmit={this.onSubmit} ref={(form) => this.form = form}>
-            <FormField
-              className="form-control"
-              name="username"
-              value={this.state.value}
-              component={Field.Input}
-              validators={[new RequiredValidator()]}
-            />
-            <FormFieldValidator name="username" />
-            <button className="btn" type="submit">Send</button>
-          </Form>
-        </Panel>
-        <h6>Better examples and docs coming soon™</h6>
-      </div>
+        <Form onSubmit={this.onSubmit} ref={(form) => this.form = form}>
+          <FieldGroup
+            id="idUsername"
+            name="username"
+            value={this.state.username}
+            component={Field.Input}
+            validators={[new RequiredValidator()]}
+            label="Username:"
+            placeholder="Enter username"
+            help="Help text"
+          />
+          <FieldGroup
+            id="idEmail"
+            name="email"
+            value={this.state.email}
+            component={Field.Input}
+            validators={[new RequiredValidator()]}
+            label="Email:"
+            placeholder="Enter email"
+            help="Help text for email field"
+          />
+          <button className="btn" type="submit">Send</button>
+        </Form>
+      </Panel>
     );
   }
 }

@@ -13,22 +13,28 @@ class FormField extends React.Component {
     form.onInitField(field);
   };
 
-  onFocus = (field) => {
+  onFocus = (field, e) => {
     console.log('onFocus', field);
     const form = this.getForm();
+    const {onFocus = () => {}} = this.props;
     form.onFocusField(field);
+    onFocus(e, field);
   };
 
-  onBlur = (field) => {
+  onBlur = (field, e) => {
     console.log('onBlur', field);
     const form = this.getForm();
+    const {onBlur = () => {}} = this.props;
     form.onBlurField(field);
+    onBlur(e, field);
   };
 
-  onChange = (field) => {
+  onChange = (field, e) => {
     console.log('onChange', field);
     const form = this.getForm();
+    const {onChange = () => {}} = this.props;
     form.onChangeField(field);
+    onChange(e, field);
   };
 
   onUpdate = (field) => {
@@ -47,6 +53,10 @@ class FormField extends React.Component {
     return this.context.form;
   };
 
+  getFieldAttr = () => {
+    return this.field && this.field.field;
+  };
+
   render() {
     return (
       <Field
@@ -57,6 +67,7 @@ class FormField extends React.Component {
         onBlur={this.onBlur}
         onUpdate={this.onUpdate}
         onRemove={this.onRemove}
+        ref={(field) => this.field = field}
       />
     )
   };
