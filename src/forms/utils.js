@@ -8,6 +8,7 @@ const isFieldProp = (propName) => {
     propName === 'onBlur' ||
     propName === 'onChange' ||
     propName === 'onRemove' ||
+    propName === 'onValid' ||
     propName === 'validators'
   );
 };

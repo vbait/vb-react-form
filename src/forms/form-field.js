@@ -11,6 +11,7 @@ class FormField extends React.Component {
     console.log('onInit', field);
     const form = this.getForm();
     form.onInitField(field);
+    this.onValid(field);
   };
 
   onFocus = (field, e) => {
@@ -19,28 +20,32 @@ class FormField extends React.Component {
     const {onFocus = () => {}} = this.props;
     form.onFocusField(field);
     onFocus(e, field);
+    this.onValid(field);
   };
 
   onBlur = (field, e) => {
     console.log('onBlur', field);
     const form = this.getForm();
-    const {onBlur = () => {}} = this.props;
     form.onBlurField(field);
+    const {onBlur = () => {}} = this.props;
     onBlur(e, field);
+    this.onValid(field);
   };
 
   onChange = (field, e) => {
     console.log('onChange', field);
     const form = this.getForm();
-    const {onChange = () => {}} = this.props;
     form.onChangeField(field);
+    const {onChange = () => {}} = this.props;
     onChange(e, field);
+    this.onValid(field);
   };
 
   onUpdate = (field) => {
     console.log('onUpdate', field);
     const form = this.getForm();
     form.onUpdateField(field);
+    this.onValid(field);
   };
 
   onRemove = (field) => {
@@ -53,9 +58,10 @@ class FormField extends React.Component {
     return this.context.form;
   };
 
-  getFieldAttr = () => {
-    return this.field && this.field.field;
-  };
+  onValid(field) {
+    const {onValid = () => {}} = this.props;
+    onValid(field);
+  }
 
   render() {
     return (

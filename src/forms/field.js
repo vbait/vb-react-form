@@ -133,15 +133,12 @@ class Field extends React.Component {
     });
   };
 
-  getField = () => {
-    return this.field;
-  };
-
   updateState = () => {
     this.setState({value: this.field.value});
   };
 
   render() {
+    console.log(111111, this.props.name);
     const {component} = this.props;
     const {value} = this.state;
     return React.createElement(component || FieldInput, {

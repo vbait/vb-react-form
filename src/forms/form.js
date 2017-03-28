@@ -4,6 +4,7 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {values: {}, fields: {}};
+    this.fields = {};
   }
 
   getChildContext() {
@@ -18,10 +19,14 @@ class Form extends React.Component {
     }};
   }
 
+  componentDidMount() {
+    // this.forceUpdate();
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
     const {onSubmit = () => {}} = this.props;
-    const {fields} = this.state;
+    const fields = this.fields;
     let isValid = true;
     const values = Object.keys(fields).reduce((temp, key) => {
       if (fields[key].errors.length) {
@@ -38,7 +43,7 @@ class Form extends React.Component {
   };
 
   onInitField = (field) => {
-    this.updateField(field);
+    this.fields[field.name] = field;
   };
 
   onFocusField = (field) => {
@@ -62,25 +67,21 @@ class Form extends React.Component {
   };
 
   getFieldByName = (name) => {
-    return this.state.fields[name];
+    return this.fields[name];
   };
 
   updateField = (field) => {
-    const fields = {...this.state.fields};
-    fields[field.name] = field;
-    this.setState({fields: fields});
+    this.fields[field.name] = field;
+    this.forceUpdate();
   };
 
   removeField = (field) => {
-    const fields = {...this.state.fields};
-    delete fields[field.name];
-    this.setState({fields: fields});
+    delete this.fields[field.name];
   };
 
   reset = (value = {}) => {
-    const {fields} = this.state;
-    Object.keys(fields).forEach((key) => {
-      fields[key].instance.reset(value[key]);
+    Object.keys(this.fields).forEach((key) => {
+      this.fields[key].instance.reset(value[key]);
     });
   };
 
@@ -99,4 +100,18 @@ Form.childContextTypes = {
   form: React.PropTypes.any,
 };
 
-export {Form};
+const formConnector = (component) => {
+  return ((c) => {
+    class WrapperComponent extends React.Component {
+      render() {
+        return React.createElement(c, {...this.props, ...this.context})
+      }
+    }
+    WrapperComponent.contextTypes = {
+      form: React.PropTypes.object.isRequired,
+    };
+    return WrapperComponent;
+  })(component);
+};
+
+export {Form, formConnector};
