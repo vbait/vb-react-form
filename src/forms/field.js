@@ -8,17 +8,19 @@ export class FieldAttr {
   name = '';
   value = '';
   validators = [];
+  validatorsOptions = {};
   errors = [];
   touched = false;
   dirty = false;
   pristine = true;
   focused = false;
 
-  constructor(instance, name = '', value = '', validators = []) {
+  constructor(instance, name = '', value = '', validators = [], validatorsOptions = {}) {
     this.instance = instance;
     this.name = name;
     this.value = value;
     this.validators = validators;
+    this.validatorsOptions = validatorsOptions;
   }
 
   setValue(value = '') {
@@ -27,6 +29,10 @@ export class FieldAttr {
 
   setValidators(validators = []) {
     this.validators = validators;
+  }
+
+  setValidatorsOptions(options = {}) {
+    this.validatorsOptions = options;
   }
 
   setErrors(errors = []) {
@@ -53,17 +59,22 @@ export class FieldAttr {
     }).filter((v) => {
       return v;
     });
-    this.setErrors(errors);
+    const {multi = true} = this.validatorsOptions;
+    if (multi && errors.length) {
+      this.setErrors(errors);
+    } else {
+      this.setErrors(errors.slice(0, 1));
+    }
   }
 }
 
-class Field extends React.Component {
+class Field extends React.PureComponent {
   field;
 
   constructor(props) {
     super(props);
-    const {name, value = '', validators = []} = this.props;
-    this.field = new FieldAttr(this, name, value, validators);
+    const {name, value = '', validators = [], validatorsOptions = {}} = this.props;
+    this.field = new FieldAttr(this, name, value, validators, validatorsOptions);
     this.field.validate();
     this.state = {
       value: this.field.value,
@@ -80,6 +91,7 @@ class Field extends React.Component {
       const {onUpdate = () => {}} = nextProps;
       this.field.setValue(nextProps.value);
       this.field.setValidators(nextProps.validators);
+      this.field.setValidatorsOptions(nextProps.validatorsOptions);
       this.field.validate();
       this.updateState();
       onUpdate(this.field);
@@ -138,7 +150,7 @@ class Field extends React.Component {
   };
 
   render() {
-    console.log(111111, this.props.name);
+    // console.log(111111, this.props.name);
     const {component} = this.props;
     const {value} = this.state;
     return React.createElement(component || FieldInput, {

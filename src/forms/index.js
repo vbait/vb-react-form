@@ -1,4 +1,4 @@
-export { Validator, RequiredValidator } from './validators';
+export * from './validators';
 export { Field } from './field';
 export { FieldInput } from './fields';
 export { FormField } from './form-field';

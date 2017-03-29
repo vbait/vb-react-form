@@ -1,6 +1,21 @@
 import React from 'react';
-import { Panel, FormGroup, ControlLabel, FormControl, HelpBlock, Overlay, OverlayTrigger, Popover, Button } from 'react-bootstrap';
-import { Field, FormField, RequiredValidator, Form, formConnector, FormFieldValidator } from '../../../../../src/forms';
+import { Panel, FormGroup, ControlLabel, HelpBlock, OverlayTrigger, Popover, Button } from 'react-bootstrap';
+import {
+  Form,
+  Field,
+  FormField,
+  FormFieldValidator,
+  RequiredValidator,
+  EmailValidator,
+  PhoneValidator,
+  WebSiteValidator,
+  CurrencyValidator,
+  PasswordValidator,
+  MinLengthValidator,
+  MaxLengthValidator,
+  MinValueValidator,
+  MaxValueValidator,
+} from '../../../../../src/forms';
 
 class FieldGroup extends React.Component {
   state = {isInvalid: false};
@@ -13,7 +28,7 @@ class FieldGroup extends React.Component {
     const {id, label, help, ...props} = this.props;
     const popoverFocus = (<Popover id="popover-trigger-focus">{help}</Popover>);
     let validationState = this.state.isInvalid ? 'error' : null;
-    // console.log(form.getFieldByName(props.name));
+
     return (
       <FormGroup controlId={id} validationState={validationState}>
         <ControlLabel>{label}</ControlLabel>
@@ -30,19 +45,20 @@ export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      text: '',
       email: '',
       firstName: '',
+      phone: '12025550174',
     };
   }
 
   updateState = () => {
-    this.setState({username: 'Baitaliuk'});
+    this.setState({text: 'Baitaliuk'});
   };
 
   reset = () => {
     this.form.reset({
-      username: 'Reset Value',
+      text: 'Reset Value',
     });
   };
 
@@ -58,34 +74,45 @@ export default class FormDemo extends React.Component {
 
         <Form onSubmit={this.onSubmit} ref={(form) => this.form = form}>
           <FieldGroup
-            id="idUsername"
-            name="username"
-            value={this.state.username}
+            id="idText"
+            name="text"
+            value={this.state.text}
             component={Field.Input}
             validators={[new RequiredValidator()]}
-            label="Username:"
-            placeholder="Enter username"
-            help="Help text"
+            label="Text:"
+            placeholder="Enter text"
+            help="Help text for text field"
           />
           <FieldGroup
             id="idEmail"
             name="email"
+            type="email"
             value={this.state.email}
-            component={Field.Input}
-            validators={[new RequiredValidator()]}
+            validators={[new RequiredValidator(), new EmailValidator()]}
+            validatorsOptions={{multi: true}}
             label="Email:"
             placeholder="Enter email"
             help="Help text for email field"
           />
-          <div>
-            <FormField
-              name="firstName"
-              value={this.state.firstName}
-              component={Field.Input}
-              validators={[new RequiredValidator()]}
-            />
-            <FormFieldValidator name="firstName" />
-          </div>
+          <FieldGroup
+            id="idPassword"
+            name="password"
+            type="password"
+            value={this.state.password}
+            validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator()]}
+            label="Password:"
+            placeholder="Enter password"
+            help="Help text for password field"
+          />
+          <FieldGroup
+            id="idPhone"
+            name="phone"
+            value={this.state.phone}
+            validators={[new RequiredValidator(), new PhoneValidator('en-US')]}
+            label="Phone:"
+            placeholder="Enter phone"
+            help="Help text for phone field"
+          />
           <button className="btn" type="submit">Send</button>
         </Form>
       </Panel>

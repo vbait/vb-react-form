@@ -9,6 +9,7 @@ const isFieldProp = (propName) => {
     propName === 'onChange' ||
     propName === 'onRemove' ||
     propName === 'onValid' ||
+    propName === 'validatorsOptions' ||
     propName === 'validators'
   );
 };

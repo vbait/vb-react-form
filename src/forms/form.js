@@ -25,6 +25,9 @@ class Form extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    //this.setState({values: 1});
+    // this.forceUpdate();
+
     const {onSubmit = () => {}} = this.props;
     const fields = this.fields;
     let isValid = true;
