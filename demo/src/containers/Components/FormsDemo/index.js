@@ -17,23 +17,40 @@ import {
   MaxValueValidator,
 } from '../../../../../src/forms';
 
+class AsyncValidator {
+  isValid(value) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        value === '1' ? reject(['Async error']) : resolve();
+      }, 200);
+    });
+  }
+}
+
 class FieldGroup extends React.Component {
   state = {isInvalid: false};
 
   onValid = (field) => {
-    this.setState({isInvalid: field.dirty && field.errors.length});
+    this.setState({
+      isInvalid: field.dirty && (field.errors.length || field.asyncErrors.length),
+      pending: field.pending,
+    });
   };
 
   render() {
     const {id, label, help, ...props} = this.props;
+    const {isInvalid, pending} = this.state;
     const popoverFocus = (<Popover id="popover-trigger-focus">{help}</Popover>);
-    let validationState = this.state.isInvalid ? 'error' : null;
+    let validationState = isInvalid ? 'error' : null;
 
     return (
       <FormGroup controlId={id} validationState={validationState}>
         <ControlLabel>{label}</ControlLabel>
         <OverlayTrigger trigger="focus" placement="left" overlay={popoverFocus}>
-          <FormField className="form-control" {...props} onValid={this.onValid} />
+          <div className="input-container">
+            <FormField className="form-control" {...props} onValid={this.onValid} />
+            {pending && <div className="loader">async validating ...</div>}
+          </div>
         </OverlayTrigger>
         <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
       </FormGroup>
@@ -49,6 +66,7 @@ export default class FormDemo extends React.Component {
       email: '',
       firstName: '',
       phone: '12025550174',
+      formProps: {}
     };
   }
 
@@ -57,29 +75,34 @@ export default class FormDemo extends React.Component {
   };
 
   reset = () => {
-    this.form.reset({
-      text: 'Reset Value',
-    });
+    this.form.reset();
   };
 
   onSubmit = (values) => {
     console.log('onSubmit', values);
   };
 
+  onValid = (props) => {
+    this.setState({formProps: props});
+  };
+
   render() {
+    const {formProps} = this.state;
     return (
       <Panel header="Basic example">
         <button onClick={this.updateState}>Initialize Form</button>
         <button onClick={this.reset}>Reset Form</button>
 
-        <Form onSubmit={this.onSubmit} ref={(form) => this.form = form}>
+        <Form onSubmit={this.onSubmit} onValid={this.onValid} ref={(form) => this.form = form}>
           <FieldGroup
             id="idText"
             name="text"
             value={this.state.text}
             component={Field.Input}
             validators={[new RequiredValidator()]}
-            label="Text:"
+            asyncValidator={new AsyncValidator()}
+            asyncValidateOn={['blur']}
+            label="Text"
             placeholder="Enter text"
             help="Help text for text field"
           />
@@ -90,7 +113,7 @@ export default class FormDemo extends React.Component {
             value={this.state.email}
             validators={[new RequiredValidator(), new EmailValidator()]}
             validatorsOptions={{multi: true}}
-            label="Email:"
+            label="Email"
             placeholder="Enter email"
             help="Help text for email field"
           />
@@ -100,7 +123,7 @@ export default class FormDemo extends React.Component {
             type="password"
             value={this.state.password}
             validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator()]}
-            label="Password:"
+            label="Password"
             placeholder="Enter password"
             help="Help text for password field"
           />
@@ -109,11 +132,11 @@ export default class FormDemo extends React.Component {
             name="phone"
             value={this.state.phone}
             validators={[new RequiredValidator(), new PhoneValidator('en-US')]}
-            label="Phone:"
+            label="Phone"
             placeholder="Enter phone"
             help="Help text for phone field"
           />
-          <button className="btn" type="submit">Send</button>
+          <button className="btn" type="submit" disabled={!formProps.isValid}>Send</button>
         </Form>
       </Panel>
     );

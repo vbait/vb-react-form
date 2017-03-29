@@ -48,6 +48,13 @@ class FormField extends React.Component {
     this.onValid(field);
   };
 
+  onAsyncValid = (field) => {
+    console.log('onAsyncValid', field);
+    const form = this.getForm();
+    form.onAsyncValid(field);
+    this.onValid(field);
+  };
+
   onRemove = (field) => {
     console.log('onRemove', field);
     const form = this.getForm();
@@ -72,6 +79,7 @@ class FormField extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         onUpdate={this.onUpdate}
+        onAsyncValid={this.onAsyncValid}
         onRemove={this.onRemove}
         ref={(field) => this.field = field}
       />

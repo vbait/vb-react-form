@@ -5,6 +5,7 @@ class FormFieldValidatorComponent extends React.Component {
     const {field, ...other} = this.props;
     return (field.dirty ? <div {...other}>
       {field.errors.map((error, index) => <div key={index}>{error}</div>)}
+      {field.asyncErrors.map((error, index) => <div key={index}>{error}</div>)}
     </div> : null)
   };
 }
@@ -29,7 +30,7 @@ class FormFieldValidator extends React.Component {
     const field = this.getFieldByName(name);
     const element = React.createElement(component || FormFieldValidatorComponent, {
       field: field,
-      ...other
+      ...other,
     });
     return (field ? element : null)
   };

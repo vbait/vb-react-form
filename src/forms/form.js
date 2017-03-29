@@ -3,37 +3,38 @@ import React from 'react';
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {values: {}, fields: {}};
     this.fields = {};
   }
 
   getChildContext() {
     return {form: {
       onInitField: this.onInitField,
-      onFocusField: this.onFocusField,
-      onBlurField: this.onBlurField,
-      onChangeField: this.onChangeField,
-      onUpdateField: this.onUpdateField,
+      onFocusField: this.updateField,
+      onBlurField: this.updateField,
+      onChangeField: this.updateField,
+      onUpdateField: this.updateField,
+      onAsyncValid: this.updateField,
       onRemoveField: this.onRemoveField,
       getFieldByName: this.getFieldByName,
     }};
   }
 
   componentDidMount() {
-    // this.forceUpdate();
+    this.forceUpdate();
   }
+
+  componentDidUpdate() {}
 
   onSubmit = (e) => {
     e.preventDefault();
-    //this.setState({values: 1});
-    // this.forceUpdate();
-
     const {onSubmit = () => {}} = this.props;
     const fields = this.fields;
     let isValid = true;
     const values = Object.keys(fields).reduce((temp, key) => {
       if (fields[key].errors.length) {
         fields[key].instance.validate();
+        isValid = false;
+      } if (fields[key].pending || fields[key].asyncErrors.length) {
         isValid = false;
       } else {
         temp[key] = fields[key].value;
@@ -47,39 +48,47 @@ class Form extends React.Component {
 
   onInitField = (field) => {
     this.fields[field.name] = field;
-  };
-
-  onFocusField = (field) => {
-    this.updateField(field);
-  };
-
-  onBlurField = (field) => {
-    this.updateField(field);
-  };
-
-  onChangeField = (field) => {
-    this.updateField(field);
-  };
-
-  onUpdateField = (field) => {
-    this.updateField(field);
+    this.returnFormState();
   };
 
   onRemoveField = (field) => {
     this.removeField(field);
   };
 
-  getFieldByName = (name) => {
-    return this.fields[name];
-  };
-
   updateField = (field) => {
     this.fields[field.name] = field;
+    this.returnFormState();
     this.forceUpdate();
   };
 
+  returnFormState() {
+    const {onValid = () => {}} = this.props;
+    const props = {
+      pending: false,
+      dirty: false,
+      isValid: true,
+    };
+    Object.keys(this.fields).forEach((key) => {
+      const field = this.fields[key];
+      if (field.dirty) {
+        props.dirty = true;
+      }
+      if (field.pending) {
+        props.pending = true;
+      }
+      if (field.errors.length || field.asyncErrors.length) {
+        props.isValid = false;
+      }
+    });
+    onValid(props);
+  }
+
   removeField = (field) => {
     delete this.fields[field.name];
+  };
+
+  getFieldByName = (name) => {
+    return this.fields[name];
   };
 
   reset = (value = {}) => {
@@ -89,15 +98,16 @@ class Form extends React.Component {
   };
 
   render() {
-    const {children} = this.props;
+    const {children, onValid, ...other} = this.props;
     return (
-      <form {...this.props} onSubmit={this.onSubmit}>{children}</form>
+      <form {...other} onSubmit={this.onSubmit}>{children}</form>
     );
   }
 }
 Form.propTypes = {
   name: React.PropTypes.any,
   children: React.PropTypes.any,
+  onValid: React.PropTypes.any,
 };
 Form.childContextTypes = {
   form: React.PropTypes.any,
