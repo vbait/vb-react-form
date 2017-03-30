@@ -1,7 +1,7 @@
 import React from 'react';
 import { Validator } from './validators';
 import { getElementProps } from './utils';
-import { FieldInput } from './fields';
+import { FieldInput, FieldRadio, FieldCheckbox } from './fields';
 import isEqual from 'lodash/isEqual';
 // import cloneDeep from 'lodash/cloneDeep';
 
@@ -247,7 +247,7 @@ class Field extends React.PureComponent {
   };
 
   render() {
-    console.log(111111, this.props.name);
+    // console.log(111111, this.props.name);
     const {component} = this.props;
     const {value} = this.state;
     return React.createElement(component || FieldInput, {
@@ -272,6 +272,7 @@ Field.propTypes = {
   validators: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Validator)),
   validatorsOptions: React.PropTypes.shape({
     multi: React.PropTypes.bool,
+    validateAfterLocal: React.PropTypes.bool,
   }),
   asyncValidator: React.PropTypes.object,
   asyncValidatorOptions: React.PropTypes.shape({
@@ -280,5 +281,7 @@ Field.propTypes = {
 };
 
 Field.Input = FieldInput;
+Field.Radio = FieldRadio;
+Field.Checkbox = FieldCheckbox;
 
 export {Field}

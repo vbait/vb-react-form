@@ -58,6 +58,46 @@ class FieldGroup extends React.Component {
   }
 }
 
+class FieldRadioGroup extends React.Component {
+  render() {
+    const {id, label, help, ...props} = this.props;
+    const popover = (<Popover>{help}</Popover>);
+    let validationState = null;
+
+    return (
+      <FormGroup controlId={id} validationState={validationState}>
+        <ControlLabel>{label}</ControlLabel>
+        <OverlayTrigger trigger="hover" placement="left" overlay={popover}>
+          <div className="input-container">
+            <FormField className="form-control" {...props} />
+          </div>
+        </OverlayTrigger>
+        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
+      </FormGroup>
+    );
+  }
+}
+
+class FieldCheckboxGroup extends React.Component {
+  render() {
+    const {id, label, help, ...props} = this.props;
+    const popover = (<Popover>{help}</Popover>);
+    let validationState = null;
+
+    return (
+      <FormGroup controlId={id} validationState={validationState}>
+        <ControlLabel>{label}</ControlLabel>
+        <OverlayTrigger trigger="hover" placement="left" overlay={popover}>
+          <div className="input-container">
+            <FormField className="form-control" {...props} />
+          </div>
+        </OverlayTrigger>
+        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
+      </FormGroup>
+    );
+  }
+}
+
 export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
@@ -101,7 +141,7 @@ export default class FormDemo extends React.Component {
             validators={[new RequiredValidator()]}
             validatorsOptions={{multi: true}}
             asyncValidator={new AsyncValidator()}
-            asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: false}}
+            asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
             label="Text"
             placeholder="Enter text"
             help="Help text for text field"
@@ -136,6 +176,23 @@ export default class FormDemo extends React.Component {
             label="Phone"
             placeholder="Enter phone"
             help="Help text for phone field"
+          />
+          <FieldRadioGroup
+            id="idRadio"
+            name="radio"
+            value={this.state.radio}
+            label="Radio"
+            help="Help text for radio field"
+            component={Field.Radio}
+          />
+          <FieldCheckboxGroup
+            id="idCheckbox"
+            name="checkbox"
+            value={this.state.checkbox}
+            label="Checkbox"
+            help="Help text for checkbox field"
+            component={Field.Checkbox}
+            validators={[new RequiredValidator()]}
           />
           <button className="btn" type="submit">Send</button>
         </Form>
