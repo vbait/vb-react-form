@@ -66,7 +66,7 @@ export default class FormDemo extends React.Component {
       email: '',
       firstName: '',
       phone: '12025550174',
-      formProps: {}
+      formProps: {},
     };
   }
 
@@ -87,7 +87,6 @@ export default class FormDemo extends React.Component {
   };
 
   render() {
-    const {formProps} = this.state;
     return (
       <Panel header="Basic example">
         <button onClick={this.updateState}>Initialize Form</button>
@@ -100,8 +99,9 @@ export default class FormDemo extends React.Component {
             value={this.state.text}
             component={Field.Input}
             validators={[new RequiredValidator()]}
+            validatorsOptions={{multi: true}}
             asyncValidator={new AsyncValidator()}
-            asyncValidateOn={['blur']}
+            asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: false}}
             label="Text"
             placeholder="Enter text"
             help="Help text for text field"
@@ -122,7 +122,8 @@ export default class FormDemo extends React.Component {
             name="password"
             type="password"
             value={this.state.password}
-            validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator()]}
+            validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}
+            validatorsOptions={{multi: false}}
             label="Password"
             placeholder="Enter password"
             help="Help text for password field"
@@ -136,7 +137,7 @@ export default class FormDemo extends React.Component {
             placeholder="Enter phone"
             help="Help text for phone field"
           />
-          <button className="btn" type="submit" disabled={!formProps.isValid}>Send</button>
+          <button className="btn" type="submit">Send</button>
         </Form>
       </Panel>
     );

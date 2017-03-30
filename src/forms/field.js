@@ -2,14 +2,22 @@ import React from 'react';
 import { Validator } from './validators';
 import { getElementProps } from './utils';
 import { FieldInput } from './fields';
+import isEqual from 'lodash/isEqual';
+// import cloneDeep from 'lodash/cloneDeep';
 
 export class FieldAttr {
+  static events = {
+    FOCUS: 'focus',
+    CHANGE: 'change',
+    BLUR: 'blur',
+  };
   instance;
   name = '';
   value = '';
   validators = [];
   validatorsOptions = {};
   asyncValidator = null;
+  asyncValidatorOptions = {};
   errors = [];
   asyncErrors = [];
   touched = false;
@@ -18,13 +26,18 @@ export class FieldAttr {
   focused = false;
   pending = false;
 
-  constructor(instance, name = '', value = '', validators = [], validatorsOptions = {}, asyncValidator = null) {
+  constructor(
+    instance, name = '', value = '',
+    validators = [], validatorsOptions = {},
+    asyncValidator = null, asyncValidatorOptions = {})
+  {
     this.instance = instance;
     this.name = name;
     this.value = value;
     this.validators = validators;
     this.validatorsOptions = validatorsOptions;
     this.asyncValidator = asyncValidator;
+    this.asyncValidatorOptions = asyncValidatorOptions;
   }
 
   setValue(value = '') {
@@ -41,6 +54,10 @@ export class FieldAttr {
 
   setAsyncValidator(validator) {
     this.asyncValidator = validator;
+  }
+
+  setAsyncValidatorOptions(options = {}) {
+    this.asyncValidatorOptions = options;
   }
 
   setErrors(errors = []) {
@@ -60,8 +77,8 @@ export class FieldAttr {
     this.focused = focused;
   }
 
-  validate(done, resetAsyncErrors = false) {
-    const {validators, name, value, asyncValidator} = this;
+  validate() {
+    const {validators, name, value} = this;
     const {multi = true} = this.validatorsOptions;
     const errors = validators.map((v) => {
       return !v.isValid(value) && v.error(name, value);
@@ -73,23 +90,35 @@ export class FieldAttr {
     } else {
       this.setErrors(errors.slice(0, 1));
     }
+  }
 
-    if (resetAsyncErrors) {
+  asyncValidate(currentEvent, done) {
+    if (currentEvent && currentEvent === FieldAttr.events.CHANGE) {
       this.asyncErrors = [];
     }
-    if (asyncValidator && done) {
+    const {value, asyncValidator, asyncValidatorOptions, errors} = this;
+    const {validateOn = [], validateAfterLocal = false} = asyncValidatorOptions;
+    if (validateAfterLocal && errors.length) {
+      return done();
+    }
+    if (asyncValidator) {
+      if (validateOn.length && validateOn.indexOf(currentEvent) === -1) {
+        return done();
+      }
       this.pending = true;
       asyncValidator.isValid(value)
         .then(() => {
           this.pending = false;
           this.asyncErrors = [];
-          done();
+          done(true);
         })
         .catch((errors) => {
           this.pending = false;
           this.asyncErrors = errors || [];
-          done();
+          done(true);
         });
+    } else {
+      done();
     }
   }
 }
@@ -113,19 +142,26 @@ class Field extends React.PureComponent {
 
   componentWillReceiveProps(nextProps) {
     let changed = false;
+    let validate = false;
     if (this.props.value !== nextProps.value) {
       this.field.setValue(nextProps.value);
       this.updateState();
       changed = true;
     }
-    // if (this.props.validators !== nextProps.validators) {
-    //   this.field.setValidators(nextProps.validators);
-    //   this.field.setValidatorsOptions(nextProps.validatorsOptions);
-    //   this.validateField();
-    //   changed = true;
-    // }
-    if (this.props.asyncValidator !== nextProps.asyncValidator) {
+    if (!isEqual(this.props.validators, nextProps.validators)) {
+      this.field.setValidators(nextProps.validators);
+      this.field.setValidatorsOptions(nextProps.validatorsOptions);
+      changed = true;
+      validate = true;
+    }
+    if (!isEqual(this.props.asyncValidator, nextProps.asyncValidator)) {
       this.field.setAsyncValidator(nextProps.asyncValidator);
+      this.field.setAsyncValidatorOptions(nextProps.asyncValidatorOptions);
+      changed = true;
+      validate = true;
+    }
+    if (validate) {
+      this.validateField();
     }
     if (changed) {
       const {onUpdate = () => {}} = nextProps;
@@ -133,7 +169,9 @@ class Field extends React.PureComponent {
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {}
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState) || !isEqual(this.context, nextContext);
+  }
 
   componentWillUnmount() {
     const {onRemove = () => {}} = this.props;
@@ -144,41 +182,36 @@ class Field extends React.PureComponent {
     const {
       name, value = '',
       validators = [], validatorsOptions = {},
-      asyncValidator = null
+      asyncValidator = null, asyncValidatorOptions = {},
     } = this.props;
     const val = props.value !== undefined ? props.value : value; // For reset values
     return new FieldAttr(
       this, name, val,
       validators, validatorsOptions,
-      asyncValidator
+      asyncValidator, asyncValidatorOptions
     );
   }
 
   validateField(event) {
-    const {asyncValidateOn, onAsyncValid = () => {}} = this.props;
-    let done;
-    if (asyncValidateOn) {
-      if (asyncValidateOn.indexOf(event) !== -1) {
-        done = () => onAsyncValid(this.field);
-      }
-    } else {
-      done = () => onAsyncValid(this.field);
-    }
-    this.field.validate(done, event === 'change');
+    const {onAsyncValid = () => {}} = this.props;
+    this.field.validate();
+    this.field.asyncValidate(event, (active) => {
+      active && onAsyncValid(this.field);
+    });
   }
 
   onFocus = (event) => {
     const {onFocus = () => {}} = this.props;
     this.field.setTouched(true);
     this.field.setFocus(true);
-    this.validateField('focus');
+    this.validateField(FieldAttr.events.FOCUS);
     onFocus(this.field, event);
   };
 
   onBlur = (event) => {
     const {onBlur = () => {}} = this.props;
     this.field.setFocus(false);
-    this.validateField('blur');
+    this.validateField(FieldAttr.events.BLUR);
     onBlur(this.field, event);
   };
 
@@ -186,7 +219,7 @@ class Field extends React.PureComponent {
     const {onChange = () => {}} = this.props;
     this.field.setValue(value);
     this.field.setDirty(true);
-    this.validateField('change');
+    this.validateField(FieldAttr.events.CHANGE);
     this.updateState();
     onChange(this.field, event);
   };
@@ -230,14 +263,20 @@ class Field extends React.PureComponent {
 Field.propTypes = {
   name: React.PropTypes.string.isRequired,
   component: React.PropTypes.func,
-  validators: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Validator)),
   onChange: React.PropTypes.func,
   onInit: React.PropTypes.func,
   onUpdate: React.PropTypes.func,
   onFocus: React.PropTypes.func,
   onBlur: React.PropTypes.func,
   value: React.PropTypes.any,
-  asyncValidateOn: React.PropTypes.arrayOf(React.PropTypes.string),
+  validators: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Validator)),
+  validatorsOptions: React.PropTypes.shape({
+    multi: React.PropTypes.bool,
+  }),
+  asyncValidator: React.PropTypes.object,
+  asyncValidatorOptions: React.PropTypes.shape({
+    validateOn: React.PropTypes.arrayOf(React.PropTypes.string),
+  }),
 };
 
 Field.Input = FieldInput;

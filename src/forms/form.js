@@ -100,7 +100,7 @@ class Form extends React.Component {
   render() {
     const {children, onValid, ...other} = this.props;
     return (
-      <form {...other} onSubmit={this.onSubmit}>{children}</form>
+      <form {...other} onSubmit={this.onSubmit} noValidate>{children}</form>
     );
   }
 }

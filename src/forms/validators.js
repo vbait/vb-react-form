@@ -97,10 +97,18 @@ export class PasswordValidator extends RegexValidator {
   static mediumRegex = '^((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))';
   constructor(strong = true) {
     super(strong ? PasswordValidator.strongRegex : PasswordValidator.mediumRegex);
+    this.strong = strong;
   }
 
   error(name, value) {
-    return 'This value is not currency amount.';
+    if (this.strong) {
+      return 'The string must contain at least 1 lowercase alphabetical character, ' +
+        'at least 1 uppercase alphabetical character, ' +
+        'at least 1 numeric character and ' +
+        'at least one special character';
+    }
+    return 'The string must contain at least 1 lowercase or uppercase alphabetical character and ' +
+      'at least 1 numeric character';
   }
 }
 
