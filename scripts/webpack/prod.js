@@ -13,12 +13,12 @@ module.exports = () => {
 
   const baseConfig = {
     entry: {
-      'b-components': './src/index.js',
+      'vb-react-form': './src/index.js',
     },
     output: {
       path: path.resolve(__dirname, '../../dist'),
       filename: '[name].bundle.js',
-      library: 'bComponents',
+      library: 'vb-react-form',
     },
     resolve: {
       extensions: ['.js', '.jsx', '.json', '.css', '.scss', 'png', 'woff', 'woff2', 'eot', 'ttf', 'svg', 'gif', 'jpg'],
