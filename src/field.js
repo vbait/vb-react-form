@@ -248,9 +248,18 @@ class Field extends React.PureComponent {
 
   render() {
     // console.log(111111, this.props.name);
-    const {component} = this.props;
+    let defaultComponent = FieldInput;
+    const {component, type} = this.props;
     const {value} = this.state;
-    return React.createElement(component || FieldInput, {
+    switch (type) {
+      case 'checkbox':
+        defaultComponent = FieldCheckbox;
+        break;
+      case 'radio':
+        defaultComponent = FieldRadio;
+        break;
+    }
+    return React.createElement(component || defaultComponent, {
       ...getElementProps(this.props),
       onFocus: this.onFocus,
       onBlur: this.onBlur,
@@ -269,6 +278,7 @@ Field.propTypes = {
   onFocus: React.PropTypes.func,
   onBlur: React.PropTypes.func,
   value: React.PropTypes.any,
+  options: React.PropTypes.arrayOf(React.PropTypes.any),
   validators: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Validator)),
   validatorsOptions: React.PropTypes.shape({
     multi: React.PropTypes.bool,

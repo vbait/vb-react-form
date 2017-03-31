@@ -3,12 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const demoDir = path.resolve(__dirname, '../../demo');
-const demoSrc = path.resolve(demoDir, 'src');
 const demoDist = path.resolve(demoDir, 'dist');
 const srcDir = path.resolve(__dirname, '../../src');
 
 module.exports = () => ({
-  entry: ['./index.jsx'],
+  entry: ['./index.js'],
   output: {
     filename: '[hash].[name].js',
     path: demoDist,
@@ -17,7 +16,7 @@ module.exports = () => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.css', '.scss'],
   },
-  context: demoSrc,
+  context: demoDir,
   module: {
     rules: [
       // {
@@ -30,7 +29,7 @@ module.exports = () => ({
         test: /\.(js|jsx)$/,
         include: [
           srcDir,
-          path.resolve(demoDir, 'src'),
+          demoDir,
         ],
         exclude: /node_modules/,
         loader: 'babel-loader',
@@ -78,6 +77,6 @@ module.exports = () => ({
   },
   plugins: [
     new ExtractTextPlugin({ allChunks: false, filename: 'styles.css' }),
-    new HtmlWebpackPlugin({ inject: 'body', template: path.resolve(demoDir, 'src/index.html') }),
+    new HtmlWebpackPlugin({ inject: 'body', template: path.resolve(demoDir, 'index.html') }),
   ],
 });

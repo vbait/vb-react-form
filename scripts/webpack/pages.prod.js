@@ -38,7 +38,7 @@ module.exports = () => (
         },
         comments: false,
         test: /\.(js|jsx)$/i,
-        include: ['src/**', 'demo/src/**'],
+        include: ['src/**', 'demo/**'],
       }),
     ],
   })

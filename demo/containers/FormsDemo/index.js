@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel, FormGroup, ControlLabel, HelpBlock, OverlayTrigger, Popover, Button } from 'react-bootstrap';
+import { Panel, FormGroup, FormControl, ControlLabel, HelpBlock, OverlayTrigger, Popover, Glyphicon, Button } from 'react-bootstrap';
 import {
   Form,
   Field,
@@ -15,14 +15,14 @@ import {
   MaxLengthValidator,
   MinValueValidator,
   MaxValueValidator,
-} from '../../../../../src/forms';
+} from '../../../src';
 
 class AsyncValidator {
   isValid(value) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         value === '1' ? reject(['Async error']) : resolve();
-      }, 200);
+      }, 1000);
     });
   }
 }
@@ -33,23 +33,26 @@ class FieldGroup extends React.Component {
   onValid = (field) => {
     this.setState({
       isInvalid: field.dirty && (field.errors.length || field.asyncErrors.length),
+      dirty: field.dirty,
       pending: field.pending,
     });
   };
 
   render() {
     const {id, label, help, ...props} = this.props;
-    const {isInvalid, pending} = this.state;
-    const popoverFocus = (<Popover id="popover-trigger-focus">{help}</Popover>);
-    let validationState = isInvalid ? 'error' : null;
+    const {isInvalid, pending, dirty} = this.state;
+    const popover = (<Popover id="popover-focus">{help}</Popover>);
+    let validationState = (isInvalid) ? 'error' : 'success';
 
     return (
-      <FormGroup controlId={id} validationState={validationState}>
+      <FormGroup controlId={id} validationState={dirty && !pending ? validationState : null}>
         <ControlLabel>{label}</ControlLabel>
-        <OverlayTrigger trigger="focus" placement="left" overlay={popoverFocus}>
+        <OverlayTrigger trigger="focus" placement="left" overlay={popover}>
           <div className="input-container">
             <FormField className="form-control" {...props} onValid={this.onValid} />
-            {pending && <div className="loader">async validating ...</div>}
+            <FormControl.Feedback>
+              {pending && <Glyphicon glyph="repeat fast-right-spinner" />}
+            </FormControl.Feedback>
           </div>
         </OverlayTrigger>
         <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
@@ -60,41 +63,35 @@ class FieldGroup extends React.Component {
 
 class FieldRadioGroup extends React.Component {
   render() {
-    const {id, label, help, ...props} = this.props;
-    const popover = (<Popover>{help}</Popover>);
-    let validationState = null;
+    const {label, help, ...props} = this.props;
+    const popover = (<Popover id="popover-hover">{help}</Popover>);
 
     return (
-      <FormGroup controlId={id} validationState={validationState}>
-        <ControlLabel>{label}</ControlLabel>
-        <OverlayTrigger trigger="hover" placement="left" overlay={popover}>
-          <div className="input-container">
-            <FormField className="form-control" {...props} />
-          </div>
+      <div className="radio">
+        <OverlayTrigger trigger={['hover', 'focus']} placement="left" overlay={popover}>
+          <label>
+            <FormField {...props} /> {label}
+          </label>
         </OverlayTrigger>
-        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
-      </FormGroup>
+      </div>
     );
   }
 }
 
 class FieldCheckboxGroup extends React.Component {
   render() {
-    const {id, label, help, ...props} = this.props;
-    const popover = (<Popover>{help}</Popover>);
-    let validationState = null;
+    const {label, help, ...props} = this.props;
+    const popover = (<Popover id="popover-hover">{help}</Popover>);
 
     return (
-      <FormGroup controlId={id} validationState={validationState}>
-        <ControlLabel>{label}</ControlLabel>
-        <OverlayTrigger trigger="hover" placement="left" overlay={popover}>
-          <div className="input-container">
-            <FormField className="form-control" {...props} />
-          </div>
+      <div className="checkbox has-error">
+        <OverlayTrigger trigger={['hover', 'focus']} placement="left" overlay={popover}>
+          <label>
+            <FormField {...props} /> {label}
+          </label>
         </OverlayTrigger>
-        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
-      </FormGroup>
-    );
+      </div>
+    )
   }
 }
 
@@ -106,6 +103,7 @@ export default class FormDemo extends React.Component {
       email: '',
       firstName: '',
       phone: '12025550174',
+      checkbox: '1',
       formProps: {},
     };
   }
@@ -180,18 +178,18 @@ export default class FormDemo extends React.Component {
           <FieldRadioGroup
             id="idRadio"
             name="radio"
+            type="radio"
             value={this.state.radio}
             label="Radio"
             help="Help text for radio field"
-            component={Field.Radio}
           />
           <FieldCheckboxGroup
             id="idCheckbox"
             name="checkbox"
+            type="checkbox"
             value={this.state.checkbox}
             label="Checkbox"
             help="Help text for checkbox field"
-            component={Field.Checkbox}
             validators={[new RequiredValidator()]}
           />
           <button className="btn" type="submit">Send</button>
