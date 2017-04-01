@@ -38,10 +38,13 @@ class FieldRadioGroup extends React.Component {
     // this.props.onChange(event.target.checked, event);
   };
   render() {
+    const {options, value, ...other} = this.props;
     return (
-      <input checked={this.props.value} {...this.props} type="radio" onChange={this.onChange} />
+      <div>
+        <input checked={value} {...other} type="radio" onChange={this.onChange} />
+      </div>
     )
   };
 }
 
-export {FieldInput, FieldRadio, FieldCheckbox}
+export {FieldInput, FieldRadio, FieldCheckbox, FieldRadioGroup}

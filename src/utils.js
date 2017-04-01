@@ -14,7 +14,8 @@ const isFieldProp = (propName) => {
     propName === 'validators' ||
     propName === 'asyncValidator' ||
     propName === 'asyncValidatorOptions' ||
-    propName === 'asyncValidateOn'
+    propName === 'asyncValidateOn' ||
+    propName === 'errors'
   );
 };
 

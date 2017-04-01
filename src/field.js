@@ -1,9 +1,9 @@
 import React from 'react';
 import { Validator } from './validators';
 import { getElementProps } from './utils';
-import { FieldInput, FieldRadio, FieldCheckbox } from './fields';
+import { FieldInput, FieldRadio, FieldCheckbox, FieldRadioGroup } from './fields';
 import isEqual from 'lodash/isEqual';
-// import cloneDeep from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 export class FieldAttr {
   static events = {
@@ -121,6 +121,20 @@ export class FieldAttr {
       done();
     }
   }
+
+  getFieldOptions() {
+    return cloneDeep({
+      name: this.name,
+      focused: this.focused,
+      touched: this.touched,
+      dirty: this.dirty,
+      pristine: this.pristine,
+      value: this.value,
+      pending: this.pending,
+      errors: this.errors,
+      asyncErrors: this.asyncErrors,
+    });
+  }
 }
 
 class Field extends React.PureComponent {
@@ -218,6 +232,7 @@ class Field extends React.PureComponent {
   onChange = (value, event) => {
     const {onChange = () => {}} = this.props;
     this.field.setValue(value);
+    this.field.setTouched(true);
     this.field.setDirty(true);
     this.validateField(FieldAttr.events.CHANGE);
     this.updateState();
@@ -247,7 +262,7 @@ class Field extends React.PureComponent {
   };
 
   render() {
-    // console.log(111111, this.props.name);
+    console.log(111111, this.props.name);
     let defaultComponent = FieldInput;
     const {component, type} = this.props;
     const {value} = this.state;
@@ -293,5 +308,6 @@ Field.propTypes = {
 Field.Input = FieldInput;
 Field.Radio = FieldRadio;
 Field.Checkbox = FieldCheckbox;
+Field.RadioGroup = FieldRadioGroup;
 
 export {Field}

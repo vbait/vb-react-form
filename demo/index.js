@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
-import './style.scss';
 import '../node_modules/highlight.js/styles/dark.css';
 import App from './containers/App';
 

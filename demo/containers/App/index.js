@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, NavLink, Route } from 'react-router-dom';
-import { Navbar, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Navbar, Row, Col, ListGroup } from 'react-bootstrap';
 import Home from '../Home';
 import FormsDemo from '../FormsDemo';
+import '../../style.scss';
 
 const App = ({route}) => (
   <div>

@@ -2,6 +2,10 @@ import React from 'react';
 import validator from 'validator';
 
 export class Validator {
+  constructor(message) {
+    this.message = message;
+  }
+
   convertValue(value) {
     return (value && value.toString()) || '';
   }
@@ -11,15 +15,29 @@ export class Validator {
   }
 
   error(name, value) {
-    return 'Wrong value';
+    return this.message || 'Wrong value';
+  }
+}
+
+export class EqualValidator extends Validator {
+  constructor(value, message) {
+    super(message);
+    this.value = value;
+  }
+
+  isValid(value) {
+    return value === this.value;
+  }
+
+  error(name, value) {
+    return 'This value is required.';
   }
 }
 
 export class RegexValidator extends Validator {
-  constructor(regex, message = '') {
-    super();
+  constructor(regex, message) {
+    super(message);
     this.regex = new RegExp(regex);
-    this.message = message;
   }
 
   isValid(value) {
@@ -37,7 +55,7 @@ export class RequiredValidator extends Validator {
   }
 
   error(name, value) {
-    return 'This value is required.';
+    return this.message || 'This value is required.';
   }
 }
 
@@ -47,7 +65,7 @@ export class EmailValidator extends Validator {
   }
 
   error(name, value) {
-    return 'This value should be a valid email.';
+    return this.message || 'This value should be a valid email.';
   }
 }
 
@@ -57,13 +75,13 @@ export class WebSiteValidator extends Validator {
   }
 
   error(name, value) {
-    return 'This value should be a valid website.';
+    return this.message || 'This value should be a valid website.';
   }
 }
 
 export class PhoneValidator extends Validator {
-  constructor(locale) {
-    super();
+  constructor(locale, message) {
+    super(message);
     this.locale = locale;
   }
 
@@ -72,13 +90,13 @@ export class PhoneValidator extends Validator {
   }
 
   error(name, value) {
-    return 'This value should be a valid phone number.';
+    return this.message || 'This value should be a valid phone number.';
   }
 }
 
 export class CurrencyValidator extends Validator {
-  constructor(options = {allow_negatives: false}) {
-    super();
+  constructor(options = {allow_negatives: false}, message) {
+    super(message);
     this.options = options;
   }
 
@@ -87,7 +105,7 @@ export class CurrencyValidator extends Validator {
   }
 
   error(name, value) {
-    return 'This value is not currency amount.';
+    return this.message || 'This value is not currency amount.';
   }
 }
 
@@ -95,8 +113,8 @@ export class PasswordValidator extends RegexValidator {
   // https://www.thepolyglotdeveloper.com/2015/05/use-regex-to-test-password-strength-in-javascript/
   static strongRegex = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])';
   static mediumRegex = '^((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))';
-  constructor(strong = true) {
-    super(strong ? PasswordValidator.strongRegex : PasswordValidator.mediumRegex);
+  constructor(strong = true, message) {
+    super(strong ? PasswordValidator.strongRegex : PasswordValidator.mediumRegex, message);
     this.strong = strong;
   }
 
@@ -113,8 +131,8 @@ export class PasswordValidator extends RegexValidator {
 }
 
 export class MinLengthValidator extends Validator {
-  constructor(minLength) {
-    super();
+  constructor(minLength, message) {
+    super(message);
     this.minLength = minLength;
   }
 
@@ -123,13 +141,13 @@ export class MinLengthValidator extends Validator {
   }
 
   error(name, value) {
-    return `This value is too short. It should have ${this.minLength} characters or more.`;
+    return this.message || `This value is too short. It should have ${this.minLength} characters or more.`;
   }
 }
 
 export class MaxLengthValidator extends Validator {
-  constructor(maxLength) {
-    super();
+  constructor(maxLength, message) {
+    super(message);
     this.maxLength = maxLength;
   }
 
@@ -138,7 +156,7 @@ export class MaxLengthValidator extends Validator {
   }
 
   error(name, value) {
-    return `This value is too long. It should have ${this.maxLength} characters or less.`;
+    return this.message || `This value is too long. It should have ${this.maxLength} characters or less.`;
   }
 }
 
@@ -148,13 +166,13 @@ export class NumberValidator extends Validator {
   }
 
   error(name, value) {
-    return `This value is not a number.`;
+    return this.message || 'This value is not a number.';
   }
 }
 
 export class MinValueValidator extends NumberValidator {
-  constructor(minValue) {
-    super();
+  constructor(minValue, message) {
+    super(message);
     this.minValue = minValue;
   }
 
@@ -163,13 +181,13 @@ export class MinValueValidator extends NumberValidator {
   }
 
   error(name, value) {
-    return `This value is too small. It should be ${this.minValue} or more.`;
+    return this.message || `This value is too small. It should be ${this.minValue} or more.`;
   }
 }
 
 export class MaxValueValidator extends NumberValidator {
-  constructor(maxValue) {
-    super();
+  constructor(maxValue, message) {
+    super(message);
     this.maxValue = maxValue;
   }
 
@@ -178,6 +196,6 @@ export class MaxValueValidator extends NumberValidator {
   }
 
   error(name, value) {
-    return `This value is too big. It should be ${this.maxValue} or less.`;
+    return this.message || `This value is too big. It should be ${this.maxValue} or less.`;
   }
 }
