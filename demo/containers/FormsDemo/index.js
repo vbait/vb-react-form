@@ -57,7 +57,7 @@ class FieldGroup extends React.Component {
             </FormControl.Feedback>
           </div>
         </OverlayTrigger>
-        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
+        {/*<HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>*/}
       </FormGroup>
     );
   }
