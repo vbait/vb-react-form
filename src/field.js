@@ -149,7 +149,7 @@ class Field extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {onInit = () => {}} = this.props;
     onInit(this.field);
   }
@@ -216,7 +216,6 @@ class Field extends React.PureComponent {
 
   onFocus = (event) => {
     const {onFocus = () => {}} = this.props;
-    this.field.setTouched(true);
     this.field.setFocus(true);
     this.validateField(FieldAttr.events.FOCUS);
     onFocus(this.field, event);
@@ -225,6 +224,7 @@ class Field extends React.PureComponent {
   onBlur = (event) => {
     const {onBlur = () => {}} = this.props;
     this.field.setFocus(false);
+    this.field.setTouched(true);
     this.validateField(FieldAttr.events.BLUR);
     onBlur(this.field, event);
   };

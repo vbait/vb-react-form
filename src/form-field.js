@@ -1,6 +1,7 @@
 import React from 'react';
 import { Field } from './field';
 import { Validator } from './validators';
+import { FormContext } from './form';
 
 class InvalidValidator extends Validator {
   isValid() {
@@ -10,17 +11,31 @@ class InvalidValidator extends Validator {
 
 class FormField extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
+    this.state = {errorValidators: []};
+  }
+
+  componentDidMount() {
+    this.context.form.subscribeToValidatorsByName((error) => {
+      const {errorValidators} = this.state;
+      if (error) {
+        this.setState({errorValidators: [new InvalidValidator(error)]});
+      } else if (errorValidators.length) {
+        this.setState({errorValidators: []});
+      }
+    }, this.props.name);
   }
 
   onInit = (field) => {
     console.log('onInit', field);
+    this.context.form.onInitField(field);
     this.onValid(field);
   };
 
   onFocus = (field, e) => {
     console.log('onFocus', field);
+    this.context.form.onUpdateField(field);
     const {onFocus = () => {}} = this.props;
     onFocus(e, field);
     this.onValid(field);
@@ -28,6 +43,7 @@ class FormField extends React.Component {
 
   onBlur = (field, e) => {
     console.log('onBlur', field);
+    this.context.form.onUpdateField(field);
     const {onBlur = () => {}} = this.props;
     onBlur(e, field);
     this.onValid(field);
@@ -35,6 +51,7 @@ class FormField extends React.Component {
 
   onChange = (field, e) => {
     console.log('onChange', field);
+    this.context.form.onUpdateField(field);
     const {onChange = () => {}} = this.props;
     onChange(e, field);
     this.onValid(field);
@@ -42,16 +59,19 @@ class FormField extends React.Component {
 
   onUpdate = (field) => {
     console.log('onUpdate', field);
+    this.context.form.onUpdateField(field);
     this.onValid(field);
   };
 
   onAsyncValid = (field) => {
     console.log('onAsyncValid', field);
+    this.context.form.onUpdateField(field);
     this.onValid(field);
   };
 
   onRemove = (field) => {
     console.log('onRemove', field);
+    this.context.form.onRemoveField(field);
   };
 
   onValid(field) {
@@ -60,9 +80,29 @@ class FormField extends React.Component {
   }
 
   render() {
+    const {
+      formValidators,
+      formValidatorsOptions,
+      formAsyncValidator,
+      formAsyncValidatorOptions,
+    } = this.context.form;
+    const {
+      name,
+      validators = [],
+      validatorsOptions = {},
+      asyncValidator,
+      asyncValidatorOptions = {},
+      ...other,
+    } = this.props;
+    // console.log(validators);
     return (
       <Field
-        {...this.props}
+        {...other}
+        name={name}
+        validators={[...validators, ...formValidators[name] || [], ...this.state.errorValidators]}
+        validatorsOptions={{...formValidatorsOptions, ...validatorsOptions}}
+        asyncValidator={asyncValidator || formAsyncValidator[name]}
+        asyncValidatorOptions={{...formAsyncValidatorOptions, ...asyncValidatorOptions}}
         onInit={this.onInit}
         onChange={this.onChange}
         onFocus={this.onFocus}
@@ -75,10 +115,12 @@ class FormField extends React.Component {
   };
 }
 
-FormField.propTypes = {};
+FormField.propTypes = {
+  name: React.PropTypes.string.isRequired,
+};
 
 FormField.contextTypes = {
-  form: React.PropTypes.object.isRequired,
+  form: React.PropTypes.instanceOf(FormContext).isRequired,
 };
 
 export {FormField};
