@@ -3,6 +3,7 @@ import validator from 'validator';
 
 export class Validator {
   constructor(message) {
+    this.name = this.constructor.name;
     this.message = message;
   }
 

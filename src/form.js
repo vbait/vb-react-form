@@ -1,175 +1,7 @@
 import React from 'react';
-import map from 'lodash/map';
-import keyBy from 'lodash/keyBy';
 import forEach from 'lodash/forEach';
-import isEqual from 'lodash/isEqual';
-import cloneDeep from 'lodash/cloneDeep';
 import { getElementProps } from './utils';
-
-// https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076
-
-export class FormContext {
-  constructor() {
-    this.initialized = false;
-    this.subscribers = {};
-    this.subscribersToValidators = {};
-    this.fields = {};
-    this.errors = [];
-    this.formValidators = {};
-    this.formValidatorsOptions = {};
-    this.formAsyncValidator = {};
-    this.formAsyncValidatorOptions = {};
-  }
-
-  subscribe(f) {
-    this.subscribeByName(f, '');
-  }
-
-  subscribeByName(f, name) {
-    if (this.subscribers[name]) {
-      this.subscribers[name].push(f);
-    } else {
-      this.subscribers[name] = [f];
-    }
-    if (this.fields[name]) {
-      f(this.fields[name].getFieldOptions());
-    }
-  }
-
-  publishByName(name) {
-    if (this.subscribers[name]) {
-      this.subscribers[name].forEach(f => {
-        if (name) {
-          f(this.fields[name].getFieldOptions());
-        } else {
-          f(this.getFieldsOptions());
-        }
-      });
-    }
-  }
-
-  subscribeToValidators(f) {
-    this.subscribeToValidatorsByName(f, '__all__');
-  }
-
-  subscribeToValidatorsByName(f, name) {
-    if (this.subscribersToValidators[name]) {
-      this.subscribersToValidators[name].push(f);
-    } else {
-      this.subscribersToValidators[name] = [f];
-    }
-  }
-
-  publishValidators() {
-    const validators = this.formValidators[''];
-    if (validators) {
-      const errors = {};
-      forEach(validators, (validator, name) => {
-        const error = validator(this.getFieldsOptions());
-        if (error) {
-          errors[name] = error;
-        }
-
-        if (name !== '__all__') {
-          const subscribers = this.subscribersToValidators[name] || [];
-          subscribers.forEach((f) => {
-            f(errors[name]);
-          });
-        }
-      });
-
-      const subscribers = this.subscribersToValidators['__all__'] || [];
-      subscribers.forEach((f) => {
-        f(errors);
-      });
-    }
-  }
-
-  update() {
-    this.publishValidators();
-  }
-
-  onInitField(field) {
-    console.log('onInitField', field);
-    this.fields[field.name] = field;
-    this.publishByName(field.name);
-    this.publishByName('');
-    if (this.initialized) {
-      this.update();
-    }
-  }
-
-  onUpdateField(field) {
-    console.log('onUpdateField', field);
-    this.fields[field.name] = field;
-    this.publishByName(field.name);
-    this.publishByName('');
-    this.update();
-  }
-
-  onRemoveField(field) {
-    console.log('onRemoveField', field);
-    if (this.subscribers[field.name]) {
-      delete this.subscribers[field.name];
-    }
-    if (this.subscribersToValidators[field.name]) {
-      delete this.subscribersToValidators[field.name];
-    }
-    delete this.fields[field.name];
-  }
-
-  setValidators(validators = {}) {
-    this.formValidators = validators;
-  }
-
-  setValidatorsOptions(options = {}) {
-    this.formValidatorsOptions = options;
-  }
-
-  setAsyncValidator(validators = {}) {
-    this.formAsyncValidator = validators;
-  }
-
-  setAsyncValidatorOptions(options = {}) {
-    this.formAsyncValidatorOptions = options;
-  }
-
-  getFormOptions = () => {
-    const props = {
-      pending: false,
-      dirty: false,
-      isValid: true,
-      errors: [...this.errors],
-    };
-    forEach(this.fields, (field) => {
-      if (field.dirty) {
-        props.dirty = true;
-      }
-      if (field.pending) {
-        props.pending = true;
-      }
-      if (field.errors.length || field.asyncErrors.length) {
-        props.isValid = false;
-      }
-    });
-    if (this.errors.length) {
-      props.isValid = false;
-    }
-    return props;
-  };
-
-  getFieldsOptions = () => {
-    return keyBy(map(this.fields, (field) => {
-      return field.getFieldOptions();
-    }), 'name');
-  };
-
-  getFieldByName = (name) => {
-    if (this.fields[name]) {
-      return this.fields[name].getFieldOptions();
-    }
-  }
-}
+import { FormContext } from './form-context';
 
 class Form extends React.Component {
   constructor(props, context) {
@@ -191,7 +23,6 @@ class Form extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('componentWillReceiveProps', nextProps.validators);
     this.formContext.setValidators(nextProps.validators);
     this.formContext.setValidatorsOptions(nextProps.validatorsOptions);
     this.formContext.setAsyncValidator(nextProps.asyncValidator);
@@ -199,9 +30,26 @@ class Form extends React.Component {
     this.formContext.update();
   }
 
+  componentWillUnmount() {
+    console.log(33333333);
+    this.formContext.clear();
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
+    const isFormContextValid = this.formContext.isValid();
+    if (isFormContextValid) {
+      console.log('-------------------VALID-------------------', this.formContext.fields.getValues());
+      const {onSubmit = () => {}} = this.props;
+      onSubmit(this.formContext.fields.getValues());
+    } else {
+      this.formContext.fields.updateFieldsAsUsed();
+    }
   };
+
+  reset(value = {}) {
+    this.formContext.reset(value);
+  }
 
   render() {
     const {children} = this.props;
@@ -216,14 +64,41 @@ Form.propTypes = {
   onSubmit: React.PropTypes.any,
 };
 Form.childContextTypes = {
-  form: React.PropTypes.instanceOf(FormContext),
+  form: React.PropTypes.instanceOf(FormContext).isRequired,
 };
 
 const formConnector = (component) => {
   return ((c) => {
     class WrapperComponent extends React.Component {
+      componentDidMount() {
+        this.context.form.fields.subscribe(() => {
+          this.forceUpdate();
+        });
+        this.context.form.validators.subscribe(() => {
+          this.forceUpdate();
+        });
+      }
+
       render() {
-        return React.createElement(c, {...this.props, ...this.context})
+        const form = this.context.form;
+        const props = {
+          dirty: false,
+          pristine: true,
+          touched: false,
+          isValid: form.isValid(),
+          fields: form.fields.getFieldsOptions(),
+          formErrors: form.validators.errors,
+        };
+        forEach(form.fields.getFieldsOptions(), (field) => {
+          if (field.dirty) {
+            props.dirty = true;
+            props.pristine = false;
+          }
+          if (field.touched) {
+            props.touched = true;
+          }
+        });
+        return React.createElement(c, {...this.props, form: props});
       }
     }
     WrapperComponent.contextTypes = {

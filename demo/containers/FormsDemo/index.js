@@ -12,7 +12,7 @@ import {
   Button
 } from 'react-bootstrap';
 import {
-  Form,
+  Form, formConnector,
   Field,
   FormField,
   FormFieldErrors,
@@ -44,11 +44,11 @@ class FieldGroup extends React.Component {
   state = {isInvalid: false, pending: false};
 
   onValid = (field) => {
-    // this.setState({
-    //   isInvalid: field.dirty && (field.errors.length || field.asyncErrors.length),
-    //   dirty: field.dirty,
-    //   pending: field.pending,
-    // });
+    this.setState({
+      isInvalid: field.dirty && (field.errors.length || field.asyncErrors.length),
+      dirty: field.dirty,
+      pending: field.pending,
+    });
   };
 
   render() {
@@ -97,7 +97,7 @@ class FieldCheckboxGroup extends React.Component {
             <FormField {...props} type={type} onValid={this.onValid} /> {label}
           </label>
         </OverlayTrigger>
-        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
+        <HelpBlock><FormFieldErrors name={props.name} /></HelpBlock>
       </div>
     )
   }
@@ -126,11 +126,17 @@ class FieldSelectGroup extends React.Component {
             <FormField {...props} type={type} onValid={this.onValid} /> {label}
           </label>
         </OverlayTrigger>
-        <HelpBlock><FormFieldValidator name={props.name} /></HelpBlock>
+        <HelpBlock><FormFieldErrors name={props.name} /></HelpBlock>
       </div>
     )
   }
 }
+
+const Actions = formConnector((props) => {
+  return (
+    <Button type="submit" disabled={!props.form.isValid}>SEND</Button>
+  )
+});
 
 export default class FormDemo extends React.Component {
   constructor(props) {
@@ -149,11 +155,11 @@ export default class FormDemo extends React.Component {
       formOptions: {
         validators: {
           '': {
-            '': (fields) => {
+            form: (fields) => {
               return fields.text.value === '4444' && 'FORM ERROR';
             },
             text: (fields) => {
-              return `Form validator error (${fields.text.name} = ${fields.text.value})`;
+              return fields.text.value === '4444' && `Form validator error (${fields.text.name} = ${fields.text.value})`;
             }
           },
           text: [new MinLengthValidator(3)],
@@ -180,7 +186,7 @@ export default class FormDemo extends React.Component {
   };
 
   addField = () => {
-    this.setState({emailField: true});
+    this.setState({emailField: !this.state.emailField});
   };
 
   onSubmit = (values) => {
@@ -202,7 +208,7 @@ export default class FormDemo extends React.Component {
           ref={(form) => this.form = form}
         >
           <div className="form-group">
-            <FormErrors errors={['', 'text1']} />
+            <FormErrors errors={['form', 'text']} />
             {formProps.errors.map((error, index) => <div key={index}>{error}</div>)}
           </div>
           <FieldGroup
@@ -229,75 +235,76 @@ export default class FormDemo extends React.Component {
             placeholder="Enter email"
             help="Help text for email field"
           />}
-          {/*<FieldGroup*/}
-          {/*id="idEmail"*/}
-          {/*name="email"*/}
-          {/*type="email"*/}
-          {/*value={this.state.email}*/}
-          {/*validators={[new RequiredValidator(), new EmailValidator()]}*/}
-          {/*validatorsOptions={{multi: true}}*/}
-          {/*label="Email"*/}
-          {/*placeholder="Enter email"*/}
-          {/*help="Help text for email field"*/}
-          {/*/>*/}
-          {/*<FieldGroup*/}
-          {/*id="idPassword"*/}
-          {/*name="password"*/}
-          {/*type="password"*/}
-          {/*value={this.state.password}*/}
-          {/*validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}*/}
-          {/*validatorsOptions={{multi: false}}*/}
-          {/*label="Password"*/}
-          {/*placeholder="Enter password"*/}
-          {/*help="Help text for password field"*/}
-          {/*/>*/}
-          {/*<FieldGroup*/}
-          {/*id="idPassword1"*/}
-          {/*name="password1"*/}
-          {/*type="password1"*/}
-          {/*value={this.state.password}*/}
-          {/*validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}*/}
-          {/*validatorsOptions={{multi: false}}*/}
-          {/*label="Repeat Password"*/}
-          {/*placeholder="Enter password again"*/}
-          {/*help="Help text for password field"*/}
-          {/*/>*/}
-          {/*<FieldGroup*/}
-          {/*id="idPhone"*/}
-          {/*name="phone"*/}
-          {/*value={this.state.phone}*/}
-          {/*validators={[new RequiredValidator(), new PhoneValidator('en-US')]}*/}
-          {/*label="Phone"*/}
-          {/*placeholder="Enter phone"*/}
-          {/*help="Help text for phone field"*/}
-          {/*/>*/}
-          {/*<FieldCheckboxGroup*/}
-          {/*id="idRadio"*/}
-          {/*name="radio"*/}
-          {/*type="radio"*/}
-          {/*value={this.state.radio}*/}
-          {/*label="Radio"*/}
-          {/*help="Help text for radio field"*/}
-          {/*validators={[new EqualValidator(true)]}*/}
-          {/*/>*/}
-          {/*<FieldCheckboxGroup*/}
-          {/*id="idCheckbox"*/}
-          {/*name="checkbox"*/}
-          {/*type="checkbox"*/}
-          {/*value={this.state.checkbox}*/}
-          {/*label="Checkbox"*/}
-          {/*help="Help text for checkbox field"*/}
-          {/*validators={[new EqualValidator(true)]}*/}
-          {/*/>*/}
-          {/*<FieldSelectGroup*/}
-          {/*id="idSelectRadio"*/}
-          {/*name="selectRadio"*/}
-          {/*value={this.state.selectRadio}*/}
-          {/*options={[{value: '1', label: 'Label 1'}]}*/}
-          {/*help="Help text for radio group field"*/}
-          {/*component={Field.RadioGroup}*/}
-          {/*/>*/}
-          <button className="btn" type="submit">Send</button>
+          <FieldGroup
+            id="idEmail"
+            name="email"
+            type="email"
+            value={this.state.email}
+            validators={[new RequiredValidator(), new EmailValidator()]}
+            validatorsOptions={{multi: true}}
+            label="Email"
+            placeholder="Enter email"
+            help="Help text for email field"
+          />
+          <FieldGroup
+            id="idPassword"
+            name="password"
+            type="password"
+            value={this.state.password}
+            validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}
+            validatorsOptions={{multi: false}}
+            label="Password"
+            placeholder="Enter password"
+            help="Help text for password field"
+          />
+          <FieldGroup
+            id="idPassword1"
+            name="password1"
+            type="password1"
+            value={this.state.password}
+            validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}
+            validatorsOptions={{multi: false}}
+            label="Repeat Password"
+            placeholder="Enter password again"
+            help="Help text for password field"
+          />
+          <FieldGroup
+            id="idPhone"
+            name="phone"
+            value={this.state.phone}
+            validators={[new RequiredValidator(), new PhoneValidator('en-US')]}
+            label="Phone"
+            placeholder="Enter phone"
+            help="Help text for phone field"
+          />
+          <FieldCheckboxGroup
+            id="idRadio"
+            name="radio"
+            type="radio"
+            value={this.state.radio}
+            label="Radio"
+            help="Help text for radio field"
+            validators={[new EqualValidator(true)]}
+          />
+          <FieldCheckboxGroup
+            id="idCheckbox"
+            name="checkbox"
+            type="checkbox"
+            value={this.state.checkbox}
+            label="Checkbox"
+            help="Help text for checkbox field"
+            validators={[new EqualValidator(true)]}
+          />
+          <FieldSelectGroup
+            id="idSelectRadio"
+            name="selectRadio"
+            value={this.state.selectRadio}
+            options={[{value: '1', label: 'Label 1'}]}
+            help="Help text for radio group field"
+            component={Field.RadioGroup}
+          />
+          <Actions />
+          <Button type="submit">SEND ALWAYS</Button>
         </Form>
       </Panel>
     );

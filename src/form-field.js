@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field } from './field';
 import { Validator } from './validators';
-import { FormContext } from './form';
+import { FormContext } from './form-context';
 
 class InvalidValidator extends Validator {
   isValid() {
@@ -10,14 +10,15 @@ class InvalidValidator extends Validator {
 }
 
 class FormField extends React.Component {
-
+  subscriberId;
   constructor(props, context) {
     super(props, context);
+    this.removed = false;
     this.state = {errorValidators: []};
   }
 
   componentDidMount() {
-    this.context.form.subscribeToValidatorsByName((error) => {
+    this.subscriberId = this.context.form.validators.subscribe((error) => {
       const {errorValidators} = this.state;
       if (error) {
         this.setState({errorValidators: [new InvalidValidator(error)]});
@@ -27,14 +28,21 @@ class FormField extends React.Component {
     }, this.props.name);
   }
 
+  componentWillUnmount() {
+    if (this.subscriberId) {
+      this.context.form.validators.removeSubscriber(this.subscriberId);
+      this.subscriberId = null;
+    }
+  }
+
   onInit = (field) => {
-    console.log('onInit', field);
+    // console.log('onInit', field);
     this.context.form.onInitField(field);
     this.onValid(field);
   };
 
   onFocus = (field, e) => {
-    console.log('onFocus', field);
+    // console.log('onFocus', field);
     this.context.form.onUpdateField(field);
     const {onFocus = () => {}} = this.props;
     onFocus(e, field);
@@ -42,7 +50,7 @@ class FormField extends React.Component {
   };
 
   onBlur = (field, e) => {
-    console.log('onBlur', field);
+    // console.log('onBlur', field);
     this.context.form.onUpdateField(field);
     const {onBlur = () => {}} = this.props;
     onBlur(e, field);
@@ -50,7 +58,7 @@ class FormField extends React.Component {
   };
 
   onChange = (field, e) => {
-    console.log('onChange', field);
+    // console.log('onChange', field);
     this.context.form.onUpdateField(field);
     const {onChange = () => {}} = this.props;
     onChange(e, field);
@@ -58,19 +66,22 @@ class FormField extends React.Component {
   };
 
   onUpdate = (field) => {
-    console.log('onUpdate', field);
+    // console.log('onUpdate', field);
     this.context.form.onUpdateField(field);
     this.onValid(field);
   };
 
   onAsyncValid = (field) => {
-    console.log('onAsyncValid', field);
-    this.context.form.onUpdateField(field);
-    this.onValid(field);
+    // console.log('onAsyncValid', field);
+    if (!this.removed) {
+      this.context.form.onUpdateField(field);
+      this.onValid(field);
+    }
   };
 
   onRemove = (field) => {
-    console.log('onRemove', field);
+    // console.log('onRemove', field);
+    this.removed = true;
     this.context.form.onRemoveField(field);
   };
 

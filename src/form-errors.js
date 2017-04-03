@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormContext } from './form';
+import { FormContext } from './form-context';
 import map from 'lodash/map';
 
 class FormErrorsComponent extends React.Component {
@@ -12,21 +12,27 @@ class FormErrorsComponent extends React.Component {
 }
 
 class FormErrors extends React.Component {
+  subscriberId;
   constructor(props, context) {
     super(props, context);
     this.state = {errors: {}};
   }
 
   componentDidMount() {
-    (this.props.errors || []).forEach((name) => {
-    });
-    this.context.form.subscribeToValidators((errors) => {
+    this.subscriberId = this.context.form.validators.subscribe((errors) => {
       const err = {};
       (this.props.errors || []).forEach((name) => {
         err[name] = errors[name];
       });
       this.setState({errors: err});
     });
+  }
+
+  componentWillUnmount() {
+    if (this.subscriberId) {
+      this.context.form.validators.removeSubscriber(this.subscriberId);
+      this.subscriberId = null;
+    }
   }
 
   render() {

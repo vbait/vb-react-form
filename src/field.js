@@ -247,13 +247,16 @@ class Field extends React.PureComponent {
   };
 
   reset = (value) => {
-    const {onInit = () => {}} = this.props;
-    this.field = this.createField({value});
-    this.setState({
-      value: this.field.value
-    }, () => {
-      this.validateField();
-      onInit(this.field);
+    return new Promise((resolve) => {
+      const {onInit = () => {}} = this.props;
+      this.field = this.createField({value});
+      this.setState({
+        value: this.field.value
+      }, () => {
+        this.validateField();
+        onInit(this.field);
+        resolve(this.field);
+      });
     });
   };
 
@@ -262,7 +265,7 @@ class Field extends React.PureComponent {
   };
 
   render() {
-    console.log(111111, this.props.name);
+    // console.log(111111, this.props.name);
     let defaultComponent = FieldInput;
     const {component, type} = this.props;
     const {value} = this.state;
@@ -294,7 +297,10 @@ Field.propTypes = {
   onBlur: React.PropTypes.func,
   value: React.PropTypes.any,
   options: React.PropTypes.arrayOf(React.PropTypes.any),
-  validators: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Validator)),
+  validators: React.PropTypes.arrayOf(React.PropTypes.shape({
+    isValid: React.PropTypes.func.isRequired,
+    error: React.PropTypes.func.isRequired,
+  })),
   validatorsOptions: React.PropTypes.shape({
     multi: React.PropTypes.bool,
     validateAfterLocal: React.PropTypes.bool,
