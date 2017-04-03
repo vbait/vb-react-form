@@ -102,6 +102,9 @@ class Fields {
   }
 
   removeSubscriber(id) {
+    if (!id) {
+      return null;
+    }
     forEach(this.subscribers, (subscribers) => {
       for (let i = subscribers.length - 1; i >= 0; i--) {
         if (subscribers[i].id === id) {
@@ -179,6 +182,9 @@ class Validators {
   }
 
   removeSubscriber(id) {
+    if (!id) {
+      return null;
+    }
     forEach(this.subscribers, (subscribers) => {
       for (let i = subscribers.length - 1; i >= 0; i--) {
         if (subscribers[i].id === id) {

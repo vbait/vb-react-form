@@ -1,7 +1,6 @@
 import React from 'react';
-import { Validator } from './validators';
 import { getElementProps } from './utils';
-import { FieldInput, FieldRadio, FieldCheckbox, FieldRadioGroup } from './fields';
+import { FieldInput, FieldText, FieldRadio, FieldCheckbox, FieldSelect, FieldRadioGroup, FieldCheckboxGroup } from './fields';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -27,7 +26,7 @@ export class FieldAttr {
   pending = false;
 
   constructor(
-    instance, name = '', value = '',
+    instance, name = '', value,
     validators = [], validatorsOptions = {},
     asyncValidator = null, asyncValidatorOptions = {})
   {
@@ -315,5 +314,8 @@ Field.Input = FieldInput;
 Field.Radio = FieldRadio;
 Field.Checkbox = FieldCheckbox;
 Field.RadioGroup = FieldRadioGroup;
+Field.CheckboxGroup = FieldCheckboxGroup;
+Field.Select = FieldSelect;
+Field.Text = FieldText;
 
 export {Field}

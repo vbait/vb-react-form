@@ -43,9 +43,9 @@ class AsyncValidator {
 class FieldGroup extends React.Component {
   state = {isInvalid: false, pending: false};
 
-  onValid = (field) => {
+  onValid = (field, formError) => {
     this.setState({
-      isInvalid: field.dirty && (field.errors.length || field.asyncErrors.length),
+      isInvalid: field.dirty && (field.errors.length || field.asyncErrors.length || formError),
       dirty: field.dirty,
       pending: field.pending,
     });
@@ -62,7 +62,7 @@ class FieldGroup extends React.Component {
         <ControlLabel>{label}</ControlLabel>
         <OverlayTrigger trigger="focus" placement="top" overlay={popover}>
           <div className="input-container">
-            <FormField className="form-control" {...props} onValid={this.onValid} readOnly={pending} />
+            <FormField className="form-control" {...props} onValid={this.onValid} disabled={pending} />
             <FormControl.Feedback>
               {pending && <Glyphicon glyph="repeat fast-right-spinner" />}
             </FormControl.Feedback>
@@ -74,7 +74,7 @@ class FieldGroup extends React.Component {
   }
 }
 
-class FieldCheckboxGroup extends React.Component {
+class FieldCheckbox extends React.Component {
   state = {isInvalid: false};
 
   onValid = (field) => {
@@ -99,6 +99,32 @@ class FieldCheckboxGroup extends React.Component {
         </OverlayTrigger>
         <HelpBlock><FormFieldErrors name={props.name} /></HelpBlock>
       </div>
+    )
+  }
+}
+
+class FieldCheckboxGroup extends React.Component {
+  state = {isInvalid: false};
+
+  onValid = (field) => {
+    this.setState({
+      isInvalid: field.dirty && field.errors.length,
+      dirty: field.dirty,
+    });
+  };
+
+  render() {
+    const {id, ...props} = this.props;
+    const {isInvalid, dirty} = this.state;
+    let validationState = isInvalid ? 'error' : 'success';
+
+    return (
+      <FormGroup controlId={id} validationState={dirty ? validationState : null}>
+        <div className="input-container">
+          <FormField {...props} onValid={this.onValid} />
+        </div>
+        <HelpBlock><FormFieldErrors name={props.name} /></HelpBlock>
+      </FormGroup>
     )
   }
 }
@@ -114,20 +140,18 @@ class FieldSelectGroup extends React.Component {
   };
 
   render() {
-    const {label, help, type, ...props} = this.props;
+    const {id, label, ...props} = this.props;
     const {isInvalid, dirty} = this.state;
-    const popover = (<Popover id="popover-hover">{help}</Popover>);
-    let validationState = isInvalid ? 'has-error' : 'has-success';
+    let validationState = isInvalid ? 'error' : 'success';
 
     return (
-      <div className={classNames(type, dirty && validationState)}>
-        <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={popover}>
-          <label>
-            <FormField {...props} type={type} onValid={this.onValid} /> {label}
-          </label>
-        </OverlayTrigger>
+      <FormGroup controlId={id} validationState={dirty ? validationState : null}>
+        <ControlLabel>{label}</ControlLabel>
+        <div className="input-container">
+          <FormField className="form-control" {...props} onValid={this.onValid} />
+        </div>
         <HelpBlock><FormFieldErrors name={props.name} /></HelpBlock>
-      </div>
+      </FormGroup>
     )
   }
 }
@@ -142,13 +166,18 @@ export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      input: '',
       text: '',
       email: '',
       firstName: '',
+      password: '',
       phone: '12025550174',
       checkbox: true,
       radio: true,
-      selectRadio: '1',
+      selectRadio: '',
+      selectCheckbox: [],
+      select: '',
+      selectMulti: [],
       formProps: {
         errors: [],
       },
@@ -156,22 +185,32 @@ export default class FormDemo extends React.Component {
         validators: {
           '': {
             form: (fields) => {
-              return fields.text.value === '4444' && 'FORM ERROR';
+              return fields.input.value === '4444' && 'FORM ERROR';
             },
-            text: (fields) => {
-              return fields.text.value === '4444' && `Form validator error (${fields.text.name} = ${fields.text.value})`;
+            input: (fields) => {
+              return fields.input.value === '4444' && `Form validator error (${fields.input.name} = ${fields.input.value})`;
+            },
+            password: (fields) => {
+              if (!fields.password.errors.length && !fields.password1.errors.length) {
+                return fields.password.value !== fields.password1.value;
+              }
+            },
+            password1: (fields) => {
+              if (!fields.password.errors.length && !fields.password1.errors.length) {
+                return fields.password.value !== fields.password1.value && 'Passwords are not equal';
+              }
             }
           },
-          text: [new MinLengthValidator(3)],
+          input: [new MinLengthValidator(3)],
         },
         validatorsOptions: {
-          text: {multi: true},
+          input: {multi: true},
         },
         asyncValidator: {
-          text: new AsyncValidator(),
+          input: new AsyncValidator(),
         },
         asyncValidatorOptions: {
-          text: {validateOn: ['blur'], validateAfterLocal: true}
+          input: {validateOn: ['blur'], validateAfterLocal: true}
         },
       }
     };
@@ -208,33 +247,22 @@ export default class FormDemo extends React.Component {
           ref={(form) => this.form = form}
         >
           <div className="form-group">
-            <FormErrors errors={['form', 'text']} />
+            <FormErrors errors={['form']} />
             {formProps.errors.map((error, index) => <div key={index}>{error}</div>)}
           </div>
           <FieldGroup
-            id="idText"
-            name="text"
-            value={this.state.text}
+            id="idInput"
+            name="input"
+            value={this.state.input}
             component={Field.Input}
             validators={[new RequiredValidator()]}
             validatorsOptions={{multi: true}}
             asyncValidator={new AsyncValidator()}
             asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
-            label="Text"
-            placeholder="Enter text"
-            help="Help text for text field"
+            label="Input"
+            placeholder="Enter input"
+            help="Help text for input field"
           />
-          {this.state.emailField && <FieldGroup
-            id="idEmail"
-            name="email"
-            type="email"
-            value={this.state.email}
-            validators={[new RequiredValidator(), new EmailValidator()]}
-            validatorsOptions={{multi: true}}
-            label="Email"
-            placeholder="Enter email"
-            help="Help text for email field"
-          />}
           <FieldGroup
             id="idEmail"
             name="email"
@@ -261,7 +289,7 @@ export default class FormDemo extends React.Component {
             id="idPassword1"
             name="password1"
             type="password1"
-            value={this.state.password}
+            value={this.state.password1}
             validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}
             validatorsOptions={{multi: false}}
             label="Repeat Password"
@@ -277,7 +305,7 @@ export default class FormDemo extends React.Component {
             placeholder="Enter phone"
             help="Help text for phone field"
           />
-          <FieldCheckboxGroup
+          <FieldCheckbox
             id="idRadio"
             name="radio"
             type="radio"
@@ -286,7 +314,7 @@ export default class FormDemo extends React.Component {
             help="Help text for radio field"
             validators={[new EqualValidator(true)]}
           />
-          <FieldCheckboxGroup
+          <FieldCheckbox
             id="idCheckbox"
             name="checkbox"
             type="checkbox"
@@ -295,13 +323,53 @@ export default class FormDemo extends React.Component {
             help="Help text for checkbox field"
             validators={[new EqualValidator(true)]}
           />
-          <FieldSelectGroup
+          <FieldCheckboxGroup
             id="idSelectRadio"
             name="selectRadio"
             value={this.state.selectRadio}
-            options={[{value: '1', label: 'Label 1'}]}
-            help="Help text for radio group field"
+            options={[{value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
+            validators={[new RequiredValidator()]}
             component={Field.RadioGroup}
+          />
+          <FieldCheckboxGroup
+            id="idSelectCheckbox"
+            name="selectCheckbox"
+            value={this.state.selectCheckbox}
+            options={[{value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
+            validators={[new RequiredValidator()]}
+            component={Field.CheckboxGroup}
+          />
+          <FieldSelectGroup
+            id="idSelect"
+            name="select"
+            value={this.state.select}
+            label="Select"
+            options={[{value: '', label: '------'}, {value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
+            validators={[new RequiredValidator()]}
+            component={Field.Select}
+          />
+          <FieldSelectGroup
+            id="idSelectMulti"
+            name="selectMulti"
+            value={this.state.selectMulti}
+            label="Select Multi"
+            options={[{value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
+            multiple
+            validators={[new RequiredValidator()]}
+            component={Field.Select}
+          />
+          <FieldGroup
+            id="idText"
+            name="text"
+            value={this.state.text}
+            component={Field.Text}
+            validators={[new RequiredValidator()]}
+            validatorsOptions={{multi: true}}
+            asyncValidator={new AsyncValidator()}
+            asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
+            label="Text"
+            placeholder="Enter text"
+            help="Help text for text field"
           />
           <Actions />
           <Button type="submit">SEND ALWAYS</Button>

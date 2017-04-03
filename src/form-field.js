@@ -11,6 +11,7 @@ class InvalidValidator extends Validator {
 
 class FormField extends React.Component {
   subscriberId;
+  formError = false;
   constructor(props, context) {
     super(props, context);
     this.removed = false;
@@ -19,20 +20,16 @@ class FormField extends React.Component {
 
   componentDidMount() {
     this.subscriberId = this.context.form.validators.subscribe((error) => {
-      const {errorValidators} = this.state;
-      if (error) {
-        this.setState({errorValidators: [new InvalidValidator(error)]});
-      } else if (errorValidators.length) {
-        this.setState({errorValidators: []});
+      if (this.formError !== error) {
+        this.formError = error;
+        this.onValid(this.context.form.fields.getFieldByName(this.props.name));
       }
     }, this.props.name);
   }
 
   componentWillUnmount() {
-    if (this.subscriberId) {
-      this.context.form.validators.removeSubscriber(this.subscriberId);
-      this.subscriberId = null;
-    }
+    this.context.form.validators.removeSubscriber(this.subscriberId);
+    this.subscriberId = null;
   }
 
   onInit = (field) => {
@@ -87,7 +84,7 @@ class FormField extends React.Component {
 
   onValid(field) {
     const {onValid = () => {}} = this.props;
-    onValid(field);
+    onValid(field, this.formError);
   }
 
   render() {

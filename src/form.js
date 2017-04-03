@@ -31,7 +31,6 @@ class Form extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(33333333);
     this.formContext.clear();
   }
 
@@ -70,13 +69,22 @@ Form.childContextTypes = {
 const formConnector = (component) => {
   return ((c) => {
     class WrapperComponent extends React.Component {
+      fieldsSubscriberId;
+      validatorsSubscriberId;
       componentDidMount() {
-        this.context.form.fields.subscribe(() => {
+        this.fieldsSubscriberId = this.context.form.fields.subscribe(() => {
           this.forceUpdate();
         });
-        this.context.form.validators.subscribe(() => {
+        this.validatorsSubscriberId = this.context.form.validators.subscribe(() => {
           this.forceUpdate();
         });
+      }
+
+      componentWillUnmount() {
+        this.context.form.fields.removeSubscriber(this.fieldsSubscriberId);
+        this.context.form.validators.removeSubscriber(this.validatorsSubscriberId);
+        this.fieldsSubscriberId = null;
+        this.validatorsSubscriberId = null;
       }
 
       render() {
