@@ -14,5 +14,6 @@ export {
 export { Field } from './field';
 export { FieldInput } from './fields';
 export { FormField } from './form-field';
-export { FormFieldValidator } from './form-field-validator';
+export { FormFieldErrors } from './form-field-errors';
+export { FormErrors } from './form-errors';
 export { Form, formConnector } from './form';

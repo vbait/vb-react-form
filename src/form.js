@@ -1,165 +1,54 @@
 import React from 'react';
-import map from 'lodash/map';
-import keyBy from 'lodash/keyBy';
 import forEach from 'lodash/forEach';
 import { getElementProps } from './utils';
-
-// https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076
+import { FormContext } from './form-context';
 
 class Form extends React.Component {
-  constructor(props) {
-    super(props);
-    this.fields = {};
-    this.errors = [];
-    this.initialized = false;
+  constructor(props, context) {
+    super(props, context);
+    this.formContext = new FormContext();
+    this.formContext.setValidators(props.validators);
+    this.formContext.setValidatorsOptions(props.validatorsOptions);
+    this.formContext.setAsyncValidator(props.asyncValidator);
+    this.formContext.setAsyncValidatorOptions(props.asyncValidatorOptions);
   }
 
   getChildContext() {
-    console.log('getChildContext');
-    const {
-      validators = {},
-      validatorsOptions = {},
-      asyncValidator = {},
-      asyncValidatorOptions = {},
-      errors = {},
-    } = this.props;
-    const validateForm = validators[''];
-    let validatorsErrors = {};
-    if (validateForm && Object.keys(this.fields).length) {
-      validatorsErrors = validateForm(this.getFieldsOptions()) || {};
-    }
-    this.errors = [];
-    if (errors['']) {
-      this.errors.push(errors['']);
-    }
-    if (validatorsErrors['']) {
-      this.errors.push(validatorsErrors['']);
-    }
-
-    return {
-      form: {
-        onInitField: this.onInitField,
-        onFocusField: this.updateField,
-        onBlurField: this.updateField,
-        onChangeField: this.updateField,
-        onUpdateField: this.updateField,
-        onAsyncValid: this.updateField,
-        onRemoveField: this.onRemoveField,
-        getFieldByName: this.getFieldByName,
-        validators: validators,
-        validatorsOptions: validatorsOptions,
-        asyncValidator: asyncValidator,
-        asyncValidatorOptions: asyncValidatorOptions,
-        errors: errors,
-        validatorsErrors: validatorsErrors,
-      },
-    };
+    return {form: this.formContext};
   }
 
   componentDidMount() {
-    this.forceUpdate();
+    this.formContext.initialized = true;
+    this.formContext.update();
   }
 
-  componentDidUpdate() {
-    if (!this.initialized) {
-      this.initialized = true;
-      this.returnFormState();
-    }
+  componentWillReceiveProps(nextProps) {
+    this.formContext.setValidators(nextProps.validators);
+    this.formContext.setValidatorsOptions(nextProps.validatorsOptions);
+    this.formContext.setAsyncValidator(nextProps.asyncValidator);
+    this.formContext.setAsyncValidatorOptions(nextProps.asyncValidatorOptions);
+    this.formContext.update();
+  }
+
+  componentWillUnmount() {
+    this.formContext.clear();
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    const {onSubmit = () => {}} = this.props;
-    const fields = this.fields;
-    let isValid = true;
-    const values = Object.keys(fields).reduce((temp, key) => {
-      fields[key].instance.validate();
-      if (fields[key].errors.length) {
-        isValid = false;
-      } if (fields[key].pending || fields[key].asyncErrors.length) {
-        isValid = false;
-      } else {
-        temp[key] = fields[key].value;
-      }
-      return temp;
-    }, {});
-    if (isValid) {
-      onSubmit(values);
+    const isFormContextValid = this.formContext.isValid();
+    if (isFormContextValid) {
+      console.log('-------------------VALID-------------------', this.formContext.fields.getValues());
+      const {onSubmit = () => {}} = this.props;
+      onSubmit(this.formContext.fields.getValues());
+    } else {
+      this.formContext.fields.updateFieldsAsUsed();
     }
   };
 
-  onInitField = (field) => {
-    this.fields[field.name] = field;
-    if (this.initialized) {
-      this.initialized = false;
-      this.forceUpdate();
-    }
-  };
-
-  onRemoveField = (field) => {
-    this.removeField(field);
-  };
-
-  updateField = (field) => {
-    this.fields[field.name] = field;
-    this.initialized = false;
-    this.forceUpdate();
-  };
-
-  returnFormState() {
-    const {onValid} = this.props;
-    if (onValid) {
-      onValid(this.getFormOptions(), this.getFieldsOptions());
-    }
+  reset(value = {}) {
+    this.formContext.reset(value);
   }
-
-  removeField = (field) => {
-    delete this.fields[field.name];
-  };
-
-  getFieldByName = (name) => {
-    return this.fields[name];
-  };
-
-  reset = (value = {}) => {
-    this.initialized = false;
-    forEach(this.fields, (field, key) => {
-      field.instance.reset(value[key]);
-    });
-    setTimeout(() => {
-      this.forceUpdate();
-    });
-  };
-
-  getFormOptions = () => {
-    const props = {
-      pending: false,
-      dirty: false,
-      isValid: true,
-      errors: [...this.errors],
-    };
-    forEach(this.fields, (field) => {
-      if (field.dirty) {
-        props.dirty = true;
-      }
-      if (field.pending) {
-        props.pending = true;
-      }
-      if (field.errors.length || field.asyncErrors.length) {
-        props.isValid = false;
-      }
-    });
-    if (this.errors.length) {
-      props.isValid = false;
-    }
-    return props;
-  };
-
-  getFieldsOptions = () => {
-    return keyBy(map(this.fields, (field) => {
-      return field.getFieldOptions();
-    }), 'name');
-  };
 
   render() {
     const {children} = this.props;
@@ -171,21 +60,57 @@ class Form extends React.Component {
 Form.propTypes = {
   name: React.PropTypes.any,
   children: React.PropTypes.any,
-  onValid: React.PropTypes.any,
+  onSubmit: React.PropTypes.any,
 };
 Form.childContextTypes = {
-  form: React.PropTypes.any,
+  form: React.PropTypes.instanceOf(FormContext).isRequired,
 };
 
 const formConnector = (component) => {
   return ((c) => {
     class WrapperComponent extends React.Component {
+      fieldsSubscriberId;
+      validatorsSubscriberId;
+      componentDidMount() {
+        this.fieldsSubscriberId = this.context.form.fields.subscribe(() => {
+          this.forceUpdate();
+        });
+        this.validatorsSubscriberId = this.context.form.validators.subscribe(() => {
+          this.forceUpdate();
+        });
+      }
+
+      componentWillUnmount() {
+        this.context.form.fields.removeSubscriber(this.fieldsSubscriberId);
+        this.context.form.validators.removeSubscriber(this.validatorsSubscriberId);
+        this.fieldsSubscriberId = null;
+        this.validatorsSubscriberId = null;
+      }
+
       render() {
-        return React.createElement(c, {...this.props, ...this.context})
+        const form = this.context.form;
+        const props = {
+          dirty: false,
+          pristine: true,
+          touched: false,
+          isValid: form.isValid(),
+          fields: form.fields.getFieldsOptions(),
+          formErrors: form.validators.errors,
+        };
+        forEach(form.fields.getFieldsOptions(), (field) => {
+          if (field.dirty) {
+            props.dirty = true;
+            props.pristine = false;
+          }
+          if (field.touched) {
+            props.touched = true;
+          }
+        });
+        return React.createElement(c, {...this.props, form: props});
       }
     }
     WrapperComponent.contextTypes = {
-      form: React.PropTypes.object.isRequired,
+      form: React.PropTypes.instanceOf(FormContext).isRequired,
     };
     return WrapperComponent;
   })(component);

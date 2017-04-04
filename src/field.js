@@ -1,7 +1,6 @@
 import React from 'react';
-import { Validator } from './validators';
 import { getElementProps } from './utils';
-import { FieldInput, FieldRadio, FieldCheckbox, FieldRadioGroup } from './fields';
+import { FieldInput, FieldText, FieldRadio, FieldCheckbox, FieldSelect, FieldRadioGroup, FieldCheckboxGroup } from './fields';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -27,7 +26,7 @@ export class FieldAttr {
   pending = false;
 
   constructor(
-    instance, name = '', value = '',
+    instance, name = '', value,
     validators = [], validatorsOptions = {},
     asyncValidator = null, asyncValidatorOptions = {})
   {
@@ -149,7 +148,7 @@ class Field extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {onInit = () => {}} = this.props;
     onInit(this.field);
   }
@@ -216,7 +215,6 @@ class Field extends React.PureComponent {
 
   onFocus = (event) => {
     const {onFocus = () => {}} = this.props;
-    this.field.setTouched(true);
     this.field.setFocus(true);
     this.validateField(FieldAttr.events.FOCUS);
     onFocus(this.field, event);
@@ -225,6 +223,7 @@ class Field extends React.PureComponent {
   onBlur = (event) => {
     const {onBlur = () => {}} = this.props;
     this.field.setFocus(false);
+    this.field.setTouched(true);
     this.validateField(FieldAttr.events.BLUR);
     onBlur(this.field, event);
   };
@@ -247,13 +246,16 @@ class Field extends React.PureComponent {
   };
 
   reset = (value) => {
-    const {onInit = () => {}} = this.props;
-    this.field = this.createField({value});
-    this.setState({
-      value: this.field.value
-    }, () => {
-      this.validateField();
-      onInit(this.field);
+    return new Promise((resolve) => {
+      const {onInit = () => {}} = this.props;
+      this.field = this.createField({value});
+      this.setState({
+        value: this.field.value
+      }, () => {
+        this.validateField();
+        onInit(this.field);
+        resolve(this.field);
+      });
     });
   };
 
@@ -262,7 +264,7 @@ class Field extends React.PureComponent {
   };
 
   render() {
-    console.log(111111, this.props.name);
+    // console.log(111111, this.props.name);
     let defaultComponent = FieldInput;
     const {component, type} = this.props;
     const {value} = this.state;
@@ -294,7 +296,10 @@ Field.propTypes = {
   onBlur: React.PropTypes.func,
   value: React.PropTypes.any,
   options: React.PropTypes.arrayOf(React.PropTypes.any),
-  validators: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Validator)),
+  validators: React.PropTypes.arrayOf(React.PropTypes.shape({
+    isValid: React.PropTypes.func.isRequired,
+    error: React.PropTypes.func.isRequired,
+  })),
   validatorsOptions: React.PropTypes.shape({
     multi: React.PropTypes.bool,
     validateAfterLocal: React.PropTypes.bool,
@@ -309,5 +314,8 @@ Field.Input = FieldInput;
 Field.Radio = FieldRadio;
 Field.Checkbox = FieldCheckbox;
 Field.RadioGroup = FieldRadioGroup;
+Field.CheckboxGroup = FieldCheckboxGroup;
+Field.Select = FieldSelect;
+Field.Text = FieldText;
 
 export {Field}
