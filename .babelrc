@@ -3,7 +3,7 @@
     [
       "es2015",
       {
-        "modules": false
+        "loose": true
       }
     ],
     "es2016",
@@ -13,7 +13,13 @@
   "plugins": [
     "transform-react-jsx",
     "react-hot-loader/babel",
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+
+    "dev-expression",
+    "transform-runtime",
+    "transform-es3-member-expression-literals",
+    "transform-es3-property-literals",
+    "add-module-exports"
   ],
   "env": {
     "test": {

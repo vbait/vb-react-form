@@ -182,8 +182,8 @@ class Field extends React.PureComponent {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState) || !isEqual(this.context, nextContext);
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentWillUnmount() {

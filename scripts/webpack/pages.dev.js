@@ -32,5 +32,8 @@ module.exports = () => (
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(),
     ],
+    // node: {
+    //   fs: "empty"
+    // },
   }, baseConfig())
 );
