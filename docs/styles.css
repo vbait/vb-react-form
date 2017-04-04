@@ -6426,80 +6426,6 @@ button.close {
     display: none !important; } }
 
 /*# sourceMappingURL=bootstrap.css.map */
-@keyframes fadein {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-
-@-webkit-keyframes fadein {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-
-table.b-data-table thead tr th.ascending {
-  position: relative; }
-  table.b-data-table thead tr th.ascending:after {
-    top: 0.25em;
-    right: 5px;
-    position: absolute;
-    font-family: 'Glyphicons Halflings';
-    content: '\E253'; }
-
-table.b-data-table thead tr th.descending {
-  position: relative; }
-  table.b-data-table thead tr th.descending:after {
-    top: 1em;
-    right: 5px;
-    position: absolute;
-    font-family: 'Glyphicons Halflings';
-    content: '\E252'; }
-
-table.b-data-table thead tr th.ordering-none {
-  position: relative; }
-  table.b-data-table thead tr th.ordering-none:before {
-    top: 0.25em;
-    right: 5px;
-    position: absolute;
-    font-family: 'Glyphicons Halflings';
-    content: '\E253'; }
-  table.b-data-table thead tr th.ordering-none:after {
-    top: 1em;
-    right: 5px;
-    position: absolute;
-    font-family: 'Glyphicons Halflings';
-    content: '\E252'; }
-
-table.b-data-table thead tr th.expand-column {
-  max-width: 2em;
-  width: 2em; }
-
-table.b-data-table tbody tr td.expand-icon {
-  transition-property: transform;
-  transition-duration: 0.2s;
-  transition-timing-function: ease-in-out; }
-  table.b-data-table tbody tr td.expand-icon:after {
-    font-family: 'Glyphicons Halflings';
-    content: '\E080'; }
-  table.b-data-table tbody tr td.expand-icon.shown {
-    transform: rotate(90deg); }
-
-table.b-data-table tbody tr.expanded td {
-  -webkit-animation: fadein 0.2s ease-in-out;
-  animation: fadein 0.2s ease-in-out;
-  padding-left: 3em; }
-.navbar.demo-nav {
-  background-color: #ff3232;
-  margin-bottom: 0; }
-  .navbar.demo-nav .navbar-header a, .navbar.demo-nav .navbar-collapse a {
-    color: #ffffff; }
-
-.container pre {
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  margin: 0; }
 /*
 
 Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
@@ -6555,5 +6481,71 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 
 .hljs-emphasis {
   font-style: italic; }
+/*
+ * Style tweaks
+ * --------------------------------------------------
+ */
+html,
+body {
+  overflow-x: hidden;
+  /* Prevent scroll on narrow devices */ }
+
+body {
+  padding-top: 70px; }
+
+footer {
+  padding: 30px 0; }
+
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out; }
+  .row-offcanvas-right {
+    right: 0; }
+  .row-offcanvas-left {
+    left: 0; }
+  .row-offcanvas-right .sidebar-offcanvas {
+    right: -50%;
+    /* 6 columns */ }
+  .row-offcanvas-left .sidebar-offcanvas {
+    left: -50%;
+    /* 6 columns */ }
+  .row-offcanvas-right.active {
+    right: 50%;
+    /* 6 columns */ }
+  .row-offcanvas-left.active {
+    left: 50%;
+    /* 6 columns */ }
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    /* 6 columns */ } }
+
+@-webkit-keyframes glyphicon-spin-r {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg); }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg); } }
+
+.form-group .input-container {
+  position: relative; }
+  .form-group .input-container .loader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 6px;
+    background: rgba(0, 0, 0, 0.2); }
+  .form-group .input-container .glyphicon.fast-right-spinner {
+    animation: glyphicon-spin-r .5s infinite linear; }
 
 /*# sourceMappingURL=styles.css.map*/
