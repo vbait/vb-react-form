@@ -1,10 +1,7 @@
 {
   "presets": [
     [
-      "es2015",
-      {
-        "loose": true
-      }
+      "es2015"
     ],
     "es2016",
     "stage-2",
@@ -12,13 +9,8 @@
   ],
   "plugins": [
     "transform-react-jsx",
-    "react-hot-loader/babel",
     "transform-object-rest-spread",
-
-    "dev-expression",
     "transform-runtime",
-    "transform-es3-member-expression-literals",
-    "transform-es3-property-literals",
     "add-module-exports"
   ],
   "env": {

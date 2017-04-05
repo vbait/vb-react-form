@@ -9,31 +9,18 @@ const webpackMerge = require('webpack-merge');
 
 module.exports = () => (
   webpackMerge({
-    entry: [
-      'react-hot-loader/patch',
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/only-dev-server',
-    ],
+    entry: 'demo/index.js',
     devtool: 'inline-source-map',
     context: demoSrc,
     devServer: {
       contentBase: demoDist,
       historyApiFallback: true,
-      hot: true,
+      hot: false,
       publicPath: '/',
-      inline: true,
-      watchOptions: {
-        ignored: /node_modules/,
-        aggregateTimeout: 300,
-        poll: 300,
-      },
+      inline: false,
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(),
     ],
-    // node: {
-    //   fs: "empty"
-    // },
   }, baseConfig())
 );

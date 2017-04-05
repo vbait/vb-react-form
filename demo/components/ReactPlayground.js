@@ -3,9 +3,32 @@ const classNames = require('classnames');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const SafeAnchor = require('./SafeAnchor');
-const CodeMirror = require('codemirror');
+const lodash = require('lodash');
+const components = require('../../src');
+const {
+  Field,
+  FormField,
+  FormFieldErrors,
+  FormErrors,
+  Form,
+  formConnector,
+  EqualValidator,
+  RequiredValidator,
+  EmailValidator,
+  PhoneValidator,
+  WebSiteValidator,
+  CurrencyValidator,
+  PasswordValidator,
+  MinLengthValidator,
+  MaxLengthValidator,
+  MinValueValidator,
+  MaxValueValidator
+} = components;
 /* eslint-enable */
 
+import CodeMirror from 'codemirror';
+import 'codemirror/addon/runmode/runmode';
+import 'codemirror/mode/jsx/jsx';
 import {transform} from 'babel-standalone';
 import CodeExample from './CodeExample';
 import {Alert} from 'react-bootstrap';
@@ -156,7 +179,7 @@ const ReactPlayground = React.createClass({
 
   render() {
     return (
-      <div className="playground">
+      <div className="playground" style={{padding: '0 0 28px 0'}}>
         {this.renderExample()}
 
         {this.renderEditor()}
