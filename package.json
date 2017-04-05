@@ -13,7 +13,7 @@
   "author": "Vitalii Baitaliuk <flampschelsea@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "server": "node demo/server",
+    "server": "babel-node demo/server",
     "start": "webpack-dev-server --env=pages.dev --progress --profile --colors",
     "build": "webpack --env=prod --progress --profile --colors",
     "pages": "webpack --env=pages.prod --progress --profile --colors && git add ./docs && gh-pages -d docs",

@@ -26,12 +26,19 @@ const {
 } = components;
 /* eslint-enable */
 
-import CodeMirror from 'codemirror';
-import 'codemirror/addon/runmode/runmode';
-import 'codemirror/mode/jsx/jsx';
+// import CodeMirror from 'codemirror';
+// import 'codemirror/addon/runmode/runmode';
+// import 'codemirror/mode/jsx/jsx';
 import {transform} from 'babel-standalone';
 import CodeExample from './CodeExample';
 import {Alert} from 'react-bootstrap';
+
+let CodeMirror = null;
+if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
+  CodeMirror = require('codemirror');
+  require('codemirror/addon/runmode/runmode');
+  require('codemirror/mode/jsx/jsx');
+}
 
 const IS_MOBILE = typeof navigator !== 'undefined' && (
   navigator.userAgent.match(/Android/i)

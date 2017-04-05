@@ -7,6 +7,9 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const argv = require('minimist')(process.argv.slice(2));
 const webpackConfig = require('../scripts/webpack/pages.dev')();
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const App = require('./containers/App');
 
 const ngrok = process.env.ENABLE_TUNNEL || argv.tunnel ? require('ngrok') : false;
 const app = express();
@@ -39,7 +42,13 @@ app.get('*', (req, res) => {
     if (err) {
       res.sendStatus(404);
     } else {
-      res.send(file.toString());
+      App.propData = {aaa: 1};
+      const Root = React.createClass({
+        render() {
+          return file.toString();
+        }
+      });
+      res.send(ReactDOMServer.renderToString(Root));
     }
   });
 });
