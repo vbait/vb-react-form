@@ -9,6 +9,7 @@
   ],
   "plugins": [
     "transform-react-jsx",
+    "react-hot-loader/babel",
     "transform-object-rest-spread",
     "transform-runtime",
     "add-module-exports"

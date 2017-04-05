@@ -20,6 +20,7 @@ module.exports = () => (
       inline: false,
     },
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(),
     ],
   }, baseConfig())
