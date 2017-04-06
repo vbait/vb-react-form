@@ -2,16 +2,16 @@ export default [
   {
     label: 'Home',
     path: '/',
-    component: require('./Home'),
+    component: require('./Home').default,
   },
   {
     label: 'Fields',
     path: '/fields',
-    component: require('./Fields'),
+    component: require('./Fields').default,
   },
   {
     label: 'Form Demo',
     path: '/form-demo',
-    component: require('./FormsDemo'),
+    component: require('./FormsDemo').default,
   },
 ]

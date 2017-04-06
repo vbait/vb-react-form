@@ -2,9 +2,10 @@
 const classNames = require('classnames');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const SafeAnchor = require('./SafeAnchor');
-const lodash = require('lodash');
+const SafeAnchor = require('./SafeAnchor').default;
+const lodash = require('lodash').default;
 const components = require('../../src');
+
 const {
   Field,
   FormField,

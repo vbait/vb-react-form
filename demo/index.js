@@ -9,10 +9,6 @@ import 'codemirror/theme/solarized.css';
 import './style.scss';
 import App from './containers/App';
 
-// var metadata = require('react-component-metadata');
-// var fs = require('fs');
-// var result = metadata(fs.readFileSync('./containers/App', 'utf8'));
-
 const render = () => {
   ReactDOM.render(
     <AppContainer>

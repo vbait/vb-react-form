@@ -10,6 +10,5 @@ class Example extends React.Component {
   }
 }
 
-ReactDOM.render(Example, mountNode);
+ReactDOM.render(<Example />, mountNode);
 `
-

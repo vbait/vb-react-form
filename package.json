@@ -13,13 +13,15 @@
   "author": "Vitalii Baitaliuk <flampschelsea@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "server": "node demo/server",
     "start": "webpack-dev-server --env=pages.dev --progress --profile --colors",
+    "build-dev": "webpack --env=pages.dev --progress --profile --colors",
     "build": "webpack --env=prod --progress --profile --colors",
-    "pages": "webpack --env=pages.prod --progress --profile --colors && git add ./docs && gh-pages -d docs",
+    "pages": "webpack --env=pages.prod --progress --profile --colors",
+    "gh-pages": "webpack --env=pages.prod --progress --profile --colors && git add ./docs && gh-pages -d docs",
     "lint": "eslint src demo/src scripts --ext .js,.jsx",
     "test": "jest -u --no-cache --coverage",
-    "test:watch": "jest -u --watch --no-cache"
+    "test:watch": "jest -u --watch --no-cache",
+    "build:dll": "node ./internals/scripts/dependencies.js"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -81,11 +83,9 @@
     "gh-pages": "^0.12.0",
     "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
-    "ip": "^1.1.5",
     "jest": "^18.1.0",
     "json-loader": "^0.5.4",
     "minimist": "^1.2.0",
-    "ngrok": "^2.2.6",
     "node-sass": "^4.5.0",
     "postcss-loader": "^0.9.1",
     "react-addons-test-utils": "^15.4.2",
@@ -99,9 +99,7 @@
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony",
     "url-loader": "^0.5.8",
     "webpack": "^2.1.0-beta.25",
-    "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.1.0-beta.0",
-    "webpack-hot-middleware": "^2.18.0",
     "webpack-merge": "^2.6.1"
   },
   "peerDependencies": {

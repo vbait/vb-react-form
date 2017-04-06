@@ -1,3 +1,3 @@
 export default {
-  Input: require('./examples/Input'),
+  Input: require('./examples/Input').default,
 };
