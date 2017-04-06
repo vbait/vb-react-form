@@ -13,6 +13,7 @@ const {
   FormErrors,
   Form,
   formConnector,
+  Validator,
   EqualValidator,
   RequiredValidator,
   EmailValidator,

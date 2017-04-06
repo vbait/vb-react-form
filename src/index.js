@@ -1,4 +1,5 @@
 export {
+  Validator,
   EqualValidator,
   RequiredValidator,
   EmailValidator,
