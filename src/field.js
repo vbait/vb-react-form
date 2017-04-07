@@ -136,7 +136,7 @@ export class FieldAttr {
   }
 }
 
-class Field extends React.PureComponent {
+class Field extends React.Component {
   field;
 
   constructor(props) {
@@ -302,11 +302,11 @@ Field.propTypes = {
   })),
   validatorsOptions: React.PropTypes.shape({
     multi: React.PropTypes.bool,
-    validateAfterLocal: React.PropTypes.bool,
   }),
   asyncValidator: React.PropTypes.object,
   asyncValidatorOptions: React.PropTypes.shape({
     validateOn: React.PropTypes.arrayOf(React.PropTypes.string),
+    validateAfterLocal: React.PropTypes.bool,
   }),
 };
 
