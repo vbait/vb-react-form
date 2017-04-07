@@ -66,4 +66,3 @@ module.exports = () => (
     ],
   }, baseConfig())
 );
-console.log(module.exports());
