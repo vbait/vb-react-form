@@ -10,7 +10,7 @@ class CustomValidator extends Validator {
   }
   
   isValid(value) {
-    return value === this.validValue;
+    return this.convertValue(value) === this.validValue;
   }
 
   error(name, value) {
@@ -24,10 +24,10 @@ class Example extends React.Component {
     return (
       <div>
         <div>
-          <b>isValid</b> = {validator.isValid('bad-value') ? 'True' : validator.error('Username', 'bad-value')}
+          <b>isInvalid</b> = {validator.isInvalid('bad-value') && validator.error('Username', 'bad-value')}
         </div>
         <div>
-          <b>isValid</b> = {validator.isValid('some-value') ? 'True' : 'False'}
+          <b>isValid</b> = {validator.isValid('some-value') && 'Yes'}
         </div>
       </div>
     )

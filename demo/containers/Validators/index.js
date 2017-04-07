@@ -19,7 +19,7 @@ class Example extends React.Component {
 const Fields = ({ children }) => (
   <Row>
     <Col xs={12}>
-      <h2 className="page-header">Validators</h2>
+      <h2 className="page-header">Validators for fields</h2>
       <p><a href="https://www.npmjs.com/package/validator" target="blank">https://www.npmjs.com/package/validator</a></p>
       <h3>Base Validator</h3>
       <ReactPlayground codeText={samples.Validator} />
