@@ -79,15 +79,20 @@ export class FieldAttr {
   validate() {
     const {validators, name, value} = this;
     const {multi = true} = this.validatorsOptions;
-    const errors = validators.map((v) => {
-      return !v.isValid(value) && v.error(name, value);
-    }).filter((v) => {
-      return v;
-    });
-    if (multi && errors.length) {
+    if (multi) {
+      const errors = validators.map((v) => {
+        return !v.isValid(value) && v.error(name, value);
+      }).filter((v) => {
+        return v;
+      });
       this.setErrors(errors);
     } else {
-      this.setErrors(errors.slice(0, 1));
+      for (let v of validators) {
+        if (!v.isValid(value)) {
+          this.setErrors([v.error(name, value)]);
+          break;
+        }
+      }
     }
   }
 
@@ -105,7 +110,7 @@ export class FieldAttr {
         return done();
       }
       this.pending = true;
-      asyncValidator.isValid(value)
+      asyncValidator(this.getFieldOptions())
         .then(() => {
           this.pending = false;
           this.asyncErrors = [];
@@ -288,14 +293,15 @@ class Field extends React.Component {
 
 Field.propTypes = {
   name: React.PropTypes.string.isRequired,
-  component: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onInit: React.PropTypes.func,
-  onUpdate: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
   value: React.PropTypes.any,
-  options: React.PropTypes.arrayOf(React.PropTypes.any),
+  options: React.PropTypes.any,
+  component: React.PropTypes.func,
+  onInit: React.PropTypes.func,
+  onFocus: React.PropTypes.func,
+  onChange: React.PropTypes.func,
+  onBlur: React.PropTypes.func,
+  onUpdate: React.PropTypes.func,
+  onAsyncValid: React.PropTypes.func,
   validators: React.PropTypes.arrayOf(React.PropTypes.shape({
     isValid: React.PropTypes.func.isRequired,
     error: React.PropTypes.func.isRequired,
@@ -303,9 +309,9 @@ Field.propTypes = {
   validatorsOptions: React.PropTypes.shape({
     multi: React.PropTypes.bool,
   }),
-  asyncValidator: React.PropTypes.object,
+  asyncValidator: React.PropTypes.func,
   asyncValidatorOptions: React.PropTypes.shape({
-    validateOn: React.PropTypes.arrayOf(React.PropTypes.string),
+    validateOn: React.PropTypes.oneOf(['focus', 'change', 'blur']),
     validateAfterLocal: React.PropTypes.bool,
   }),
 };
