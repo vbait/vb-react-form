@@ -3,7 +3,9 @@ import { Row, Col } from 'react-bootstrap';
 import ReactPlayground from '../../components/ReactPlayground';
 import samples from './samples';
 // import PropTable from '../../components/PropTable';
-// import { Field, RequiredValidator, MinLengthValidator } from '../../../src';
+import { Field, RequiredValidator, Validator } from '../../../src';
+const DatePicker = require('react-bootstrap-date-picker');
+const validator = require('validator');
 
 const Fields = ({ children }) => (
   <Row>
@@ -13,6 +15,8 @@ const Fields = ({ children }) => (
       <ReactPlayground codeText={samples.Input} />
       <h3>Other Fields</h3>
       <ReactPlayground codeText={samples.Fields} />
+      <h3>Custom Field</h3>
+      <ReactPlayground codeText={samples.CustomField} />
       {/*<PropTable component="Field"/>*/}
 
       <h3>Props</h3>

@@ -15,6 +15,11 @@ export default [
     component: require('./Fields').default,
   },
   {
+    label: 'Form + FormField',
+    path: '/form',
+    component: require('./Form').default,
+  },
+  {
     label: 'Form Demo',
     path: '/form-demo',
     component: require('./FormsDemo').default,

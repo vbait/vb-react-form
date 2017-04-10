@@ -311,7 +311,7 @@ Field.propTypes = {
   }),
   asyncValidator: React.PropTypes.func,
   asyncValidatorOptions: React.PropTypes.shape({
-    validateOn: React.PropTypes.oneOf(['focus', 'change', 'blur']),
+    validateOn: React.PropTypes.arrayOf(React.PropTypes.string),
     validateAfterLocal: React.PropTypes.bool,
   }),
 };
