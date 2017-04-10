@@ -2,10 +2,6 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import ReactPlayground from '../../components/ReactPlayground';
 import samples from './samples';
-// import PropTable from '../../components/PropTable';
-import { Field, RequiredValidator, Validator } from '../../../src';
-const DatePicker = require('react-bootstrap-date-picker');
-const validator = require('validator');
 
 const Fields = ({ children }) => (
   <Row>

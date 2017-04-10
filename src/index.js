@@ -1,6 +1,7 @@
 export {
   Validator,
   EqualValidator,
+  RegexValidator,
   RequiredValidator,
   EmailValidator,
   PhoneValidator,

@@ -7,6 +7,19 @@ const validator = require('validator');
 const SafeAnchor = require('./SafeAnchor').default;
 const lodash = require('lodash').default;
 const components = require('../../src');
+const bootstrapComponents = require('react-bootstrap');
+
+const {
+  Panel,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  HelpBlock,
+  OverlayTrigger,
+  Popover,
+  Glyphicon,
+  Button
+} = bootstrapComponents;
 
 const {
   Field,
@@ -17,6 +30,7 @@ const {
   formConnector,
   Validator,
   EqualValidator,
+  RegexValidator,
   RequiredValidator,
   EmailValidator,
   PhoneValidator,

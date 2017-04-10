@@ -87,6 +87,7 @@ export class FieldAttr {
       });
       this.setErrors(errors);
     } else {
+      this.setErrors([]);
       for (let v of validators) {
         if (!v.isValid(value)) {
           this.setErrors([v.error(name, value)]);
@@ -100,7 +101,7 @@ export class FieldAttr {
     if (currentEvent && currentEvent === FieldAttr.events.CHANGE) {
       this.asyncErrors = [];
     }
-    const {value, asyncValidator, asyncValidatorOptions, errors} = this;
+    const {asyncValidator, asyncValidatorOptions, errors} = this;
     const {validateOn = [], validateAfterLocal = false} = asyncValidatorOptions;
     if (validateAfterLocal && errors.length) {
       return done();
@@ -137,6 +138,7 @@ export class FieldAttr {
       pending: this.pending,
       errors: this.errors,
       asyncErrors: this.asyncErrors,
+      isValid: !this.errors.length && !this.asyncErrors.length,
     });
   }
 }
