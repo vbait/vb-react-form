@@ -2,6 +2,7 @@ export default `
 class Example extends React.Component {
   render() {
     const equalValidator = new EqualValidator('some-value');
+    const regexValidator = new RegexValidator('^[a-z]+$', 'Value is not valid');
     const requiredValidator = new RequiredValidator();
     const emailValidator = new EmailValidator();
     const phoneValidator = new PhoneValidator('en-US');
@@ -14,6 +15,17 @@ class Example extends React.Component {
     const maxValueValidator = new MaxValueValidator(10);
     return (
       <div>
+        <div>
+          new RegexValidator('^[a-z]+$', 'Value is not valid')
+          <ul>
+            <li>
+              <b>valid value: </b> {regexValidator.isValid('value') && 'Yes'}
+            </li>
+            <li>
+              <b>invalid value: </b> {regexValidator.isInvalid('bad-value') && regexValidator.error()}
+            </li>
+          </ul>
+        </div>
         <div>
           new EqualValidator('some-value')
           <ul>

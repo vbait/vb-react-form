@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import ReactPlayground from '../../components/ReactPlayground';
-import PropTable from '../../components/PropTable';
 import samples from './samples';
 import { Field } from '../../../src';
 
@@ -28,6 +27,7 @@ const Fields = ({ children }) => (
       <h3>Ready Validators</h3>
       <ul>
         <li>EqualValidator</li>
+        <li>RegexValidator</li>
         <li>RequiredValidator</li>
         <li>EmailValidator</li>
         <li>PhoneValidator</li>

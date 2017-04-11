@@ -1,13 +1,7 @@
 import React from 'react';
 import { Field } from './field';
-import { Validator } from './validators';
 import { FormContext } from './form-context';
-
-class InvalidValidator extends Validator {
-  isValid() {
-    return false;
-  }
-}
+import { FieldProps } from './field-props';
 
 class FormField extends React.Component {
   subscriberId;
@@ -123,7 +117,8 @@ class FormField extends React.Component {
 }
 
 FormField.propTypes = {
-  name: React.PropTypes.string.isRequired,
+  ...FieldProps,
+  onValid: React.PropTypes.func,
 };
 
 FormField.contextTypes = {

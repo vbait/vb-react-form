@@ -146,6 +146,7 @@ const Fields = ({ children }) => (
                 <p>There are ready <code>validators</code></p>
                 <pre>
                   <ul>
+                    <li>RegexValidator</li>
                     <li>EqualValidator</li>
                     <li>RequiredValidator</li>
                     <li>EmailValidator</li>
