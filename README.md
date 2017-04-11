@@ -4,7 +4,7 @@
  Not ready yet.
  
 ## Documentation
-  Probably this is the best [source](https://vbait.github.io/vb-react-form/components).
+  Probably this is the best [source](https://vbait.github.io/vb-react-form/).
  
 ## Contributing
  You can start with `yarn` or `npm install`
