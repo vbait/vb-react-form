@@ -30,15 +30,13 @@ import {
   MaxValueValidator,
 } from '../../../src';
 
-class AsyncValidator {
-  isValid(value) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        value === '111' ? reject(['Async error']) : resolve();
-      }, 1000);
-    });
-  }
-}
+const asyncValidator = (field) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      field.value === '111' ? reject(['Async error']) : resolve();
+    }, 1000);
+  });
+};
 
 class FieldGroup extends React.Component {
   state = {isInvalid: false, pending: false};
@@ -207,7 +205,7 @@ export default class FormDemo extends React.Component {
           input: {multi: true},
         },
         asyncValidator: {
-          input: new AsyncValidator(),
+          input: asyncValidator,
         },
         asyncValidatorOptions: {
           input: {validateOn: ['blur'], validateAfterLocal: true}
@@ -257,7 +255,7 @@ export default class FormDemo extends React.Component {
             component={Field.Input}
             validators={[new RequiredValidator()]}
             validatorsOptions={{multi: true}}
-            asyncValidator={new AsyncValidator()}
+            asyncValidator={asyncValidator}
             asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
             label="Input"
             placeholder="Enter input"
@@ -365,7 +363,7 @@ export default class FormDemo extends React.Component {
             component={Field.Text}
             validators={[new RequiredValidator()]}
             validatorsOptions={{multi: true}}
-            asyncValidator={new AsyncValidator()}
+            asyncValidator={asyncValidator}
             asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
             label="Text"
             placeholder="Enter text"

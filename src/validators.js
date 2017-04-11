@@ -15,6 +15,10 @@ export class Validator {
     return true;
   }
 
+  isInvalid(value) {
+    return !this.isValid(value);
+  }
+
   error(name, value) {
     return this.message || 'Wrong value';
   }
@@ -31,7 +35,7 @@ export class EqualValidator extends Validator {
   }
 
   error(name, value) {
-    return 'This value is required.';
+    return this.message || 'This value is not equal.';
   }
 }
 

@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link, NavLink, Route } from 'react-router-dom';
 import { Navbar, Row, Col, ListGroup } from 'react-bootstrap';
-import Home from '../Home';
-import FormsDemo from '../FormsDemo';
-import '../../style.scss';
+import routes from '../routes';
 
 const App = ({route}) => (
   <div>
@@ -27,13 +25,11 @@ const App = ({route}) => (
     <div className="container">
       <Row className="row-offcanvas row-offcanvas-right">
         <Col xs={12} sm={9}>
-          <Route exact path="/" component={Home}/>
-          <Route path="/forms" component={FormsDemo}/>
+          {routes.map((route, index) => <Route key={index} exact path={route.path} component={route.component}/>)}
         </Col>
         <Col xs={12} sm={3} className="sidebar-offcanvas" id="sidebar">
           <ListGroup>
-            <NavLink to="/" exact className="list-group-item">Home</NavLink>
-            <NavLink to="/forms" exact className="list-group-item">Link 3</NavLink>
+            {routes.map((route, index) => <NavLink key={index} to={route.path} exact className="list-group-item">{route.label}</NavLink>)}
           </ListGroup>
         </Col>
       </Row>

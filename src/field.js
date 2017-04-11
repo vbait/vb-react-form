@@ -1,6 +1,7 @@
 import React from 'react';
 import { getElementProps } from './utils';
 import { FieldInput, FieldText, FieldRadio, FieldCheckbox, FieldSelect, FieldRadioGroup, FieldCheckboxGroup } from './fields';
+import { FieldProps } from './field-props';
 import isEqual from 'lodash/isEqual';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -79,15 +80,21 @@ export class FieldAttr {
   validate() {
     const {validators, name, value} = this;
     const {multi = true} = this.validatorsOptions;
-    const errors = validators.map((v) => {
-      return !v.isValid(value) && v.error(name, value);
-    }).filter((v) => {
-      return v;
-    });
-    if (multi && errors.length) {
+    if (multi) {
+      const errors = validators.map((v) => {
+        return !v.isValid(value) && v.error(name, value);
+      }).filter((v) => {
+        return v;
+      });
       this.setErrors(errors);
     } else {
-      this.setErrors(errors.slice(0, 1));
+      this.setErrors([]);
+      for (let v of validators) {
+        if (!v.isValid(value)) {
+          this.setErrors([v.error(name, value)]);
+          break;
+        }
+      }
     }
   }
 
@@ -95,7 +102,7 @@ export class FieldAttr {
     if (currentEvent && currentEvent === FieldAttr.events.CHANGE) {
       this.asyncErrors = [];
     }
-    const {value, asyncValidator, asyncValidatorOptions, errors} = this;
+    const {asyncValidator, asyncValidatorOptions, errors} = this;
     const {validateOn = [], validateAfterLocal = false} = asyncValidatorOptions;
     if (validateAfterLocal && errors.length) {
       return done();
@@ -105,7 +112,7 @@ export class FieldAttr {
         return done();
       }
       this.pending = true;
-      asyncValidator.isValid(value)
+      asyncValidator(this.getFieldOptions())
         .then(() => {
           this.pending = false;
           this.asyncErrors = [];
@@ -132,11 +139,12 @@ export class FieldAttr {
       pending: this.pending,
       errors: this.errors,
       asyncErrors: this.asyncErrors,
+      isValid: !this.errors.length && !this.asyncErrors.length,
     });
   }
 }
 
-class Field extends React.PureComponent {
+class Field extends React.Component {
   field;
 
   constructor(props) {
@@ -182,8 +190,8 @@ class Field extends React.PureComponent {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState) || !isEqual(this.context, nextContext);
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
   componentWillUnmount() {
@@ -287,27 +295,10 @@ class Field extends React.PureComponent {
 }
 
 Field.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  component: React.PropTypes.func,
-  onChange: React.PropTypes.func,
+  ...FieldProps,
   onInit: React.PropTypes.func,
   onUpdate: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  value: React.PropTypes.any,
-  options: React.PropTypes.arrayOf(React.PropTypes.any),
-  validators: React.PropTypes.arrayOf(React.PropTypes.shape({
-    isValid: React.PropTypes.func.isRequired,
-    error: React.PropTypes.func.isRequired,
-  })),
-  validatorsOptions: React.PropTypes.shape({
-    multi: React.PropTypes.bool,
-    validateAfterLocal: React.PropTypes.bool,
-  }),
-  asyncValidator: React.PropTypes.object,
-  asyncValidatorOptions: React.PropTypes.shape({
-    validateOn: React.PropTypes.arrayOf(React.PropTypes.string),
-  }),
+  onAsyncValid: React.PropTypes.func,
 };
 
 Field.Input = FieldInput;

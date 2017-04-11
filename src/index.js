@@ -1,5 +1,7 @@
 export {
+  Validator,
   EqualValidator,
+  RegexValidator,
   RequiredValidator,
   EmailValidator,
   PhoneValidator,
@@ -12,7 +14,6 @@ export {
   MaxValueValidator,
 } from './validators';
 export { Field } from './field';
-export { FieldInput } from './fields';
 export { FormField } from './form-field';
 export { FormFieldErrors } from './form-field-errors';
 export { FormErrors } from './form-errors';
