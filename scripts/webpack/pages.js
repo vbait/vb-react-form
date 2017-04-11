@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const demoDir = path.resolve(__dirname, '../../demo');
 const demoDist = path.resolve(demoDir, 'dist');
@@ -35,28 +34,6 @@ module.exports = () => ({
         loader: 'babel-loader',
       },
       {
-        test: /\.(scss|css)$/,
-        include: [
-          srcDir,
-          demoDir,
-          /node_modules/,
-        ],
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                sourceMap: true,
-                importLoaders: 1,
-                localIdentName: '[local]',
-              },
-            }, 'sass-loader',
-          ],
-          fallback: 'style-loader',
-        }),
-      },
-      {
         test: /\.json$/,
         loader: 'json-loader',
       },
@@ -76,7 +53,6 @@ module.exports = () => ({
     ],
   },
   plugins: [
-    new ExtractTextPlugin({ allChunks: false, filename: 'styles.css' }),
     new HtmlWebpackPlugin({ inject: 'body', template: path.resolve(demoDir, 'index.html') }),
   ],
 });

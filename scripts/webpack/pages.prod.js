@@ -1,11 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./pages');
 const webpackMerge = require('webpack-merge');
 
+const demoDir = path.resolve(__dirname, '../../demo');
+const srcDir = path.resolve(__dirname, '../../src');
 
 module.exports = () => (
   webpackMerge(baseConfig(), {
@@ -15,6 +16,32 @@ module.exports = () => (
       publicPath: '/vb-react-form',
     },
     devtool: 'source-map',
+    module: {
+      rules: [
+        {
+          test: /\.(scss|css)$/,
+          include: [
+            srcDir,
+            demoDir,
+            /node_modules/,
+          ],
+          use: ExtractTextPlugin.extract({
+            use: [
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                  sourceMap: true,
+                  importLoaders: 1,
+                  localIdentName: '[local]',
+                },
+              }, 'sass-loader',
+            ],
+            fallback: 'style-loader',
+          }),
+        },
+      ]
+    },
     plugins: [
       new CleanWebpackPlugin(['docs'], {
         root: path.resolve(__dirname, '../../'),
@@ -27,6 +54,7 @@ module.exports = () => (
           NODE_ENV: JSON.stringify('production'),
         },
       }),
+      new ExtractTextPlugin({ allChunks: false, filename: 'styles.css' }),
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         mangle: {
