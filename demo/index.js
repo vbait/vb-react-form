@@ -12,7 +12,7 @@ import App from './containers/App';
 const render = () => {
   ReactDOM.render(
     <AppContainer>
-      <BrowserRouter>
+      <BrowserRouter basename="/vb-react-form">
         <Switch>
           <Route component={App}/>
         </Switch>
