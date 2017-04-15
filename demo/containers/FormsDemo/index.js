@@ -156,7 +156,7 @@ class FieldSelectGroup extends React.Component {
 
 const Actions = formConnector((props) => {
   return (
-    <Button type="submit" disabled={!props.form.isValid}>SEND</Button>
+    <Button type="submit" disabled={!props.form.isValid}>ENABLED IF VALID</Button>
   )
 });
 
@@ -164,30 +164,21 @@ export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
-      text: '',
-      email: '',
-      firstName: '',
-      password: '',
-      phone: '12025550174',
-      checkbox: true,
-      radio: true,
-      selectRadio: '',
-      selectCheckbox: [],
-      select: '',
-      selectMulti: [],
-      formProps: {
-        errors: [],
+      data: {
+        input: '',
+        email: '',
+        phone: '',
+        checkbox: false,
+        radio: false,
+        selectRadio: '',
+        selectCheckbox: [],
+        select: '',
+        selectMulti: [],
+        text: '',
       },
       formOptions: {
         validators: {
           '': {
-            form: (fields) => {
-              return fields.input.value === '4444' && 'FORM ERROR';
-            },
-            input: (fields) => {
-              return fields.input.value === '4444' && `Form validator error (${fields.input.name} = ${fields.input.value})`;
-            },
             password: (fields) => {
               if (!fields.password.errors.length && !fields.password1.errors.length) {
                 return fields.password.value !== fields.password1.value;
@@ -199,31 +190,30 @@ export default class FormDemo extends React.Component {
               }
             }
           },
-          input: [new MinLengthValidator(3)],
-        },
-        validatorsOptions: {
-          input: {multi: true},
-        },
-        asyncValidator: {
-          input: asyncValidator,
-        },
-        asyncValidatorOptions: {
-          input: {validateOn: ['blur'], validateAfterLocal: true}
         },
       }
     };
   }
 
-  updateState = () => {
-    this.setState({text: 'Baitaliuk', email: 'a@mail.ru'});
+  initialize = () => {
+    this.setState({
+      data: {
+        input: 'Some text',
+        email: 'test@gmail.com',
+        phone: '12025550174',
+        checkbox: true,
+        radio: true,
+        selectRadio: '2',
+        selectCheckbox: ['1', '2'],
+        select: '2',
+        selectMulti: ['1', '2'],
+        text: 'Some text',
+      }
+    });
   };
 
   reset = () => {
     this.form.reset();
-  };
-
-  addField = () => {
-    this.setState({emailField: !this.state.emailField});
   };
 
   onSubmit = (values) => {
@@ -231,12 +221,11 @@ export default class FormDemo extends React.Component {
   };
 
   render() {
-    const {formProps, formOptions} = this.state;
+    const {formOptions} = this.state;
     return (
       <Panel header="Basic example">
-        <button className="btn" onClick={this.updateState}>Initialize Form</button>
-        <button className="btn" onClick={this.reset}>Reset Form</button>
-        <button className="btn" onClick={this.addField}>Add Field</button>
+        <Button onClick={this.initialize}>Initialize Form</Button>
+        <Button onClick={this.reset}>Reset Form</Button>
         <div>&nbsp;</div>
 
         <Form
@@ -244,19 +233,12 @@ export default class FormDemo extends React.Component {
           {...formOptions}
           ref={(form) => this.form = form}
         >
-          <div className="form-group">
-            <FormErrors errors={['form']} />
-            {formProps.errors.map((error, index) => <div key={index}>{error}</div>)}
-          </div>
           <FieldGroup
             id="idInput"
             name="input"
-            value={this.state.input}
+            value={this.state.data.input}
             component={Field.Input}
             validators={[new RequiredValidator()]}
-            validatorsOptions={{multi: true}}
-            asyncValidator={asyncValidator}
-            asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
             label="Input"
             placeholder="Enter input"
             help="Help text for input field"
@@ -265,9 +247,8 @@ export default class FormDemo extends React.Component {
             id="idEmail"
             name="email"
             type="email"
-            value={this.state.email}
+            value={this.state.data.email}
             validators={[new RequiredValidator(), new EmailValidator()]}
-            validatorsOptions={{multi: true}}
             label="Email"
             placeholder="Enter email"
             help="Help text for email field"
@@ -276,7 +257,7 @@ export default class FormDemo extends React.Component {
             id="idPassword"
             name="password"
             type="password"
-            value={this.state.password}
+            value={this.state.data.password}
             validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}
             validatorsOptions={{multi: false}}
             label="Password"
@@ -286,8 +267,8 @@ export default class FormDemo extends React.Component {
           <FieldGroup
             id="idPassword1"
             name="password1"
-            type="password1"
-            value={this.state.password1}
+            type="password"
+            value={this.state.data.password1}
             validators={[new RequiredValidator(), new MinLengthValidator(6), new PasswordValidator(false)]}
             validatorsOptions={{multi: false}}
             label="Repeat Password"
@@ -297,7 +278,7 @@ export default class FormDemo extends React.Component {
           <FieldGroup
             id="idPhone"
             name="phone"
-            value={this.state.phone}
+            value={this.state.data.phone}
             validators={[new RequiredValidator(), new PhoneValidator('en-US')]}
             label="Phone"
             placeholder="Enter phone"
@@ -307,7 +288,7 @@ export default class FormDemo extends React.Component {
             id="idRadio"
             name="radio"
             type="radio"
-            value={this.state.radio}
+            value={this.state.data.radio}
             label="Radio"
             help="Help text for radio field"
             validators={[new EqualValidator(true)]}
@@ -316,7 +297,7 @@ export default class FormDemo extends React.Component {
             id="idCheckbox"
             name="checkbox"
             type="checkbox"
-            value={this.state.checkbox}
+            value={this.state.data.checkbox}
             label="Checkbox"
             help="Help text for checkbox field"
             validators={[new EqualValidator(true)]}
@@ -324,7 +305,7 @@ export default class FormDemo extends React.Component {
           <FieldCheckboxGroup
             id="idSelectRadio"
             name="selectRadio"
-            value={this.state.selectRadio}
+            value={this.state.data.selectRadio}
             options={[{value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
             validators={[new RequiredValidator()]}
             component={Field.RadioGroup}
@@ -332,7 +313,7 @@ export default class FormDemo extends React.Component {
           <FieldCheckboxGroup
             id="idSelectCheckbox"
             name="selectCheckbox"
-            value={this.state.selectCheckbox}
+            value={this.state.data.selectCheckbox}
             options={[{value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
             validators={[new RequiredValidator()]}
             component={Field.CheckboxGroup}
@@ -340,7 +321,7 @@ export default class FormDemo extends React.Component {
           <FieldSelectGroup
             id="idSelect"
             name="select"
-            value={this.state.select}
+            value={this.state.data.select}
             label="Select"
             options={[{value: '', label: '------'}, {value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
             validators={[new RequiredValidator()]}
@@ -349,7 +330,7 @@ export default class FormDemo extends React.Component {
           <FieldSelectGroup
             id="idSelectMulti"
             name="selectMulti"
-            value={this.state.selectMulti}
+            value={this.state.data.selectMulti}
             label="Select Multi"
             options={[{value: '1', label: 'Label 1'}, {value: '2', label: 'Label 2'}]}
             multiple
@@ -359,7 +340,7 @@ export default class FormDemo extends React.Component {
           <FieldGroup
             id="idText"
             name="text"
-            value={this.state.text}
+            value={this.state.data.text}
             component={Field.Text}
             validators={[new RequiredValidator()]}
             validatorsOptions={{multi: true}}
@@ -370,7 +351,7 @@ export default class FormDemo extends React.Component {
             help="Help text for text field"
           />
           <Actions />
-          <Button type="submit">SEND ALWAYS</Button>
+          <Button type="submit">SEND</Button>
         </Form>
       </Panel>
     );
