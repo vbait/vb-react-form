@@ -29,6 +29,7 @@ class Field extends React.Component {
       this.field.setValue(nextProps.value);
       this.updateState();
       changed = true;
+      validate = true;
     }
     if (!isEqual(this.props.validators, nextProps.validators)) {
       this.field.setValidators(nextProps.validators);

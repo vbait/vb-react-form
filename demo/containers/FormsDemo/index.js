@@ -30,14 +30,6 @@ import {
   MaxValueValidator,
 } from '../../../src';
 
-const asyncValidator = (field) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      field.value === '111' ? reject(['Async error']) : resolve();
-    }, 1000);
-  });
-};
-
 class FieldGroup extends React.Component {
   state = {isInvalid: false, pending: false};
 
@@ -200,6 +192,8 @@ export default class FormDemo extends React.Component {
       data: {
         input: 'Some text',
         email: 'test@gmail.com',
+        password: '111111a',
+        password1: '111111a',
         phone: '12025550174',
         checkbox: true,
         radio: true,
@@ -343,9 +337,6 @@ export default class FormDemo extends React.Component {
             value={this.state.data.text}
             component={Field.Text}
             validators={[new RequiredValidator()]}
-            validatorsOptions={{multi: true}}
-            asyncValidator={asyncValidator}
-            asyncValidatorOptions={{validateOn: ['blur'], validateAfterLocal: true}}
             label="Text"
             placeholder="Enter text"
             help="Help text for text field"
