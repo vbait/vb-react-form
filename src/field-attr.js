@@ -70,7 +70,7 @@ export class FieldAttr {
   }
 
   setFocus(focused) {
-    this.focused = focused;
+    this.focused = !!focused;
   }
 
   validate() {
