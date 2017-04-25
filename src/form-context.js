@@ -215,7 +215,6 @@ export class FormContext {
     this.formAsyncValidator = {};
     this.formAsyncValidatorOptions = {};
   }
-
   update() {
     this.validators.updateFields(this.fields.getFieldsOptions());
     this.validators.updateValidators(this.formValidators['']);
