@@ -95,7 +95,7 @@ export class FieldAttr {
   }
 
   asyncValidate(currentEvent, done) {
-    if (currentEvent && currentEvent === FieldAttr.events.CHANGE) {
+    if (currentEvent && currentEvent === FieldAttr.events.CHANGE) { // need to clear when user input text to hide errors
       this.asyncErrors = [];
     }
     const {asyncValidator, asyncValidatorOptions, errors} = this;

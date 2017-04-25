@@ -20,7 +20,7 @@
     "gh-pages": "webpack --env=pages.prod --progress --profile --colors && git add ./docs && gh-pages -d docs",
     "lint": "eslint src demo/src scripts --ext .js,.jsx",
     "test": "jest -u --no-cache --coverage",
-    "test:watch": "jest -u --watch --no-cache",
+    "test:watch": "jest -u --watch --no-cache --coverage",
     "build:dll": "node ./internals/scripts/dependencies.js"
   },
   "jest": {
