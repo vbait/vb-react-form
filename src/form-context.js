@@ -63,7 +63,7 @@ class Fields {
     });
   }
 
-  reset(value) {
+  reset(value = {}) {
     const promises = [];
     forEach(this.getFields(), (field, key) => {
       promises.push(field.instance.reset(value[key]));

@@ -82,6 +82,24 @@ describe('FormContext', () => {
       fields.updateFieldsAsUsed();
       expect(mockFn).toHaveBeenCalled();
     });
+
+    it('should reset fields', (done) => {
+      const mockFn = jest.fn();
+      const field = new FieldAttr({reset: mockFn}, 'name');
+      fields.updateField(field);
+      fields.reset().then(() => {
+        expect(mockFn).toHaveBeenCalled();
+        done();
+      });
+    });
+
+    it('should remove field', () => {
+      const field = new FieldAttr({}, 'name');
+      fields.updateField(field);
+      expect(fields.getFieldByName(field.name)).toBeDefined();
+      fields.removeField(field.name);
+      expect(fields.getFieldByName(field.name)).not.toBeDefined();
+    });
   });
 
   describe('Validators', () => {
