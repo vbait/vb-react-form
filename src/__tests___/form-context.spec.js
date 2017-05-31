@@ -6,11 +6,11 @@ jest.useFakeTimers();
 
 describe('FormContext', () => {
   describe('Fields', () => {
-    let context, fields, validators;
+    let context;
+    let fields;
     beforeEach(() => {
       context = new FormContext();
       fields = context.fields;
-      validators = context.validators;
     });
 
     it('should have initialize values', () => {
@@ -22,7 +22,7 @@ describe('FormContext', () => {
     it('should add field', () => {
       const field = new FieldAttr({}, 'name');
       fields.updateField(field);
-      expect(fields.fields['name']).toEqual(field);
+      expect(fields.fields.name).toEqual(field);
     });
 
     it('should get fields', () => {

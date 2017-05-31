@@ -1,7 +1,15 @@
 .idea/
 .env
-es/
 umd/
+
+amd/
+!tools/amd/
+lib/
+!tools/lib/
+es/
+!tools/es/
+dist/
+!tools/dist/
 
 demo/dist/*
 

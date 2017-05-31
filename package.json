@@ -1,27 +1,35 @@
 {
   "name": "vb-react-form",
-  "version": "0.5.0",
+  "version": "0.0.1",
   "private": true,
   "description": "React form components",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "jsnext:main": "es/index.js",
+  "module": "es/index.js",
   "files": [
-    "es",
-    "umd"
+    "lib",
+    "dist",
+    "es"
   ],
-  "global": "vbComponents",
+  "keywords": [
+    "react",
+    "form",
+    "react form",
+    "react form validation",
+    "form field",
+    "form field validation"
+  ],
+  "global": "VBReactForm",
   "repository": "hhttps://github.com/vbait/vb-react-form.git",
   "author": "Vitalii Baitaliuk <flampschelsea@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --env=pages.dev --progress --profile --colors",
-    "build-dev": "webpack --env=pages.dev --progress --profile --colors",
-    "build": "webpack --env=prod --progress --profile --colors",
-    "pages": "webpack --env=pages.prod --progress --profile --colors",
-    "gh-pages": "webpack --env=pages.prod --progress --profile --colors && git add ./docs && gh-pages -d docs",
+    "demo": "webpack-dev-server --env=demo --progress --profile --colors",
+    "build": "babel-node tools/build-cli.js",
+    "gh-pages": "webpack --env=docs --progress --profile --colors",
     "lint": "eslint src demo/src scripts --ext .js,.jsx",
     "test": "jest -u --no-cache --coverage",
-    "test:watch": "jest -u --watch --no-cache --coverage",
-    "build:dll": "node ./internals/scripts/dependencies.js"
+    "test:watch": "jest -u --watch --no-cache --coverage"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -38,16 +46,14 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     }
   },
-  "dependencies": {
-    "react": "^15.4.2",
-    "validator": "^7.0.0"
+  "dependencies": {},
+  "peerDependencies": {
+    "lodash": ">=4.17.4",
+    "react": ">=15.0",
+    "validator": ">=7.0.0"
   },
   "devDependencies": {
-    "classnames": "^2.2.5",
-    "react-bootstrap": "^0.30.7",
-    "react-dom": "^15.4.2",
-    "styled-components": "^1.4.3",
-    "babel-cli": "^6.22.2",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.13.2",
     "babel-eslint": "^7.1.1",
     "babel-jest": "^18.0.0",
@@ -62,12 +68,16 @@
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-es2016": "^6.22.0",
     "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-1": "^6.24.1",
     "babel-preset-stage-2": "^6.13.0",
     "babel-standalone": "^6.24.0",
     "bootstrap": "^3.3.7",
     "chalk": "^1.1.3",
+    "child-process-promise": "^2.2.1",
+    "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.15",
     "codemirror": "^5.25.0",
+    "colors": "^1.1.2",
     "coveralls": "^2.11.16",
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.1",
@@ -80,30 +90,35 @@
     "express": "^4.15.2",
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^0.10.1",
+    "fs-promise": "^2.0.3",
     "gh-pages": "^0.12.0",
     "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^18.1.0",
     "json-loader": "^0.5.4",
+    "lodash": "^4.17.4",
     "minimist": "^1.2.0",
     "node-sass": "^4.5.0",
     "postcss-loader": "^0.9.1",
+    "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
     "react-bootstrap-date-picker": "^5.0.1",
     "react-component-metadata": "^3.1.0",
+    "react-dom": "^15.4.2",
     "react-highlight": "^0.9.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-router-dom": "next",
     "react-test-renderer": "^15.4.2",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",
+    "styled-components": "^1.4.3",
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony",
     "url-loader": "^0.5.8",
+    "validator": "^7.0.0",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-server": "^2.1.0-beta.0",
-    "webpack-merge": "^2.6.1"
-  },
-  "peerDependencies": {
-    "react-bootstrap": "^0.30.7"
+    "webpack-merge": "^2.6.1",
+    "yargs": "^8.0.1"
   }
 }

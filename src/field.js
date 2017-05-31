@@ -3,7 +3,7 @@ import { getElementProps } from './utils';
 import { FieldInput, FieldText, FieldRadio, FieldCheckbox, FieldSelect, FieldRadioGroup, FieldCheckboxGroup } from './fields';
 import { FieldProps } from './field-props';
 import { FieldAttr } from './field-attr';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash';
 
 class Field extends React.Component {
   field;

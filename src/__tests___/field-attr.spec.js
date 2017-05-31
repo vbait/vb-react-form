@@ -3,23 +3,26 @@ import {Validator} from '../index';
 
 jest.useFakeTimers();
 
-class ValidValidator extends Validator {}
+class ValidValidator extends Validator {
+}
 
 class InvalidValidator extends Validator {
-  isValid () {
+  isValid() {
     return false;
   }
 }
 
-const v3 = (errors) => {
-  return () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        errors ? reject(errors) : resolve();
-      }, 500);
-    })
-  }
-};
+const v3 = errors => (() => (
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (errors) {
+        reject(errors);
+      } else {
+        resolve();
+      }
+    }, 500);
+  })
+));
 
 
 describe('FieldAttr', () => {
@@ -149,7 +152,7 @@ describe('FieldAttr', () => {
     it('asyncValidate: should validate after static validators', (done) => {
       fieldAttr.setValidators([v2]);
       fieldAttr.setAsyncValidator(v3(['error']));
-      fieldAttr.setAsyncValidatorOptions({validateAfterLocal : true});
+      fieldAttr.setAsyncValidatorOptions({validateAfterLocal: true});
       fieldAttr.validate();
       fieldAttr.asyncValidate(null, () => {
         expect(fieldAttr.asyncErrors.length).toEqual(0);
@@ -159,7 +162,7 @@ describe('FieldAttr', () => {
 
     it('asyncValidate: should pass validate with incorrect event', (done) => {
       fieldAttr.setAsyncValidator(v3(['error']));
-      fieldAttr.setAsyncValidatorOptions({validateOn : [FieldAttr.events.CHANGE]});
+      fieldAttr.setAsyncValidatorOptions({validateOn: [FieldAttr.events.CHANGE]});
       fieldAttr.asyncValidate(null, () => {
         expect(fieldAttr.asyncErrors.length).toEqual(0);
         done();
@@ -168,7 +171,7 @@ describe('FieldAttr', () => {
 
     it('asyncValidate: should validate with correct event', (done) => {
       fieldAttr.setAsyncValidator(v3(['error']));
-      fieldAttr.setAsyncValidatorOptions({validateOn : [FieldAttr.events.CHANGE]});
+      fieldAttr.setAsyncValidatorOptions({validateOn: [FieldAttr.events.CHANGE]});
       fieldAttr.asyncValidate(FieldAttr.events.CHANGE, () => {
         expect(fieldAttr.asyncErrors.length).toEqual(1);
         done();

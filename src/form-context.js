@@ -1,7 +1,4 @@
-import map from 'lodash/map';
-import keyBy from 'lodash/keyBy';
-import forEach from 'lodash/forEach';
-import some from 'lodash/some';
+import { some, map, keyBy, forEach } from 'lodash';
 
 // https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076
 
