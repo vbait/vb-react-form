@@ -49,7 +49,6 @@ module.exports = () => (
         disable: false,
         allChunks: true,
       }),
-      new webpack.HotModuleReplacementPlugin(),
       new webpack.NamedModulesPlugin(),
       new HtmlWebpackPlugin({ inject: 'body', template: './index.html' }),
     ]
