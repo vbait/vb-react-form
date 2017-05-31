@@ -1,7 +1,4 @@
-import map from 'lodash/map';
-import keyBy from 'lodash/keyBy';
-import forEach from 'lodash/forEach';
-import some from 'lodash/some';
+import { some, map, keyBy, forEach } from 'lodash';
 
 // https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076
 
@@ -63,7 +60,7 @@ class Fields {
     });
   }
 
-  reset(value) {
+  reset(value = {}) {
     const promises = [];
     forEach(this.getFields(), (field, key) => {
       promises.push(field.instance.reset(value[key]));
@@ -215,7 +212,6 @@ export class FormContext {
     this.formAsyncValidator = {};
     this.formAsyncValidatorOptions = {};
   }
-
   update() {
     this.validators.updateFields(this.fields.getFieldsOptions());
     this.validators.updateValidators(this.formValidators['']);

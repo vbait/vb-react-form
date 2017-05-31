@@ -20,6 +20,11 @@ export default [
     component: require('./Form').default,
   },
   {
+    label: 'Form Example',
+    path: '/form-example',
+    component: require('./FormExample').default,
+  },
+  {
     label: 'Form Demo',
     path: '/form-demo',
     component: require('./FormsDemo').default,

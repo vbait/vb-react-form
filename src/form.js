@@ -1,5 +1,5 @@
 import React from 'react';
-import forEach from 'lodash/forEach';
+import { forEach } from 'lodash';
 import { getElementProps } from './utils';
 import { FormContext } from './form-context';
 

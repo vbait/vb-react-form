@@ -41,7 +41,7 @@ const FormDemo = ({ children }) => (
 
       <h3>FormField</h3>
       <p><code>FormField</code> component - special field wrapper to communicate with form. <code>Form</code> parent component is required.</p>
-      <p>
+      <div>
         <Highlight fill className="javascript">
           {`{
   name: React.PropTypes.string.isRequired,
@@ -70,11 +70,11 @@ const FormDemo = ({ children }) => (
           {`onValid = (field, formError) => {...}`}
         </Highlight>
         Other descriptions for props you can find here <Link to="/fields">Fields Props</Link>
-      </p>
+      </div>
 
       <h3>FormFieldErrors</h3>
       <p><code>FormFieldErrors</code> component - special wrapper to show errors for a field by name. <code>Form</code> parent component is required.</p>
-      <p>
+      <div>
         <Highlight fill className="javascript">
           {`{
   name: React.PropTypes.string.isRequired,
@@ -94,11 +94,11 @@ class FormFieldErrorsComponent extends React.Component {
   };
 }`}
         </Highlight>
-      </p>
+      </div>
 
       <h3>FormErrors</h3>
       <p><code>FormErrors</code> component - special wrapper to show errors for form-wide validation. <code>Form</code> parent component is required.</p>
-      <p>
+      <div>
         <Highlight fill className="javascript">
           {`{
   errors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
@@ -120,7 +120,7 @@ class FormErrorsComponent extends React.Component {
 }`}
         </Highlight>
         More info you can find in examples bellow: Form (form validation), Form (mixed validation)
-      </p>
+      </div>
 
       <h3>Form (form validation)</h3>
       <ReactPlayground codeText={samples.FormValidation} />

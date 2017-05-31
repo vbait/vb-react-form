@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormContext } from './form-context';
-import map from 'lodash/map';
+import { map } from 'lodash';
 
 class FormErrorsComponent extends React.Component {
   render() {
