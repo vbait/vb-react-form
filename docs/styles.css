@@ -6481,6 +6481,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 
 .hljs-emphasis {
   font-style: italic; }
+
 /* BASICS */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -7141,6 +7142,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 
 .cm-s-solarized.cm-s-light .CodeMirror-activeline-background {
   background: rgba(0, 0, 0, 0.06); }
+
 /*
  * Style tweaks
  * --------------------------------------------------
@@ -7148,7 +7150,6 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 html,
 body {
   overflow-x: hidden;
-  /* Prevent scroll on narrow devices */
   background-color: #f9f9f9; }
 
 body {
@@ -7322,5 +7323,4 @@ Code Mirror
 
 .prop-table {
   background-color: #fff; }
-
 /*# sourceMappingURL=styles.css.map*/
