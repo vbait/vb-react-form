@@ -1,6 +1,6 @@
 {
   "name": "vb-react-form",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": false,
   "description": "React form components",
   "main": "lib/index.js",
@@ -21,8 +21,9 @@
     "form field validation"
   ],
   "global": "VBReactForm",
-  "repository": "hhttps://github.com/vbait/vb-react-form.git",
+  "repository": "https://github.com/vbait/vb-react-form.git",
   "author": "Vitalii Baitaliuk <flampschelsea@gmail.com>",
+  "homepage": "https://github.com/vbait/vb-react-form",
   "license": "MIT",
   "scripts": {
     "demo": "webpack-dev-server --env=demo --progress --profile --colors",
