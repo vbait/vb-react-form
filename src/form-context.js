@@ -36,6 +36,14 @@ class Fields {
     return values;
   };
 
+  getErrors = () => {
+    const errors = {};
+    forEach(this.getFieldsOptions(), (field) => {
+      errors[field.name] = field.errors;
+    });
+    return errors;
+  };
+
   updateField(field) {
     this.fields[field.name] = field;
   }

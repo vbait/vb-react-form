@@ -33,6 +33,18 @@ class FieldGroup extends React.Component {
   }
 }
 
+const FormErrorsCustomComponent = ({errorList}) => {
+  return (
+    <div>{
+      errorList.length ?
+      <Alert bsStyle="danger">
+        {errorList.map((error, index) => <div key={index}>{error}</div>)}
+      </Alert> : null
+    }
+    </div>
+  )
+};
+
 const Actions = formConnector((props) => {
   return (
     <Button type="submit" disabled={!props.form.isValid}>SEND</Button>
@@ -54,7 +66,7 @@ class Example extends React.Component {
           '': {
             form: (fields) => {
               if (fields.username.isValid && fields.password1.isValid && fields.username.value === 'Vitalii' && fields.password1.value === '123456aA!') {
-                return 'User is not valid';
+                return 'User "Vitalii/123456aA!" is not valid';
               }
             },
             password1: (fields) => {
@@ -94,7 +106,7 @@ class Example extends React.Component {
           ref={(form) => this.form = form}
         >
           <div className="form-group">
-            <FormErrors errors={['form']} />
+            <FormErrors errors={['form']} component={FormErrorsCustomComponent} />
           </div>
           <FieldGroup
             name="username"

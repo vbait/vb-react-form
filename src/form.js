@@ -38,7 +38,6 @@ class Form extends React.Component {
     e.preventDefault();
     const isFormContextValid = this.formContext.isValid();
     if (isFormContextValid) {
-      console.log('-------------------VALID-------------------', this.formContext.fields.getValues());
       const {onSubmit = () => {}} = this.props;
       onSubmit(this.formContext.fields.getValues());
     } else {
@@ -96,6 +95,7 @@ const formConnector = (component) => {
           isValid: form.isValid(),
           fields: form.fields.getFieldsOptions(),
           formErrors: form.validators.errors,
+          fieldsErrors: form.fields.getErrors(),
         };
         forEach(form.fields.getFieldsOptions(), (field) => {
           if (field.dirty) {

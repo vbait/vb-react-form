@@ -18,7 +18,8 @@ const {
   OverlayTrigger,
   Popover,
   Glyphicon,
-  Button
+  Button,
+  Alert
 } = bootstrapComponents;
 
 const {
@@ -49,7 +50,6 @@ import 'codemirror/addon/runmode/runmode';
 import 'codemirror/mode/jsx/jsx';
 import {transform} from 'babel-standalone';
 import CodeExample from './CodeExample';
-import {Alert} from 'react-bootstrap';
 
 const IS_MOBILE = typeof navigator !== 'undefined' && (
   navigator.userAgent.match(/Android/i)
