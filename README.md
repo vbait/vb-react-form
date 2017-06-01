@@ -1,5 +1,8 @@
 # React Form/Fields Components
 
+[![Build Status](https://travis-ci.org/vbait/vb-react-form.svg?branch=master)](https://travis-ci.org/vbait/vb-react-form)
+[![Coverage Status](https://coveralls.io/repos/github/vbait/vb-react-form/badge.svg?branch=master)](https://coveralls.io/github/vbait/vb-react-form?branch=master)
+
 ## Getting Started
  Not ready yet.
  

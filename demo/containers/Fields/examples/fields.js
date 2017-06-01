@@ -27,6 +27,10 @@ const Example = () => {
                 <Field name="select" options={[{value: '1', label: 'Value 1'}, {value: '2', label: 'Value 2'}]} component={Field.Select}/>
             </div>
             <div>
+                <h5>Multi-Select Field</h5>
+                <Field name="select" multiple options={[{value: '1', label: 'Value 1'}, {value: '2', label: 'Value 2'}]} component={Field.Select}/>
+            </div>
+            <div>
                 <h5>Text Field</h5>
                 <Field name="text" component={Field.Text}/>
             </div>

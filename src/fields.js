@@ -96,9 +96,10 @@ class FieldCheckboxGroup extends React.Component {
 
 class FieldSelect extends React.Component {
   onChange = (event) => {
+    event.preventDefault();
     const {multiple} = this.props;
     if (multiple) {
-      const options = [...event.target.options];
+      const options = Array.from(event.target.options);
       const value = [];
       options.forEach((option) => {
         if (option.selected) {
