@@ -1,12 +1,11 @@
 import React from 'react';
 import { FormContext } from './form-context';
-import { map } from 'lodash';
 
 class FormErrorsComponent extends React.Component {
   render() {
-    const {errors, ...other} = this.props;
+    const {errors, errorList, ...other} = this.props;
     return <div {...other}>
-      {map(errors, (error, key) => <div key={key || 'err'}>{error}</div>)}
+      {errorList.map((error, index) => <div key={index}>{error}</div>)}
     </div>
   };
 }
@@ -36,8 +35,11 @@ class FormErrors extends React.Component {
   }
 
   render() {
-    const {component, ...other} = this.props;
-    return React.createElement(component || FormErrorsComponent, {...other, ...this.state});
+    const {component, errors, ...other} = this.props;
+    const errorList = errors.map((key) => {
+      return this.state.errors[key];
+    }).filter((error) => !!error);
+    return React.createElement(component || FormErrorsComponent, {...other, ...this.state, errorList});
   };
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import {
+  Alert,
   Panel,
   FormGroup,
   FormControl,
@@ -152,6 +153,18 @@ const Actions = formConnector((props) => {
   )
 });
 
+const FormErrorsComponent = ({errorList}) => {
+  return (
+    <div>{
+      errorList.length ?
+      <Alert bsStyle="danger">
+        {errorList.map((error, index) => <div key={index}>{error}</div>)}
+      </Alert> : null
+    }
+    </div>
+  )
+};
+
 export default class FormDemo extends React.Component {
   constructor(props) {
     super(props);
@@ -227,6 +240,7 @@ export default class FormDemo extends React.Component {
           {...formOptions}
           ref={(form) => this.form = form}
         >
+          <FormErrors errors={['password1']} component={FormErrorsComponent} />
           <FieldGroup
             id="idInput"
             name="input"
