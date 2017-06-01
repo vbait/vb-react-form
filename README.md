@@ -9,19 +9,14 @@
 ## Contributing
  You can start with `yarn` or `npm install`
  
- `yarn run start` - Starts development server with HMR and linting. 
+ `npm run demo` - Starts development server with HMR and linting. 
  
- `yarn run build` - Builds components. 
+ `npm run build` - Builds components. 
  
- `yarn run lint` - Runs linting. 
+ `npm run lint` - Runs linting. 
  
- `yarn run test` - Runs tests. 
+ `npm run test` - Runs tests. 
  
- `yarn run test:watch` - Starts watch for tests. 
+ `npm run test:watch` - Starts watch for tests. 
 
- `yarn run pages` - Builds gh-pages application and updates docs. 
-
-
-### TODO:
- * npm publish
- 
+ `npm run gh-pages` - Builds gh-pages application and updates docs. 
