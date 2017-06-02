@@ -11,3 +11,8 @@ ratings:
   - "src/**/*.js"
 exclude_paths:
 - "**.spec.js"
+- "__mock__/"
+- "demo/"
+- "docs/"
+- "tools/"
+- "webpack/"
