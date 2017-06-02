@@ -112,9 +112,9 @@ class FormFieldErrorsComponent extends React.Component {
           {`component - UI component to show errors. Base component:
 class FormErrorsComponent extends React.Component {
   render() {
-    const {errors, ...other} = this.props;
+    const {errors, errorList, ...other} = this.props;
     return <div {...other}>
-      {map(errors, (error, key) => <div key={key || 'err'}>{error}</div>)}
+      {errorList.map((error, index) => <div key={index}>{error}</div>)}
     </div>
   };
 }`}
