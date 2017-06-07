@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormContext } from './form-context';
 
 class FormErrorsComponent extends React.Component {
@@ -44,12 +45,12 @@ class FormErrors extends React.Component {
 }
 
 FormErrors.propTypes = {
-  errors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  component: React.PropTypes.func,
+  errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  component: PropTypes.func,
 };
 
 FormErrors.contextTypes = {
-  form: React.PropTypes.instanceOf(FormContext).isRequired,
+  form: PropTypes.instanceOf(FormContext).isRequired,
 };
 
 export {FormErrors};

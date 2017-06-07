@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { getElementProps } from './utils';
 import { FieldInput, FieldText, FieldRadio, FieldCheckbox, FieldSelect, FieldRadioGroup, FieldCheckboxGroup } from './fields';
 import { FieldProps } from './field-props';
@@ -158,9 +159,9 @@ class Field extends React.Component {
 
 Field.propTypes = {
   ...FieldProps,
-  onInit: React.PropTypes.func,
-  onUpdate: React.PropTypes.func,
-  onAsyncValid: React.PropTypes.func,
+  onInit: PropTypes.func,
+  onUpdate: PropTypes.func,
+  onAsyncValid: PropTypes.func,
 };
 
 Field.Input = FieldInput;

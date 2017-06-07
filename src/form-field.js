@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from './field';
 import { FormContext } from './form-context';
 import { FieldProps } from './field-props';
@@ -118,11 +119,11 @@ class FormField extends React.Component {
 
 FormField.propTypes = {
   ...FieldProps,
-  onValid: React.PropTypes.func,
+  onValid: PropTypes.func,
 };
 
 FormField.contextTypes = {
-  form: React.PropTypes.instanceOf(FormContext).isRequired,
+  form: PropTypes.instanceOf(FormContext).isRequired,
 };
 
 export {FormField};

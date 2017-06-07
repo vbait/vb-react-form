@@ -1,23 +1,24 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const FieldProps = {
-  name: React.PropTypes.string.isRequired,
-  value: React.PropTypes.any,
-  options: React.PropTypes.any,
-  component: React.PropTypes.func,
-  onFocus: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onBlur: React.PropTypes.func,
-  validators: React.PropTypes.arrayOf(React.PropTypes.shape({
-    isValid: React.PropTypes.func.isRequired,
-    error: React.PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.any,
+  options: PropTypes.any,
+  component: PropTypes.func,
+  onFocus: PropTypes.func,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  validators: PropTypes.arrayOf(PropTypes.shape({
+    isValid: PropTypes.func.isRequired,
+    error: PropTypes.func.isRequired,
   })),
-  validatorsOptions: React.PropTypes.shape({
-    multi: React.PropTypes.bool,
+  validatorsOptions: PropTypes.shape({
+    multi: PropTypes.bool,
   }),
-  asyncValidator: React.PropTypes.func,
-  asyncValidatorOptions: React.PropTypes.shape({
-    validateOn: React.PropTypes.arrayOf(React.PropTypes.string),
-    validateAfterLocal: React.PropTypes.bool,
+  asyncValidator: PropTypes.func,
+  asyncValidatorOptions: PropTypes.shape({
+    validateOn: PropTypes.arrayOf(PropTypes.string),
+    validateAfterLocal: PropTypes.bool,
   }),
 };

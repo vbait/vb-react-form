@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { forEach } from 'lodash';
 import { getElementProps } from './utils';
 import { FormContext } from './form-context';
@@ -57,12 +58,12 @@ class Form extends React.Component {
   }
 }
 Form.propTypes = {
-  name: React.PropTypes.any,
-  children: React.PropTypes.any,
-  onSubmit: React.PropTypes.any,
+  name: PropTypes.any,
+  children: PropTypes.any,
+  onSubmit: PropTypes.any,
 };
 Form.childContextTypes = {
-  form: React.PropTypes.instanceOf(FormContext).isRequired,
+  form: PropTypes.instanceOf(FormContext).isRequired,
 };
 
 const formConnector = (component) => {
@@ -110,7 +111,7 @@ const formConnector = (component) => {
       }
     }
     WrapperComponent.contextTypes = {
-      form: React.PropTypes.instanceOf(FormContext).isRequired,
+      form: PropTypes.instanceOf(FormContext).isRequired,
     };
     return WrapperComponent;
   })(component);
