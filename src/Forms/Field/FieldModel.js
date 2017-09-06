@@ -158,7 +158,7 @@ class FieldModel {
       return;
     }
     const { multi = true } = this.validatorOptions;
-    const errors = validator(name, value, fields);
+    const errors = validator(name, value, fields) || [];
     if (errors.length) {
       if (multi) {
         this.setErrors(errors);

@@ -67,9 +67,9 @@ class VBForm extends React.PureComponent {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, onSubmit, ...other } = this.props;
     return (
-      <form onSubmit={this.onSubmit}>{children}</form>
+      <form onSubmit={this.onSubmit} {...other}>{children}</form>
     );
   }
 }
