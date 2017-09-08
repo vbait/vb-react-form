@@ -27,6 +27,11 @@ class PublicFieldModel {
     return model.dirty;
   }
 
+  isTouched() {
+    const model = privateModel.get(this);
+    return model.touched;
+  }
+
   isDisabled() {
     const model = privateModel.get(this);
     return model.disabled;
@@ -50,9 +55,14 @@ class PublicFieldModel {
     });
   }
 
-  reset(value) {
+  reset() {
     const model = privateModel.get(this);
-    return model.instance.reset(value);
+    return model.instance.reset();
+  }
+
+  update(value) {
+    const model = privateModel.get(this);
+    return model.instance.update(value);
   }
 }
 
@@ -86,6 +96,7 @@ class FieldModel {
     asyncValidator = null,
     asyncValidatorOptions = {},
     disabled,
+    excluded,
   ) {
     this.instance = instance;
     this.name = name;
@@ -96,6 +107,7 @@ class FieldModel {
     this.asyncValidatorOptions = asyncValidatorOptions;
     this.publicModel = this.createPublicModel();
     this.disabled = !!disabled;
+    this.excluded = !!excluded;
   }
 
   createPublicModel() {
@@ -107,7 +119,7 @@ class FieldModel {
   }
 
   setValue(value) {
-    this.value = value;
+    this.value = value || '';
   }
 
   setValidators(validators = []) {
@@ -130,6 +142,10 @@ class FieldModel {
     this.errors = errors;
   }
 
+  setAsyncErrors(errors = []) {
+    this.asyncErrors = errors;
+  }
+
   setDirty(dirty) {
     this.dirty = !!dirty;
     this.pristine = !dirty;
@@ -145,6 +161,10 @@ class FieldModel {
 
   setDisabled(disabled) {
     this.disabled = !!disabled;
+  }
+
+  setExcluded(excluded) {
+    this.excluded = !!excluded;
   }
 
   getName() {
@@ -170,7 +190,7 @@ class FieldModel {
 
   asyncValidate(currentEvent, done) {
     if (currentEvent && currentEvent === FieldModel.events.CHANGE) {
-      this.asyncErrors = [];
+      this.setAsyncErrors([]);
     }
     const { asyncValidator, asyncValidatorOptions, errors, disabled } = this;
     const { validateOn = [], validateAfterLocal = false } = asyncValidatorOptions;
@@ -185,12 +205,12 @@ class FieldModel {
       asyncValidator(this.getPublicModel())
         .then(() => {
           this.pending = false;
-          this.asyncErrors = [];
+          this.setAsyncErrors([]);
           done(true);
         })
         .catch((e) => {
           this.pending = false;
-          this.asyncErrors = e || [];
+          this.setAsyncErrors(e || []);
           done(true);
         });
     } else {
@@ -199,13 +219,14 @@ class FieldModel {
     return null;
   }
 
-  reset(value = '') {
-    this.setValue(value);
+  reset() {
     this.touched = false;
     this.dirty = false;
     this.pristine = true;
-    this.focused = false;
+    // this.focused = false;
     this.pending = false;
+    this.setErrors([]);
+    this.setAsyncErrors([]);
   }
 
   isValid() {

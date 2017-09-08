@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 // import { FormModel } from '../Form';
@@ -34,8 +32,15 @@ class FormField extends PureComponent {
       props.asyncValidatorOptions,
       props.disabled,
     );
+    if (props.initialized) {
+      this.model.setDirty(true);
+      this.model.setTouched(true);
+    }
+  }
+
+  componentDidMount() {
     this.formModel.onInitField(this.model);
-    this.updateComponent();
+    // this.runAsyncValidation();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,60 +62,63 @@ class FormField extends PureComponent {
       this.model.setDisabled(nextProps.disabled);
       shouldUpdate = true;
     }
+    this.model.setExcluded(nextProps.excluded);
     if (shouldUpdate) {
-      this.updateComponent();
+      // this.updateComponent();
+      this.formModel.onUpdateForm();
     }
   }
-
-  // shouldComponentUpdate() {
-  //   if (this.shouldUpdate) {
-  //     this.shouldUpdate = false;
-  //     return true;
-  //   }
-  //   return false;
-  // }
 
   onInit = () => {};
 
   onChange = (value = '') => {
     this.model.setValue(value);
-    // this.model.setTouched(true);
     this.model.setDirty(true);
-    this.updateComponent(FieldModel.events.CHANGE);
-    this.forceUpdate();
+    this.runAsyncValidation(FieldModel.events.CHANGE);
+    this.formModel.onUpdateForm();
     this.props.onChange(this.model);
   };
 
   onFocus = () => {
     this.model.setFocus(true);
-    this.updateComponent(FieldModel.events.FOCUS);
-    this.forceUpdate();
+    this.runAsyncValidation(FieldModel.events.FOCUS);
+    this.formModel.onUpdateForm();
     this.props.onFocus(this.model);
   };
 
   onBlur = () => {
     this.model.setFocus(false);
     this.model.setTouched(true);
-    this.updateComponent(FieldModel.events.BLUR);
-    this.forceUpdate();
+    this.runAsyncValidation(FieldModel.events.BLUR);
+    this.formModel.onUpdateForm();
     this.props.onBlur(this.model);
   };
 
-  updateComponent(event) {
+  updateComponent() {
     this.model.validate(this.formModel.getPublicModel().fields());
+    this.forceUpdate();
+  }
+
+  runAsyncValidation(event) {
     this.model.asyncValidate(event, (active) => {
       if (active) {
         this.forceUpdate();
-        this.formModel.onUpdateForm();
+        // this.formModel.onUpdateForm();
       }
     });
-    this.formModel.onUpdateForm();
   }
 
-  reset = () => {
-    this.model.reset(this.props.value);
-    this.updateComponent(FieldModel.events.CHANGE);
-    this.forceUpdate();
+  reset = (update = true) => {
+    const { value, initialized } = this.props;
+    this.model.reset();
+    this.model.setValue(value);
+    if (initialized) {
+      this.model.setDirty(true);
+      this.model.setTouched(true);
+    }
+    if (update) {
+      this.formModel.onUpdateForm();
+    }
     this.props.onChange(this.model);
   };
 
@@ -119,7 +127,7 @@ class FormField extends PureComponent {
   };
 
   render() {
-    const { name, ...other } = this.props;
+    const { name, initialized, ...other } = this.props;
     const value = this.model.value;
     return (
       <Field

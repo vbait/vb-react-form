@@ -9,6 +9,7 @@ export const FieldProps = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   validator: PropTypes.func,
+  initialized: PropTypes.bool,
   validatorOptions: PropTypes.shape({
     multi: PropTypes.bool,
   }),

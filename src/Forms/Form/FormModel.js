@@ -12,6 +12,9 @@ class PublicFormModel {
 
   fields(name) {
     const model = privateModel.get(this);
+    if (!model.initialized) {
+      return null;
+    }
     if (name) {
       return model.fields[name].getPublicModel();
     }
@@ -91,11 +94,16 @@ class FormModel {
     this.initialized = false;
     this.fields = {};
     this.forms = {};
+    this.excluded = false;
     this.subscribers = new PubSub();
   }
 
   createPublicModel() {
     return new PublicFormModel(this);
+  }
+
+  setExcluded(excluded) {
+    this.excluded = !!excluded;
   }
 
   getPublicModel() {
@@ -142,8 +150,9 @@ class FormModel {
 
   onUpdateForm() {
     if (this.initialized) {
-      this.onChange();
+      this.validate();
       this.publish();
+      this.onChange();
     }
   }
 
@@ -156,17 +165,18 @@ class FormModel {
   }
 
   reset() {
-    Object.values(this.fields).forEach(field => field.instance.reset());
+    Object.values(this.fields).forEach(field => field.instance.reset(false));
     Object.keys(this.forms).forEach((key) => {
       if (Array.isArray(this.forms[key])) {
         return this.forms[key].forEach(form => form.reset());
       }
       return this.forms[key].reset();
     });
+    this.onUpdateForm();
   }
 
   update(values = {}) {
-    Object.values(this.fields).forEach(field => field.instance.update(values[field.name]));
+    Object.values(this.fields).forEach(field => field.setValue(values[field.name]));
     Object.keys(this.forms).forEach((key) => {
       if (Array.isArray(this.forms[key])) {
         const formsValues = values[key] || [];
@@ -174,10 +184,14 @@ class FormModel {
       }
       return this.forms[key].update(values[key]);
     });
+    this.onUpdateForm();
   }
 
   setDirtyForm() {
-    Object.values(this.fields).forEach(field => field.setDirty(true));
+    Object.values(this.fields).forEach((field) => {
+      field.setDirty(true);
+      field.setTouched(true);
+    });
     this.onUpdateForm();
     Object.keys(this.forms).forEach((key) => {
       if (Array.isArray(this.forms[key])) {
@@ -215,14 +229,19 @@ class FormModel {
   }
 
   getValues() {
-    const values = Object.keys(this.fields).reduce((prev, key) => {
-      prev[key] = this.fields[key].value;
-      return prev;
-    }, {});
+    const values = Object.keys(this.fields)
+      .filter(key => !this.fields[key].excluded)
+      .reduce((prev, key) => {
+        prev[key] = this.fields[key].value;
+        return prev;
+      }, {});
     Object.keys(this.forms).reduce((prev, key) => {
       if (Array.isArray(this.forms[key])) {
-        prev[key] = this.forms[key].map(form => form.getValues());
-      } else {
+        prev[key] = this.forms[key].filter(form => !form.excluded).map(form => form.getValues());
+        if (!prev[key].length) {
+          delete prev[key];
+        }
+      } else if (!this.forms[key].excluded) {
         prev[key] = this.forms[key].getValues();
       }
       return prev;

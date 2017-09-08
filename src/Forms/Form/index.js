@@ -39,10 +39,10 @@ class VBForm extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.model.validate();
     this.model.setInitialized(true);
-    this.props.onLoad(this.model.getPublicModel());
+    this.model.validate();
     this.model.publish();
+    this.props.onLoad(this.model.getPublicModel());
   }
 
   onChange = () => {

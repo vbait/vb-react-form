@@ -6,6 +6,7 @@ class FormItem extends React.PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
     asList: PropTypes.bool.isRequired,
+    excluded: PropTypes.bool,
     children: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.arrayOf(PropTypes.element),
@@ -14,6 +15,7 @@ class FormItem extends React.PureComponent {
 
   static defaultProps = {
     asList: false,
+    excluded: false,
   };
 
   static contextTypes = {
@@ -28,6 +30,7 @@ class FormItem extends React.PureComponent {
     super(props, context);
     this.parentModel = context.formModel;
     this.model = new FormModel(props.name, this.onChange);
+    this.model.setExcluded(props.excluded);
     if (props.asList) {
       this.parentModel.onInitForm(this.model, true);
     } else {
@@ -44,6 +47,10 @@ class FormItem extends React.PureComponent {
     this.model.setInitialized(true);
     this.model.publish();
     this.parentModel.onUpdateForm();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.model.setExcluded(nextProps.excluded);
   }
 
   componentWillUnmount() {

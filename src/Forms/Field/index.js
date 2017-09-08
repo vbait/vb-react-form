@@ -13,7 +13,7 @@ import {
 import { FieldProps } from './FieldProps';
 import { FieldModel } from './FieldModel';
 
-class Field extends React.PureComponent {
+class Field extends React.Component {
   componentDidMount() {
     const { onInit } = this.props;
     onInit();
