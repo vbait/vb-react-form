@@ -5,6 +5,11 @@ export default [
     component: require('./Home').default,
   },
   {
+    label: 'Form V1',
+    path: '/form-v1',
+    component: require('./FormV1').default,
+  },
+  {
     label: 'Validators',
     path: '/validators',
     component: require('./Validators').default,

@@ -15,7 +15,8 @@ const isFieldProp = propName => (
   propName === 'asyncValidatorOptions' ||
   propName === 'asyncValidateOn' ||
   propName === 'errors' ||
-  propName === 'excluded'
+  propName === 'excluded' ||
+  propName === 'excludeModelProp'
 );
 
 export const getElementProps = (props) => {

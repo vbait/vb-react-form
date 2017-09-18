@@ -13,7 +13,7 @@ import {
 import { FieldProps } from './FieldProps';
 import { FieldModel } from './FieldModel';
 
-class Field extends React.Component {
+class Field extends React.PureComponent {
   componentDidMount() {
     const { onInit } = this.props;
     onInit();
@@ -41,7 +41,7 @@ class Field extends React.Component {
 
   render() {
     let defaultComponent = FieldInput;
-    const { component, type, value, model } = this.props;
+    const { component, type, value, model, excludeModelProp } = this.props;
     switch (type) {
       case 'checkbox':
         defaultComponent = FieldCheckbox;
@@ -52,14 +52,19 @@ class Field extends React.Component {
       default:
         break;
     }
-    return React.createElement(component || defaultComponent, {
+    const props = {
       ...getElementProps(this.props),
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       onChange: this.onChange,
       value,
       model,
-    });
+    };
+    if (excludeModelProp) {
+      delete props['model'];
+    }
+    console.warn('RENDER FIELD: ', this.props.name);
+    return React.createElement(component || defaultComponent, props);
   }
 }
 
