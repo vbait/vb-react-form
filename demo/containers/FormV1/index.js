@@ -2,27 +2,38 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { Button, Row, Col } from 'react-bootstrap';
 import { VBForm, requiredValidator, passwordValidator } from '../../../src/FormsV1';
-import { Actions, FormFieldWrapper, InputField, PasswordField } from './Fields';
+import { FormActions, FormFieldWrapper, InputField, PasswordField, ErrorComponent } from './Fields';
 
 const formValidator = (fields, data) => {
-  const errors = {
-    '': 'Form is not valid',
-  };
+  const errors = {};
+  let invalid = false;
   if (data.firstName === 'Vitalii') {
+    invalid = true;
     errors.firstName = ['This value is not valid.'];
   }
   if (data.password1 !== data.password2) {
+    invalid = true;
     errors.password2 = ['Passwords are not equal.'];
+  }
+  if (invalid) {
+    errors[''] = 'Form is not valid.';
   }
   return errors;
 };
 
-class FormV1 extends React.Component {
+const formProfileValidator = () => {
+  return {};
+};
+
+class Form extends React.Component {
 
   constructor(props) {
     super(props);
     this.validators = {
       firstName: (name, value) => {
+        return requiredValidator(value);
+      },
+      required: (name, value) => {
         return requiredValidator(value);
       },
       password: (name, value) => {
@@ -33,6 +44,7 @@ class FormV1 extends React.Component {
     this.state = {
       user: {
         firstName: 'Vitalii',
+        profile: {},
       }
     };
   }
@@ -46,6 +58,7 @@ class FormV1 extends React.Component {
   };
 
   onChange = (model) => {
+    console.log(999999);
     const firstName = model.fields.field('firstName');
     const firstNameUppercase = model.fields.field('firstNameUppercase');
     const firstNameLowercase = model.fields.field('firstNameLowercase');
@@ -62,6 +75,9 @@ class FormV1 extends React.Component {
   init = () => {
     this.form.init({
       firstName: 'V',
+      profile: {
+        city: 'Chernivtsi',
+      }
     });
   };
 
@@ -70,6 +86,10 @@ class FormV1 extends React.Component {
       firstName: 'Vitalii1',
       password1: 'aaaAAA111!',
       password2: 'aaaAAA111!',
+      profile: {
+        city: 'Chernivtsi',
+        address: 'Chernivtsi',
+      },
     }, true);
   };
 
@@ -89,6 +109,7 @@ class FormV1 extends React.Component {
             onLoad={this.onLoad}
             validator={formValidator}
           >
+            <VBForm.Errors component={ErrorComponent} />
             <FormFieldWrapper
               name="firstName"
               value={user.firstName}
@@ -96,6 +117,7 @@ class FormV1 extends React.Component {
               component={InputField}
               validator={this.validators.firstName}
             />
+            <VBForm.Errors name="firstName" component={ErrorComponent} />
             <VBForm.Field
               name="firstNameUppercase"
               label="First Name Uppercase"
@@ -112,6 +134,27 @@ class FormV1 extends React.Component {
               excluded
             />
             <hr />
+            <h4>Profile</h4>
+            <VBForm.Item name="profile" validator={formProfileValidator}>
+              <VBForm.Field
+                name="city"
+                value={user.profile.city}
+                label="City"
+                component={PasswordField}
+                validator={this.validators.required}
+                includeModel
+              />
+              <VBForm.Field
+                name="address"
+                value={user.profile.address}
+                label="Address"
+                component={PasswordField}
+                validator={this.validators.required}
+                includeModel
+              />
+            </VBForm.Item>
+            <hr />
+            <h4>Password</h4>
             <FormFieldWrapper
               name="password1"
               type="password"
@@ -129,6 +172,7 @@ class FormV1 extends React.Component {
               validator={this.validators.password}
               includeModel
             />
+            <FormActions />
             <Button type="submit">Submit</Button>
           </VBForm>
           <br />
@@ -144,4 +188,4 @@ class FormV1 extends React.Component {
   }
 }
 
-export default FormV1;
+export default Form;

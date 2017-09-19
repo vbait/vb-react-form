@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import { VBForm } from '../../../src/FormsV1';
+import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Alert } from 'react-bootstrap';
+import { VBForm, connectForm } from '../../../src/FormsV1';
 
-const Actions = ({ model }) => {
-  const isValid = model.isValid();
+const Actions = ({ form }) => {
+  const isValid = form.isValid();
   return (
     <Button type="submit" bsStyle="success" disabled={!isValid}>
       {isValid ? 'Submit' : 'Not Valid'}
@@ -12,8 +12,10 @@ const Actions = ({ model }) => {
   )
 };
 Actions.propTypes = {
-  model: PropTypes.object.isRequired,
+  form: PropTypes.object.isRequired,
 };
+
+const FormActions = connectForm(Actions);
 
 class FormFieldWrapper extends React.Component {
   state = {
@@ -77,9 +79,33 @@ class InputField extends React.PureComponent {
   }
 }
 
+const ErrorComponent = ({ form, field }) => {
+  let errors = [];
+  let invalid = false;
+  if (field) {
+    errors = field.getErrors();
+    invalid = field.touched && !field.isValid();
+  } else {
+    errors = form.errors;
+    invalid = form.isTouched() && form.errors.length;
+  }
+  return (
+    <div>
+      {invalid ? (
+        <Alert bsStyle="danger">
+          {errors.map(error => (
+            <div key={error}>{error}</div>
+          ))}
+        </Alert>
+      ) : null}
+    </div>
+  )
+};
+
 export {
-  Actions,
+  FormActions,
   FormFieldWrapper,
   PasswordField,
   InputField,
+  ErrorComponent,
 };

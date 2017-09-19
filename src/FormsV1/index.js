@@ -1,4 +1,4 @@
-export { VBForm } from './Form';
+export { VBForm, connectForm } from './Form';
 export {
   validators,
   requiredValidator,

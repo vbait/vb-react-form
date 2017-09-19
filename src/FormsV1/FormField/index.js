@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FormModel } from '../Form/FormModel';
+import { FieldErrors } from './FieldErrors';
 import { getElementProps } from './getElementProps';
 
 class FormField extends PureComponent {
@@ -105,4 +106,4 @@ class FormField extends PureComponent {
   }
 }
 
-export { FormField };
+export { FormField, FieldErrors };

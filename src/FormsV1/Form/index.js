@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormModel } from './FormModel';
-import { FormField } from '../FormField';
+import { FormItem } from './FormItem';
+import { FormField, FieldErrors } from '../FormField';
+import { connectForm } from './decorator';
 
 class VBForm extends React.PureComponent {
   static propTypes = {
@@ -58,5 +60,7 @@ class VBForm extends React.PureComponent {
 }
 
 VBForm.Field = FormField;
+VBForm.Errors = FieldErrors;
+VBForm.Item = FormItem;
 
-export { VBForm, FormModel };
+export { VBForm, FormModel, connectForm };

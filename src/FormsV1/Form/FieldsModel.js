@@ -63,13 +63,23 @@ class FieldsModel {
     return this.list().every(field => field.isValid());
   };
 
+  isTouched = () => {
+    return this.list().some(field => field.touched);
+  };
+
   values = () => {
     const values = {};
     this.list()
       .filter(field => !field.isExcluded())
       .forEach(field => values[field.name] = field.value);
     return values;
-  }
+  };
+
+  errors = () => {
+    const errors = {};
+    this.list().forEach(field => errors[field.name] = field.getErrors());
+    return errors;
+  };
 }
 
 export default FieldsModel;
