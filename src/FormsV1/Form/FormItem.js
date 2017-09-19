@@ -22,21 +22,21 @@ class FormItem extends React.PureComponent {
     formModel: PropTypes.instanceOf(FormModel).isRequired,
   };
 
-  static childContextTypes = {
-    formModel: PropTypes.instanceOf(FormModel).isRequired,
-  };
+  // static childContextTypes = {
+  //   formModel: PropTypes.instanceOf(FormModel).isRequired,
+  // };
 
   constructor(props, context) {
     super(props, context);
-    this.formsModel = context.formModel.forms;
-    this.model = new FormModel(props.name, props.validator, props.onChange, context.formModel);
-    this.model.excluded = !!props.excluded;
-    this.formsModel.add(this.model, !!props.asList);
+    // this.formsModel = context.formModel.forms;
+    // this.model = new FormModel(props.name, props.validator, props.onChange, context.formModel);
+    // this.model.excluded = !!props.excluded;
+    // this.formsModel.add(this.model, !!props.asList);
   }
 
-  getChildContext() {
-    return { formModel: this.model };
-  }
+  // getChildContext() {
+  //   return { formModel: this.model };
+  // }
 
   render() {
     const { children } = this.props;
