@@ -57,7 +57,6 @@ class FormField extends PureComponent {
 
   onChange = (value = '') => {
     this.model.setValue(value);
-    this.model.setChanged(true);
     this.model.setDirty(true);
     this.formModel.updateFieldByName(this.model.name);
     this.props.onChange(this.model);

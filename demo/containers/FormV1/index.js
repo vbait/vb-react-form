@@ -1,85 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button, Row, Col, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+// import PropTypes from 'prop-types';
+import { Button, Row, Col } from 'react-bootstrap';
 import { VBForm, requiredValidator, passwordValidator } from '../../../src/FormsV1';
-
-const Actions = ({ model }) => {
-  const isValid = model.isValid();
-  return (
-    <Button type="submit" bsStyle="success" disabled={!isValid}>
-      {isValid ? 'Submit' : 'Not Valid'}
-    </Button>
-  )
-};
-Actions.propTypes = {
-  model: PropTypes.object.isRequired,
-};
-
-class FormFieldWrapper extends React.Component {
-  state = {
-    invalid: false,
-  };
-
-  onFieldChange = (model) => {
-    console.log(model);
-    this.setState(() => ({
-      invalid: model.touched && !model.isValid(),
-      errors: model.getErrors(),
-    }));
-  };
-
-  render() {
-    const { id, label } = this.props;
-    const { invalid, errors } = this.state;
-    return (
-      <FormGroup controlId={id} validationState={invalid ? 'error' : null}>
-        {label && <ControlLabel>{label}</ControlLabel>}
-        <VBForm.Field {...this.props} onFieldChange={this.onFieldChange} />
-        {invalid && (
-          <HelpBlock>
-            {errors.map(error => (
-              <div key={error}>{error}</div>
-            ))}
-          </HelpBlock>
-        )}
-      </FormGroup>
-    )
-  }
-}
-
-const PasswordField = ({ model, ...props }) => {
-  const invalid = model.touched && !model.isValid();
-  const errors = model.getErrors();
-  return (
-    <FormGroup controlId={props.id} validationState={invalid ? 'error' : null}>
-      {props.label && <ControlLabel>{props.label}</ControlLabel>}
-      <InputField {...props} />
-      {invalid && (
-        <HelpBlock>
-          {errors.map(error => (
-            <div key={error}>{error}</div>
-          ))}
-        </HelpBlock>
-      )}
-    </FormGroup>
-  );
-};
-
-class InputField extends React.Component {
-  onChange = (event) => {
-    event.preventDefault();
-    this.props.onChange(event.target.value);
-  };
-
-  render() {
-    return (
-      <FormControl {...this.props} onChange={this.onChange} />
-    )
-  }
-}
+import { Actions, FormFieldWrapper, InputField, PasswordField } from './Fields';
 
 const formValidator = (fields, data) => {
-  const errors = {};
+  const errors = {
+    '': 'Form is not valid',
+  };
   if (data.firstName === 'Vitalii') {
     errors.firstName = ['This value is not valid.'];
   }
@@ -109,7 +37,45 @@ class FormV1 extends React.Component {
     };
   }
 
-  onSubmit = () => {};
+  onLoad = (model) => {
+    this.form = model;
+  };
+
+  onSubmit = (values) => {
+    console.log(1111111, values);
+  };
+
+  onChange = (model) => {
+    const firstName = model.fields.field('firstName');
+    const firstNameUppercase = model.fields.field('firstNameUppercase');
+    const firstNameLowercase = model.fields.field('firstNameLowercase');
+    firstNameUppercase.setValue(firstName.value.toUpperCase());
+    firstNameUppercase.reload();
+    firstNameLowercase.setValue(firstName.value.toLowerCase());
+    firstNameLowercase.reload();
+  };
+
+  reset = () => {
+    this.form.reset();
+  };
+
+  init = () => {
+    this.form.init({
+      firstName: 'V',
+    });
+  };
+
+  initAndDirty = () => {
+    this.form.init({
+      firstName: 'Vitalii1',
+      password1: 'aaaAAA111!',
+      password2: 'aaaAAA111!',
+    }, true);
+  };
+
+  dirty = () => {
+    this.form.makeDirty();
+  };
 
   render() {
     const { user } = this.state;
@@ -117,15 +83,35 @@ class FormV1 extends React.Component {
       <Row>
         <Col xs={12}>
           <h3 className="page-header">Form V1</h3>
-          <VBForm onSubmit={this.onSubmit} validator={formValidator}>
+          <VBForm
+            onSubmit={this.onSubmit}
+            onChange={this.onChange}
+            onLoad={this.onLoad}
+            validator={formValidator}
+          >
             <FormFieldWrapper
               name="firstName"
               value={user.firstName}
               label="First Name"
               component={InputField}
               validator={this.validators.firstName}
+            />
+            <VBForm.Field
+              name="firstNameUppercase"
+              label="First Name Uppercase"
+              component={InputField}
+              placeholder="First Name Uppercase"
+              readOnly
               excluded
             />
+            <VBForm.Field
+              name="firstNameLowercase"
+              component={InputField}
+              placeholder="First Name Lowercase"
+              disabled
+              excluded
+            />
+            <hr />
             <FormFieldWrapper
               name="password1"
               type="password"
@@ -133,7 +119,6 @@ class FormV1 extends React.Component {
               label="Password"
               component={InputField}
               validator={this.validators.password}
-              excluded
             />
             <VBForm.Field
               name="password2"
@@ -142,10 +127,17 @@ class FormV1 extends React.Component {
               label="Repeat Password"
               component={PasswordField}
               validator={this.validators.password}
-              excluded
               includeModel
             />
+            <Button type="submit">Submit</Button>
           </VBForm>
+          <br />
+        </Col>
+        <Col xs={12}>
+          <Button onClick={this.reset}>Reset</Button>&nbsp;
+          <Button onClick={this.init}>Init</Button>&nbsp;
+          <Button onClick={this.initAndDirty}>Init and Dirty</Button>&nbsp;
+          <Button onClick={this.dirty}>Dirty</Button>
         </Col>
       </Row>
     );

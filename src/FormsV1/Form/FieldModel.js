@@ -1,24 +1,22 @@
+import { cloneDeep } from 'lodash';
 
 class FieldModel {
-  constructor({ component, name, value, validator, reload }) {
+  constructor({ component, name, value, validator, reload, excluded }) {
     if (!name) {
       throw new Error('Name is required');
     }
     this.component = component;
     this.name = name;
-    this.value = value || '';
-    this.focused = false;
-    this.touched = false;
-    this.dirty = false;
-    this.changed = false;
-    this.submitted = false;
-    this.changedAfterSubmit = false;
+    this.excluded = !!excluded;
+    this.initialValue = value || '';
     this.handleReload = reload || (() => {});
-
-    this.errors = [];
-    this.formErrors = [];
-    this.validator = validator || (() => ([]));
+    this.setValidator(validator);
+    this.reset();
   }
+
+  setValidator = (validator) => {
+    this.validator = validator || (() => ([]));
+  };
 
   setValue = (value = '') => {
     this.value = value;
@@ -30,10 +28,6 @@ class FieldModel {
 
   setTouched = (touched) => {
     this.touched = touched;
-  };
-
-  setChanged = (changed) => {
-    this.changed = changed;
   };
 
   setDirty = (dirty) => {
@@ -58,8 +52,28 @@ class FieldModel {
     this.handleReload();
   };
 
+  reset = () => {
+    this.value = cloneDeep(this.initialValue);
+    this.focused = false;
+    this.touched = false;
+    this.dirty = false;
+    this.submitted = false;
+    this.changedAfterSubmit = false;
+    this.errors = [];
+    this.formErrors = [];
+  };
+
+  makeDirty = () => {
+    this.touched = true;
+    this.dirty = true;
+  };
+
   isValid = () => {
     return !this.errors.length && !this.formErrors.length;
+  };
+
+  isExcluded = () => {
+    return this.excluded;
   };
 
   getErrors = () => {

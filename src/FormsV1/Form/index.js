@@ -30,7 +30,7 @@ class VBForm extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.model = new FormModel(props.name, props.validator, this.onChange);
+    this.model = new FormModel(props.name, props.validator, props.onChange);
   }
 
   getChildContext() {
@@ -39,18 +39,18 @@ class VBForm extends React.PureComponent {
 
   componentDidMount() {
     this.model.completed();
+    this.props.onLoad(this.model);
   }
-
-  onChange = () => {
-    this.props.onChange(this.model.getPublicModel());
-  };
 
   onSubmit = (e) => {
     e.preventDefault();
+    if (this.model.isValid()) {
+      this.props.onSubmit(this.model.values(), this.model);
+    }
   };
 
   render() {
-    const { children, onSubmit, validator, ...other } = this.props;
+    const { children, onSubmit, onChange, validator, ...other } = this.props;
     return (
       <form onSubmit={this.onSubmit} {...other}>{children}</form>
     );

@@ -10,6 +10,10 @@ class FieldsModel {
     return field;
   };
 
+  field = (name) => {
+    return this.fields[name];
+  };
+
   validate = (name) => {
     if (name) {
       this.fields[name].validate();
@@ -38,6 +42,34 @@ class FieldsModel {
     this.list().forEach(field => data[field.name] = field.value);
     return data;
   };
+
+  reset = (name) => {
+    if (name) {
+      this.fields[name].reset();
+    } else {
+      this.list().forEach(field => field.reset());
+    }
+  };
+
+  init = (data = {}) => {
+    this.list().forEach(field => field.setValue(data[field.name]));
+  };
+
+  makeDirty = () => {
+    this.list().forEach(field => field.makeDirty());
+  };
+
+  isValid = () => {
+    return this.list().every(field => field.isValid());
+  };
+
+  values = () => {
+    const values = {};
+    this.list()
+      .filter(field => !field.isExcluded())
+      .forEach(field => values[field.name] = field.value);
+    return values;
+  }
 }
 
 export default FieldsModel;
