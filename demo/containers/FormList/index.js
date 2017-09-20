@@ -2,8 +2,9 @@ import uuid from 'uuid/v1';
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { Button, Row, Col } from 'react-bootstrap';
-import { VBForm, requiredValidator, passwordValidator } from '../../../src/FormsV1';
-import { RBField, FormActions } from './Fields';
+import ReactJsonSyntaxHighlighter from 'react-json-syntax-highlighter'
+import { VBForm, requiredValidator } from '../../../src/FormsV1';
+import { RBField, ColorField, FormActions } from './Fields';
 
 const required = (name, value) => {
   return requiredValidator(value);
@@ -67,8 +68,8 @@ class CarItems extends React.Component {
                   name="color"
                   value={car.color}
                   label="Car color"
-                  validator={required}
                   component={RBField}
+                  inputComponent={ColorField}
                   includeModel
                 />
               </Col>
@@ -87,23 +88,16 @@ class FormList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      errors: {}
+      values: {}
     };
   }
 
   onSubmit = (values) => {
-    console.log(1111111, values);
-    setTimeout(() => {
-      this.setState(() => ({
-        errors: {
-          fullName: 'Server error.',
-        },
-      }));
-    }, 2000);
+    this.setState(() => ({ values }));
   };
 
   render() {
-    const { errors } = this.state;
+    const { values } = this.state;
 
     return (
       <Row>
@@ -123,7 +117,6 @@ class FormList extends React.Component {
                   validator={required}
                   component={RBField}
                   includeModel
-                  submissionErrors={errors.fullName}
                 />
                 <hr />
               </Col>
@@ -134,6 +127,9 @@ class FormList extends React.Component {
             </div>
           </VBForm>
           <br />
+        </Col>
+        <Col xs={12}>
+          <ReactJsonSyntaxHighlighter obj={values} />
         </Col>
       </Row>
     );

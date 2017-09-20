@@ -45,6 +45,10 @@ class VBForm extends React.PureComponent {
     // console.log(22222, nextProps);
   }
 
+  componentDidUpdate() {
+    this.model.refresh();
+  }
+
   componentWillUnmount() {
     this.model.willDelete();
   }
