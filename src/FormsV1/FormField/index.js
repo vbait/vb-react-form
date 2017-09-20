@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { FormModel } from '../Form/FormModel';
+import { FormItemModel } from '../Form/FormItemModel';
 import { FieldErrors } from './FieldErrors';
 import { getElementProps } from './getElementProps';
 
@@ -23,13 +24,20 @@ class FormField extends PureComponent {
 
   static contextTypes = {
     formModel: PropTypes.instanceOf(FormModel).isRequired, // TODO: need to investigate
+    formItemModel: PropTypes.instanceOf(FormItemModel), // TODO: need to investigate
   };
 
   constructor(props, context) {
     super(props, context);
-    this.formModel = context.formModel;
-    this.fields = this.formModel.fields;
+    const { formModel, formItemModel } = context;
+
+    this.fields = formModel.fields;
+    if (formItemModel) {
+      this.fields = formItemModel.fields;
+    }
     this.model = this.fields.add({component: this, reload: this.handleReload, ...props});
+    this.formModel = formModel;
+    this.formItemModel = formItemModel;
   }
 
   componentDidMount() {
@@ -45,7 +53,8 @@ class FormField extends PureComponent {
   }
 
   componentWillUnmount() {
-
+    this.fields.remove(this.model.name);
+    // this.formModel.refresh();
   }
 
   handleReload = () => {
@@ -59,14 +68,18 @@ class FormField extends PureComponent {
   onChange = (value = '') => {
     this.model.setValue(value);
     this.model.setDirty(true);
-    this.formModel.updateFieldByName(this.model.name);
+    this.model.validate();
+    this.formModel.refresh();
+    // this.formModel.updateFieldByName(this.model.name);
     this.props.onChange(this.model);
     // this.props.onFieldChange(this.model, 'change');
   };
 
   onFocus = () => {
     this.model.setFocus(true);
-    this.formModel.updateFieldByName(this.model.name);
+    this.model.validate();
+    this.formModel.refresh();
+    //this.formModel.updateFieldByName(this.model.name);
     this.props.onFocus(this.model);
     // this.props.onFieldChange(this.model, 'focus');
   };
@@ -74,7 +87,9 @@ class FormField extends PureComponent {
   onBlur = () => {
     this.model.setFocus(false);
     this.model.setTouched(true);
-    this.formModel.updateFieldByName(this.model.name);
+    this.model.validate();
+    this.formModel.refresh();
+    // this.formModel.updateFieldByName(this.model.name);
     this.props.onBlur(this.model);
     // this.props.onFieldChange(this.model, 'blur');
   };

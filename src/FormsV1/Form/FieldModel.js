@@ -77,7 +77,7 @@ class FieldModel {
   };
 
   getErrors = () => {
-    return [...this.errors, this.formErrors];
+    return [...this.errors, ...this.formErrors];
   };
 }
 

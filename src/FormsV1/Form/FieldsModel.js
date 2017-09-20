@@ -10,6 +10,10 @@ class FieldsModel {
     return field;
   };
 
+  remove = (name) => {
+    delete this.fields[name];
+  };
+
   field = (name) => {
     return this.fields[name];
   };

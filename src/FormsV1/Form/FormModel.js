@@ -1,7 +1,7 @@
 import uuid from 'uuid/v1';
 import PubSub from '../PubSub';
 import FieldsModel from './FieldsModel';
-// import FormsModel from './FormsModel';
+import FormsModel from './FormsModel';
 
 class FormModel {
   constructor(name, validator, onChange, parent) {
@@ -12,6 +12,7 @@ class FormModel {
     this.initialized = false;
     this.subscribers = new PubSub();
     this.fields = new FieldsModel();
+    this.forms = new FormsModel();
     this.errors = [];
     this.onChange = onChange || (() => {});
   }
@@ -23,12 +24,7 @@ class FormModel {
 
   validate = () => {
     this.fields.validate();
-    const errors = this.validator(this.fields, this.fields.data());
-    this.updateErrors(errors['']);
-    this.fields.addErrors(errors);
-    // this.fields.reload();
-    // this.publish();
-    // this.onChange(this);
+    this.forms.validate();
     this.refresh();
   };
 
@@ -44,6 +40,10 @@ class FormModel {
   };
 
   refresh = () => {
+    const errors = this.validator(this.fields, this.fields.data());
+    this.updateErrors(errors['']);
+    this.fields.addErrors(errors);
+    this.forms.addErrors(errors);
     this.reload();
     this.publish();
     this.onChange(this);
@@ -51,29 +51,35 @@ class FormModel {
 
   reload = () => {
     this.fields.reload();
+    this.forms.reload();
   };
 
   reset = () => {
     this.fields.reset();
+    this.forms.reset();
     this.validate();
   };
 
   init = (data = {}, makeDirty = false) => {
     this.fields.reset();
+    this.forms.reset();
     this.fields.init(data);
+    this.forms.init(data);
     if (makeDirty) {
       this.fields.makeDirty();
+      this.forms.makeDirty();
     }
     this.validate();
   };
 
   makeDirty = () => {
     this.fields.makeDirty();
+    this.forms.makeDirty();
     this.validate();
   };
 
   isValid = () => {
-    return !this.errors.length && this.fields.isValid();
+    return !this.errors.length && this.fields.isValid() && this.forms.isValid();
   };
 
   isTouched = () => {

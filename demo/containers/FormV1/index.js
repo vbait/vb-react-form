@@ -18,11 +18,14 @@ const formValidator = (fields, data) => {
   if (invalid) {
     errors[''] = 'Form is not valid.';
   }
+  errors['profile'] = { city: ['City error'] };
   return errors;
 };
 
-const formProfileValidator = () => {
-  return {};
+const profileValidator = () => {
+  return {
+    city: ['Error'],
+  }
 };
 
 class Form extends React.Component {
@@ -135,7 +138,7 @@ class Form extends React.Component {
             />
             <hr />
             <h4>Profile</h4>
-            <VBForm.Item name="profile" validator={formProfileValidator}>
+            <VBForm.Item name="profile" validator={profileValidator}>
               <VBForm.Field
                 name="city"
                 value={user.profile.city}
