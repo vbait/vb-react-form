@@ -41,11 +41,14 @@ class FormField extends PureComponent {
   }
 
   componentDidMount() {
-
+    if (this.formModel.initialized) {
+      this.formModel.validate();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-
+    console.log(33333, nextProps);
+    this.model.setSubmissionErrors(nextProps.submissionErrors);
   }
 
   shouldComponentupdate() {
@@ -54,7 +57,9 @@ class FormField extends PureComponent {
 
   componentWillUnmount() {
     this.fields.remove(this.model.name);
-    // this.formModel.refresh();
+    if (this.formModel.initialized) {
+      this.formModel.validate();
+    }
   }
 
   handleReload = () => {
@@ -99,6 +104,7 @@ class FormField extends PureComponent {
       component,
       includeModel,
     } = this.props;
+
     const props = {
       ...getElementProps(this.props),
       value: this.model.value,

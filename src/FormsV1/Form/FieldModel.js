@@ -12,6 +12,7 @@ class FieldModel {
     this.handleReload = reload || (() => {});
     this.setValidator(validator);
     this.reset();
+    this.submissionErrors = [];
   }
 
   setValidator = (validator) => {
@@ -48,6 +49,15 @@ class FieldModel {
     }
   };
 
+  setSubmissionErrors = (errors) => {
+    this.submissionErrors = [];
+    if (Array.isArray(errors)) {
+      this.submissionErrors = errors;
+    } else if (errors) {
+      this.submissionErrors = [errors];
+    }
+  };
+
   reload = () => {
     this.handleReload();
   };
@@ -69,7 +79,11 @@ class FieldModel {
   };
 
   isValid = () => {
-    return !this.errors.length && !this.formErrors.length;
+    let isValid = !this.errors.length && !this.formErrors.length;
+    if (this.submitted && !this.changedAfterSubmit) {
+      return isValid && !this.submissionErrors.length;
+    }
+    return isValid;
   };
 
   isExcluded = () => {
@@ -77,7 +91,11 @@ class FieldModel {
   };
 
   getErrors = () => {
-    return [...this.errors, ...this.formErrors];
+    let errors = [...this.errors, ...this.formErrors];
+    if (this.submitted && !this.changedAfterSubmit) {
+      errors = [...errors, ...this.submissionErrors];
+    }
+    return errors;
   };
 }
 

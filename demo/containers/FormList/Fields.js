@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Alert } from 'react-bootstrap';
-import { VBForm, connectForm } from '../../../src/FormsV1';
+import { connectForm } from '../../../src/FormsV1';
 
 const Actions = ({ form }) => {
   const isValid = form.isValid();
@@ -16,55 +16,6 @@ Actions.propTypes = {
 };
 
 const FormActions = connectForm(Actions);
-
-class FormFieldWrapper extends React.Component {
-  state = {
-    invalid: false,
-  };
-
-  onFieldChange = (model) => {
-    this.setState(() => ({
-      invalid: model.touched && !model.isValid(),
-      errors: model.getErrors(),
-    }));
-  };
-
-  render() {
-    const { id, label } = this.props;
-    const { invalid, errors } = this.state;
-    return (
-      <FormGroup controlId={id} validationState={invalid ? 'error' : null}>
-        {label && <ControlLabel>{label}</ControlLabel>}
-        <VBForm.Field {...this.props} onFieldChange={this.onFieldChange} />
-        {invalid && (
-          <HelpBlock>
-            {errors.map(error => (
-              <div key={error}>{error}</div>
-            ))}
-          </HelpBlock>
-        )}
-      </FormGroup>
-    )
-  }
-}
-
-const PasswordField = ({ model, ...props }) => {
-  const invalid = model.touched && !model.isValid();
-  const errors = model.getErrors();
-  return (
-    <FormGroup controlId={props.id} validationState={invalid ? 'error' : null}>
-      {props.label && <ControlLabel>{props.label}</ControlLabel>}
-      <InputField {...props} />
-      {invalid && (
-        <HelpBlock>
-          {errors.map(error => (
-            <div key={error}>{error}</div>
-          ))}
-        </HelpBlock>
-      )}
-    </FormGroup>
-  );
-};
 
 const RBField = ({ model, ...props }) => {
   const invalid = model.touched && !model.isValid();
@@ -122,8 +73,6 @@ const ErrorComponent = ({ form, field }) => {
 
 export {
   FormActions,
-  FormFieldWrapper,
-  PasswordField,
   InputField,
   ErrorComponent,
   RBField,

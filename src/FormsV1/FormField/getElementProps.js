@@ -4,7 +4,8 @@ const isFieldProp = propName => (
   propName === 'excluded' ||
   propName === 'onUpdate' ||
   propName === 'onFieldChange' ||
-  propName === 'includeModel'
+  propName === 'includeModel' ||
+  propName === 'submissionErrors'
 );
 
 export const getElementProps = (props) => {

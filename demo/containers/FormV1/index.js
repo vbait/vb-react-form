@@ -18,13 +18,13 @@ const formValidator = (fields, data) => {
   if (invalid) {
     errors[''] = 'Form is not valid.';
   }
-  errors['profile'] = { city: ['City error'] };
+  errors['profile1'] = { city: ['City error'] };
   return errors;
 };
 
 const profileValidator = () => {
   return {
-    city: ['Error'],
+    city1: ['Error'],
   }
 };
 
@@ -61,7 +61,6 @@ class Form extends React.Component {
   };
 
   onChange = (model) => {
-    console.log(999999);
     const firstName = model.fields.field('firstName');
     const firstNameUppercase = model.fields.field('firstNameUppercase');
     const firstNameLowercase = model.fields.field('firstNameLowercase');
@@ -92,6 +91,12 @@ class Form extends React.Component {
       profile: {
         city: 'Chernivtsi',
         address: 'Chernivtsi',
+        profileChild: [
+          {
+            city: 'Chernivtsi',
+            address: 'Chernivtsi',
+          }
+        ],
       },
     }, true);
   };
@@ -100,8 +105,14 @@ class Form extends React.Component {
     this.form.makeDirty();
   };
 
+  toggleLastName = () => {
+    this.setState(prev => ({
+      showLastName: !prev.showLastName,
+    }));
+  };
+
   render() {
-    const { user } = this.state;
+    const { user, showLastName } = this.state;
     return (
       <Row>
         <Col xs={12}>
@@ -136,9 +147,21 @@ class Form extends React.Component {
               disabled
               excluded
             />
+            {showLastName ? (
+              <div>
+                <VBForm.Field
+                  name="lastName"
+                  component={InputField}
+                  placeholder="Last Name"
+                  validator={this.validators.required}
+                />
+                <VBForm.Errors name="lastName" component={ErrorComponent} />
+                <Button onClick={this.toggleLastName}>Remove Last Name</Button>
+              </div>
+            ) : <Button onClick={this.toggleLastName}>Add Last Name</Button>}
             <hr />
             <h4>Profile</h4>
-            <VBForm.Item name="profile" validator={profileValidator}>
+            <VBForm.Item name="profile" validator1={profileValidator}>
               <VBForm.Field
                 name="city"
                 value={user.profile.city}
@@ -155,6 +178,25 @@ class Form extends React.Component {
                 validator={this.validators.required}
                 includeModel
               />
+              <VBForm.Item name="profileChild" validator={profileValidator} asChild asList excluded={false}>
+                <VBForm.Field
+                  name="city"
+                  value={user.profile.city}
+                  label="City"
+                  component={PasswordField}
+                  validator={this.validators.required}
+                  includeModel
+                />
+                <VBForm.Errors name="city" component={ErrorComponent} />
+                <VBForm.Field
+                  name="address"
+                  value={user.profile.address}
+                  label="Address"
+                  component={PasswordField}
+                  validator={this.validators.required}
+                  includeModel
+                />
+              </VBForm.Item>
             </VBForm.Item>
             <hr />
             <h4>Password</h4>

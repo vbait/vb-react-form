@@ -9,10 +9,7 @@ class VBForm extends React.PureComponent {
   static propTypes = {
     name: PropTypes.string,
     validator: PropTypes.func,
-    children: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.arrayOf(PropTypes.element),
-    ]).isRequired,
+    children: PropTypes.any.isRequired,
     onLoad: PropTypes.func,
     onChange: PropTypes.func,
     onSubmit: PropTypes.func,
@@ -42,6 +39,14 @@ class VBForm extends React.PureComponent {
   componentDidMount() {
     this.model.completed();
     this.props.onLoad(this.model);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(22222, nextProps);
+  }
+
+  componentWillUnmount() {
+    this.model.willDelete();
   }
 
   onSubmit = (e) => {

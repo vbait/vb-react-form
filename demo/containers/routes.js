@@ -10,6 +10,11 @@ export default [
     component: require('./FormV1').default,
   },
   {
+    label: 'Form List',
+    path: '/form-list',
+    component: require('./FormList').default,
+  },
+  {
     label: 'Validators',
     path: '/validators',
     component: require('./Validators').default,

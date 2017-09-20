@@ -23,6 +23,11 @@ export default class PubSub {
     return false;
   }
 
+  unsubscribeAll() {
+    this.subscribers = [];
+    this.lastSubscriberId = 0;
+  }
+
   publish(...args) {
     this.subscribers.forEach((subscriber) => {
       subscriber.callback.apply(null, args);

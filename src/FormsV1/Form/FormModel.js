@@ -22,6 +22,12 @@ class FormModel {
     this.validate();
   };
 
+  willDelete = () => {
+    this.initialized = false;
+    this.subscribers.unsubscribeAll();
+    this.onChange = () => {};
+  };
+
   validate = () => {
     this.fields.validate();
     this.forms.validate();
@@ -83,11 +89,11 @@ class FormModel {
   };
 
   isTouched = () => {
-    return this.fields.isTouched();
+    return this.fields.isTouched() || this.forms.isTouched();
   };
 
   values = () => {
-    return this.fields.values();
+    return {...this.fields.values(), ...this.forms.values()};
   };
 
   updateErrors = (errors) => {
@@ -102,6 +108,7 @@ class FormModel {
   getErrors = () => {
     return {
       fields: this.fields.errors(),
+      forms: this.forms.errors(),
       form: this.errors,
     };
   };
@@ -114,7 +121,7 @@ class FormModel {
     return subscriberId;
   };
 
-  removeSubscriber = () => {
+  removeSubscriber = (id) => {
     return this.subscribers.unsubscribe(id);
   };
 
