@@ -47,11 +47,11 @@ class FormField extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(33333, nextProps);
+    // console.log(33333, nextProps);
     this.model.setSubmissionErrors(nextProps.submissionErrors);
   }
 
-  shouldComponentupdate() {
+  shouldComponentUpdate() {
     return false;
   }
 
@@ -71,6 +71,9 @@ class FormField extends PureComponent {
   onInit = () => {};
 
   onChange = (value = '') => {
+    if (this.model.submitted) {
+      this.model.changedAfterSubmit = true;
+    }
     this.model.setValue(value);
     this.model.setDirty(true);
     this.model.validate();

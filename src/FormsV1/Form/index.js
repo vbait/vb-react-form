@@ -42,7 +42,7 @@ class VBForm extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(22222, nextProps);
+    // console.log(22222, nextProps);
   }
 
   componentWillUnmount() {
@@ -52,6 +52,7 @@ class VBForm extends React.PureComponent {
   onSubmit = (e) => {
     e.preventDefault();
     if (this.model.isValid()) {
+      this.model.makeSubmitted();
       this.props.onSubmit(this.model.values(), this.model);
     }
   };

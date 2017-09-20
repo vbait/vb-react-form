@@ -58,6 +58,11 @@ class FormItemModel {
     this.forms.makeDirty();
   };
 
+  makeSubmitted = () => {
+    this.fields.makeSubmitted();
+    this.forms.makeSubmitted();
+  };
+
   values = () => {
     return {...this.fields.values(), ...this.forms.values()};
   };

@@ -34,17 +34,6 @@ class FormModel {
     this.refresh();
   };
 
-  updateFieldByName = (name) => {
-    this.fields.validate(name);
-    const errors = this.validator(this.fields, this.fields.data());
-    this.updateErrors(errors['']);
-    this.fields.addErrors(errors);
-    // this.fields.reload();
-    // this.publish();
-    // this.onChange(this);
-    this.refresh();
-  };
-
   refresh = () => {
     const errors = this.validator(this.fields, this.fields.data());
     this.updateErrors(errors['']);
@@ -82,6 +71,13 @@ class FormModel {
     this.fields.makeDirty();
     this.forms.makeDirty();
     this.validate();
+  };
+
+  makeSubmitted = () => {
+    this.fields.makeSubmitted();
+    this.forms.makeSubmitted();
+    this.reload();
+    this.publish();
   };
 
   isValid = () => {

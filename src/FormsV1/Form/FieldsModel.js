@@ -63,6 +63,10 @@ class FieldsModel {
     this.list().forEach(field => field.makeDirty());
   };
 
+  makeSubmitted = () => {
+    this.list().forEach(field => field.makeSubmitted());
+  };
+
   isValid = () => {
     return this.list().every(field => field.isValid());
   };

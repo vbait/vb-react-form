@@ -69,6 +69,10 @@ class FormsModel {
     this.list().forEach(form => form.makeDirty());
   };
 
+  makeSubmitted = () => {
+    this.list().forEach(form => form.makeSubmitted());
+  };
+
   isValid = () => {
     return this.list().every(form => form.isValid());
   };

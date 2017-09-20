@@ -93,11 +93,13 @@ class FormList extends React.Component {
 
   onSubmit = (values) => {
     console.log(1111111, values);
-    this.setState(() => ({
-      errors: {
-        fullName: 'Server error.',
-      },
-    }));
+    setTimeout(() => {
+      this.setState(() => ({
+        errors: {
+          fullName: 'Server error.',
+        },
+      }));
+    }, 2000);
   };
 
   render() {

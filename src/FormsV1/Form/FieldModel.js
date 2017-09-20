@@ -78,6 +78,11 @@ class FieldModel {
     this.dirty = true;
   };
 
+  makeSubmitted = () => {
+    this.submitted = true;
+    this.changedAfterSubmit = false;
+  };
+
   isValid = () => {
     let isValid = !this.errors.length && !this.formErrors.length;
     if (this.submitted && !this.changedAfterSubmit) {
