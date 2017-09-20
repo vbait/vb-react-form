@@ -5,6 +5,10 @@ class FormsModel {
     this.forms = {};
   }
 
+  get = (name, defaultValue) => {
+    return this.forms[name] || defaultValue;
+  };
+
   add = ({ name, validator, excluded }, asList) => {
     const model = new FormItemModel(name, validator, excluded);
     if (asList) {

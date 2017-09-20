@@ -4,7 +4,7 @@ import { Button, Row, Col } from 'react-bootstrap';
 import { VBForm, requiredValidator, passwordValidator } from '../../../src/FormsV1';
 import { FormActions, FormFieldWrapper, InputField, PasswordField, ErrorComponent } from './Fields';
 
-const formValidator = (fields, data) => {
+const formValidator = (form, fields, data) => {
   const errors = {};
   let invalid = false;
   if (data.firstName === 'Vitalii') {

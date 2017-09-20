@@ -29,7 +29,7 @@ class FormItemModel {
         return objValue.concat(srcValue);
       }
     };
-    const errors = this.validator(this.fields, this.fields.data());
+    const errors = this.validator(this, this.fields, this.fields.data());
     const mergedErrors = mergeWith({...parentErrors}, errors, customizer);
     this.fields.addErrors(mergedErrors);
     this.forms.addErrors(mergedErrors);

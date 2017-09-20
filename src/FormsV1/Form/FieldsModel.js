@@ -4,6 +4,14 @@ class FieldsModel {
     this.fields = {};
   }
 
+  get = (name) => {
+    return this.fields[name];
+  };
+
+  field = (name) => {
+    return this.fields[name];
+  };
+
   add = (props) => {
     const field = new FieldModel(props);
     this.fields[field.name] = field;
@@ -12,10 +20,6 @@ class FieldsModel {
 
   remove = (name) => {
     delete this.fields[name];
-  };
-
-  field = (name) => {
-    return this.fields[name];
   };
 
   validate = (name) => {

@@ -1,17 +1,23 @@
 import uuid from 'uuid/v1';
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { uniq } from 'lodash';
 import { Button, Row, Col } from 'react-bootstrap';
 import ReactJsonSyntaxHighlighter from 'react-json-syntax-highlighter'
 import { VBForm, requiredValidator } from '../../../src/FormsV1';
-import { RBField, ColorField, FormActions } from './Fields';
+import { RBField, ColorField, FormActions, ErrorComponent } from './Fields';
 
 const required = (name, value) => {
   return requiredValidator(value);
 };
 
-const formValidator = (fields, data) => {
-  const errors = {};
+const formValidator = (form) => {
+  const errors = { '': [] };
+  const cars = form.forms.get('cars', [])
+                .map(form => form.fields.get('name').value)
+                .filter(value => !!value);
+  if (cars.length !== uniq(cars).length) {
+    errors[''].push('Names of cars should be unique!');
+  }
   return errors;
 };
 
@@ -26,7 +32,7 @@ class CarItems extends React.Component {
   handleAdd = () => {
     const { cars } = this.state;
     this.setState(() => ({
-      cars: [...cars, {id: uuid()}],
+      cars: [...cars, {id: uuid(), color: {r: 0, g: 0, b: 0, a: 1}}],
     }));
   };
 
@@ -109,6 +115,11 @@ class FormList extends React.Component {
             onLoad={this.onLoad}
             validator={formValidator}
           >
+            <Row>
+              <Col xs={12}>
+                <VBForm.Errors component={ErrorComponent}/>
+              </Col>
+            </Row>
             <Row>
               <Col xs={12}>
                 <VBForm.Field

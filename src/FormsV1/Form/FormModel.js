@@ -35,7 +35,7 @@ class FormModel {
   };
 
   refresh = () => {
-    const errors = this.validator(this.fields, this.fields.data());
+    const errors = this.validator(this, this.fields, this.fields.data());
     this.updateErrors(errors['']);
     this.fields.addErrors(errors);
     this.forms.addErrors(errors);
