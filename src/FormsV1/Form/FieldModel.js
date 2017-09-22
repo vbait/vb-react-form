@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import FieldModelPublic from './FieldModelPublic';
 
 class FieldModel {
   constructor({ component, name, value, validator, reload, excluded }) {
@@ -13,7 +14,12 @@ class FieldModel {
     this.setValidator(validator);
     this.reset();
     this.submissionErrors = [];
+    this.public = new FieldModelPublic(this);
   }
+
+  getPublic = () => {
+    return this.public;
+  };
 
   setValidator = (validator) => {
     this.validator = validator || (() => ([]));

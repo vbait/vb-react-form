@@ -92,6 +92,12 @@ class FieldsModel {
     this.list().forEach(field => errors[field.name] = field.getErrors());
     return errors;
   };
+
+  getPublic = () => {
+    const fields = {};
+    this.list().forEach(field => fields[field.name] = field.getPublic());
+    return fields;
+  };
 }
 
 export default FieldsModel;

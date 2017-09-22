@@ -98,6 +98,10 @@ class FormList extends React.Component {
     };
   }
 
+  onLoad = (form, publicForm) => {
+    console.log(form, publicForm);
+  };
+
   onSubmit = (values) => {
     this.setState(() => ({ values }));
   };

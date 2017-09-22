@@ -13,6 +13,10 @@ class FormItemModel {
     this.forms = new FormsModel();
   }
 
+  getPublic = () => {
+    return null;
+  };
+
   validate = () => {
     this.fields.validate();
     this.forms.validate();

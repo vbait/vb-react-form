@@ -2,6 +2,7 @@ import uuid from 'uuid/v1';
 import PubSub from '../PubSub';
 import FieldsModel from './FieldsModel';
 import FormsModel from './FormsModel';
+import FormModelPublic from './FormModelPublic';
 
 class FormModel {
   constructor(name, validator, onChange, parent) {
@@ -15,7 +16,12 @@ class FormModel {
     this.forms = new FormsModel();
     this.errors = [];
     this.onChange = onChange || (() => {});
+    this.public = new FormModelPublic(this);
   }
+
+  getPublic = () => {
+    return this.public;
+  };
 
   completed = () => {
     this.initialized = true;

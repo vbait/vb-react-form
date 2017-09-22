@@ -38,7 +38,7 @@ class VBForm extends React.PureComponent {
 
   componentDidMount() {
     this.model.completed();
-    this.props.onLoad(this.model);
+    this.props.onLoad(this.model, this.model.getPublic());
   }
 
   componentWillReceiveProps(nextProps) {
