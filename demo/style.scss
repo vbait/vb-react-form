@@ -2,6 +2,9 @@
  * Style tweaks
  * --------------------------------------------------
  */
+html {
+  height: 100%;
+}
 html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
@@ -10,6 +13,7 @@ body {
 
 body {
   padding-top: 70px;
+  min-height: 100%;
 }
 
 footer {

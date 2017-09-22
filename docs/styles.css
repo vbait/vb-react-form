@@ -7145,6 +7145,9 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
  * Style tweaks
  * --------------------------------------------------
  */
+html {
+  height: 100%; }
+
 html,
 body {
   overflow-x: hidden;
@@ -7152,7 +7155,8 @@ body {
   background-color: #f9f9f9; }
 
 body {
-  padding-top: 70px; }
+  padding-top: 70px;
+  min-height: 100%; }
 
 footer {
   padding: 30px 0; }
