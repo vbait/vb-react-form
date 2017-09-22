@@ -2,7 +2,7 @@ import uuid from 'uuid/v1';
 import PubSub from '../PubSub';
 import FieldsModel from './FieldsModel';
 import FormsModel from './FormsModel';
-import FormModelPublic from './FormModelPublic';
+import FormModelPublic from './public/FormModelPublic';
 
 class FormModel {
   constructor(name, validator, onChange, parent) {

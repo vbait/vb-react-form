@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import FieldModelPublic from './FieldModelPublic';
+import FieldModelPublic from './public/FieldModelPublic';
 
 class FieldModel {
   constructor({ component, name, value, validator, reload, excluded }) {

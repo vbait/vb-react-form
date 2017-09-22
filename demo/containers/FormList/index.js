@@ -99,7 +99,9 @@ class FormList extends React.Component {
   }
 
   onLoad = (form, publicForm) => {
-    console.log(form, publicForm);
+    console.log(form);
+    console.log(publicForm.fields());
+    console.log(publicForm.forms());
   };
 
   onSubmit = (values) => {

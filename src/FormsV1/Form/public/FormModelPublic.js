@@ -1,10 +1,12 @@
+import { cloneDeep } from 'lodash';
+
 const privateModel = new WeakMap();
 
 export default class FormModelPublic {
   constructor(model) {
     privateModel.set(this, model);
-    this.id = model.id;
-    this.name = model.name;
+    this.id = cloneDeep(model.id);
+    this.name = cloneDeep(model.name);
   }
 
   refresh = () => {
@@ -49,7 +51,7 @@ export default class FormModelPublic {
 
   errors = () => {
     const model = privateModel.get(this);
-    return model.getErrors();
+    return cloneDeep(model.getErrors());
   };
 
   forms = () => {
