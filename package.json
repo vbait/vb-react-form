@@ -1,6 +1,6 @@
 {
   "name": "vb-react-form",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": false,
   "description": "React form components",
   "main": "lib/index.js",
@@ -20,7 +20,7 @@
     "form field",
     "form field validation"
   ],
-  "global": "VBReactForm",
+  "global": "VBForm",
   "repository": "https://github.com/vbait/vb-react-form.git",
   "author": "Vitalii Baitaliuk <flampschelsea@gmail.com>",
   "homepage": "https://github.com/vbait/vb-react-form",
