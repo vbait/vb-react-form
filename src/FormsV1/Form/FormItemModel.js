@@ -2,6 +2,7 @@ import uuid from 'uuid/v1';
 import { mergeWith } from 'lodash';
 import FieldsModel from './FieldsModel';
 import FormsModel from './FormsModel';
+import FormItemModelPublic from './public/FormItemModelPublic';
 
 class FormItemModel {
   constructor(name, validator, excluded = false) {
@@ -11,10 +12,11 @@ class FormItemModel {
     this.validator = validator || (() => ([]));
     this.fields = new FieldsModel();
     this.forms = new FormsModel();
+    this.public = new FormItemModelPublic(this);
   }
 
   getPublic = () => {
-    return null;
+    return this.public;
   };
 
   validate = () => {
@@ -65,6 +67,10 @@ class FormItemModel {
   makeSubmitted = () => {
     this.fields.makeSubmitted();
     this.forms.makeSubmitted();
+  };
+
+  data = () => {
+    return {...this.fields.data(), ...this.forms.data()};
   };
 
   values = () => {

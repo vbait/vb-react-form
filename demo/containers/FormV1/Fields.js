@@ -25,7 +25,7 @@ class FormFieldWrapper extends React.Component {
   onFieldChange = (model) => {
     this.setState(() => ({
       invalid: model.touched && !model.isValid(),
-      errors: model.getErrors(),
+      errors: model.errors(),
     }));
   };
 
@@ -50,7 +50,7 @@ class FormFieldWrapper extends React.Component {
 
 const PasswordField = ({ model, ...props }) => {
   const invalid = model.touched && !model.isValid();
-  const errors = model.getErrors();
+  const errors = model.errors();
   return (
     <FormGroup controlId={props.id} validationState={invalid ? 'error' : null}>
       {props.label && <ControlLabel>{props.label}</ControlLabel>}
@@ -68,7 +68,7 @@ const PasswordField = ({ model, ...props }) => {
 
 const RBField = ({ model, ...props }) => {
   const invalid = model.touched && !model.isValid();
-  const errors = model.getErrors();
+  const errors = model.errors();
   return (
     <FormGroup controlId={props.id} validationState={invalid ? 'error' : null}>
       {props.label && <ControlLabel>{props.label}</ControlLabel>}
@@ -101,11 +101,11 @@ const ErrorComponent = ({ form, field }) => {
   let errors = [];
   let invalid = false;
   if (field) {
-    errors = field.getErrors();
+    errors = field.errors();
     invalid = field.touched && !field.isValid();
   } else {
-    errors = form.errors;
-    invalid = form.isTouched() && form.errors.length;
+    errors = form.errors().form;
+    invalid = form.isTouched() && errors.length;
   }
   return (
     <div>

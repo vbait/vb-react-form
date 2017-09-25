@@ -21,7 +21,7 @@ const FormActions = connectForm(Actions);
 
 const RBField = ({ model, inputComponent, ...props }) => {
   const invalid = model.touched && !model.isValid();
-  const errors = model.getErrors();
+  const errors = model.errors();
   const Component = inputComponent || InputField;
   return (
     <FormGroup controlId={props.id} validationState={invalid ? 'error' : null}>
@@ -125,11 +125,11 @@ const ErrorComponent = ({ form, field }) => {
   let errors = [];
   let invalid = false;
   if (field) {
-    errors = field.getErrors();
+    errors = field.errors();
     invalid = field.touched && !field.isValid();
   } else {
-    errors = form.errors;
-    invalid = form.isTouched() && form.errors.length;
+    errors = form.errors().form;
+    invalid = form.isTouched() && errors.length;
   }
   return (
     <div>

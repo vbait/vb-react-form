@@ -64,11 +64,9 @@ class FormField extends PureComponent {
 
   handleReload = () => {
     this.forceUpdate();
-    this.props.onUpdate(this.model);
-    this.props.onFieldChange(this.model);
+    this.props.onUpdate(this.model.getPublic());
+    this.props.onFieldChange(this.model.getPublic());
   };
-
-  onInit = () => {};
 
   onChange = (value = '') => {
     if (this.model.submitted) {
@@ -79,7 +77,7 @@ class FormField extends PureComponent {
     this.model.validate();
     this.formModel.refresh();
     // this.formModel.updateFieldByName(this.model.name);
-    this.props.onChange(this.model);
+    this.props.onChange(this.model.getPublic());
     // this.props.onFieldChange(this.model, 'change');
   };
 
@@ -88,7 +86,7 @@ class FormField extends PureComponent {
     this.model.validate();
     this.formModel.refresh();
     //this.formModel.updateFieldByName(this.model.name);
-    this.props.onFocus(this.model);
+    this.props.onFocus(this.model.getPublic());
     // this.props.onFieldChange(this.model, 'focus');
   };
 
@@ -98,7 +96,7 @@ class FormField extends PureComponent {
     this.model.validate();
     this.formModel.refresh();
     // this.formModel.updateFieldByName(this.model.name);
-    this.props.onBlur(this.model);
+    this.props.onBlur(this.model.getPublic());
     // this.props.onFieldChange(this.model, 'blur');
   };
 
@@ -116,7 +114,7 @@ class FormField extends PureComponent {
       onBlur: this.onBlur,
     };
     if (includeModel) {
-      props.model = this.model;
+      props.model = this.model.getPublic();
     }
     return React.createElement(component, props);
     // return React.createElement(component, {

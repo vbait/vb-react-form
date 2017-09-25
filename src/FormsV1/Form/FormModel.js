@@ -25,7 +25,6 @@ class FormModel {
 
   completed = () => {
     this.initialized = true;
-    this.validate();
   };
 
   willDelete = () => {
@@ -41,13 +40,15 @@ class FormModel {
   };
 
   refresh = () => {
-    const errors = this.validator(this, this.fields, this.fields.data());
+    const errors = this.validator(this.getPublic());
     this.updateErrors(errors['']);
     this.fields.addErrors(errors);
     this.forms.addErrors(errors);
     this.reload();
     this.publish();
-    this.onChange(this);
+    if (this.initialized) {
+      this.onChange(this.getPublic());
+    }
   };
 
   reload = () => {
@@ -94,6 +95,10 @@ class FormModel {
     return this.fields.isTouched() || this.forms.isTouched();
   };
 
+  data = () => {
+    return {...this.fields.data(), ...this.forms.data()};
+  };
+
   values = () => {
     return {...this.fields.values(), ...this.forms.values()};
   };
@@ -128,7 +133,7 @@ class FormModel {
   };
 
   publish = () => {
-    this.subscribers.publish(this.fields.errors(), this.errors);
+    this.subscribers.publish();
   };
 }
 

@@ -2,40 +2,41 @@ import { cloneDeep } from 'lodash';
 
 const privateModel = new WeakMap();
 
-export default class FieldModelPublic {
+export default class FormItemModelPublic {
   constructor(model) {
     privateModel.set(this, model);
+    this.id = cloneDeep(model.id);
     this.name = cloneDeep(model.name);
   }
 
-  get value() {
+  reset = () => {
     const model = privateModel.get(this);
-    return cloneDeep(model.value);
-  }
-
-  get focused() {
-    const model = privateModel.get(this);
-    return cloneDeep(model.focused);
-  }
-
-  get touched() {
-    const model = privateModel.get(this);
-    return cloneDeep(model.touched);
-  }
-
-  get dirty() {
-    const model = privateModel.get(this);
-    return cloneDeep(model.dirty);
-  }
-
-  setValue = (value) => {
-    const model = privateModel.get(this);
-    return model.setValue(value);
+    return model.reset();
   };
 
-  errors = () => {
+  reload = () => {
     const model = privateModel.get(this);
-    return model.getErrors();
+    return model.reload();
+  };
+
+  init = (data = {}, makeDirty = false) => {
+    const model = privateModel.get(this);
+    return model.init(data, makeDirty)
+  };
+
+  makeDirty = () => {
+    const model = privateModel.get(this);
+    return model.makeDirty();
+  };
+
+  data = () => {
+    const model = privateModel.get(this);
+    return model.data();
+  };
+
+  values = () => {
+    const model = privateModel.get(this);
+    return model.values();
   };
 
   isValid = () => {
@@ -43,18 +44,23 @@ export default class FieldModelPublic {
     return model.isValid();
   };
 
-  isExcluded = () => {
+  isTouched = () => {
     const model = privateModel.get(this);
-    return model.isExcluded();
+    return model.isTouched();
   };
 
-  validate = () => {
+  errors = () => {
     const model = privateModel.get(this);
-    return model.validate();
+    return cloneDeep(model.getErrors());
   };
 
-  reload = () => {
+  forms = () => {
     const model = privateModel.get(this);
-    return model.reload();
+    return model.forms.getPublic();
+  };
+
+  fields = () => {
+    const model = privateModel.get(this);
+    return model.fields.getPublic();
   };
 }

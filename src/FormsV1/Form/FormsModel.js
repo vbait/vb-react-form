@@ -85,6 +85,22 @@ class FormsModel {
     return this.list().some(form => form.isTouched());
   };
 
+  data = () => {
+    const values = {};
+    Object.keys(this.forms).reduce((prev, key) => {
+      if (Array.isArray(this.forms[key])) {
+        prev[key] = this.forms[key].map(form => form.data());
+        if (!prev[key].length) {
+          delete prev[key];
+        }
+      } else  {
+        prev[key] = this.forms[key].data();
+      }
+      return prev;
+    }, values);
+    return values;
+  };
+
   values = () => {
     const values = {};
     Object.keys(this.forms).reduce((prev, key) => {

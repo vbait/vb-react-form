@@ -12,8 +12,9 @@ const required = (name, value) => {
 
 const formValidator = (form) => {
   const errors = { '': [] };
-  const cars = form.forms.get('cars', [])
-                .map(form => form.fields.get('name').value)
+  const forms = form.forms();
+  const cars = (forms.cars || [])
+                .map(form => form.fields().name.value)
                 .filter(value => !!value);
   if (cars.length !== uniq(cars).length) {
     errors[''].push('Names of cars should be unique!');
@@ -98,10 +99,10 @@ class FormList extends React.Component {
     };
   }
 
-  onLoad = (form, publicForm) => {
+  onLoad = (form) => {
     console.log(form);
-    console.log(publicForm.fields());
-    console.log(publicForm.forms());
+    console.log(form.fields());
+    console.log(form.forms());
   };
 
   onSubmit = (values) => {

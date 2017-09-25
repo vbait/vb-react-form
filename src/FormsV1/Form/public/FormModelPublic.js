@@ -14,6 +14,11 @@ export default class FormModelPublic {
     return model.refresh();
   };
 
+  reload = () => {
+    const model = privateModel.get(this);
+    return model.reload();
+  };
+
   reset = () => {
     const model = privateModel.get(this);
     return model.reset();
@@ -32,6 +37,11 @@ export default class FormModelPublic {
   makeSubmitted = () => {
     const model = privateModel.get(this);
     return model.makeSubmitted();
+  };
+
+  data = () => {
+    const model = privateModel.get(this);
+    return model.data();
   };
 
   values = () => {

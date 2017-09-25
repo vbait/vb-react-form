@@ -37,8 +37,9 @@ class VBForm extends React.PureComponent {
   }
 
   componentDidMount() {
+    this.model.validate();
     this.model.completed();
-    this.props.onLoad(this.model, this.model.getPublic());
+    this.props.onLoad(this.model.getPublic());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,7 +58,7 @@ class VBForm extends React.PureComponent {
     e.preventDefault();
     if (this.model.isValid()) {
       this.model.makeSubmitted();
-      this.props.onSubmit(this.model.values(), this.model);
+      this.props.onSubmit(this.model.values(), this.model.getPublic());
     }
   };
 

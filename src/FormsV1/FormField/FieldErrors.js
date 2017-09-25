@@ -46,9 +46,9 @@ class FieldErrors extends PureComponent {
         field = this.formModel.fields.field(name);
       }
       return React.createElement(component, {
-        form: this.formModel,
-        formItem: this.formItemModel,
-        field: field,
+        form: this.formModel.getPublic(),
+        formItem: this.formItemModel && this.formItemModel.getPublic(),
+        field: field && field.getPublic(),
         ...other,
       });
     }

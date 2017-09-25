@@ -4,7 +4,8 @@ import { Button, Row, Col } from 'react-bootstrap';
 import { VBForm, requiredValidator, passwordValidator } from '../../../src/FormsV1';
 import { FormActions, FormFieldWrapper, InputField, PasswordField, ErrorComponent } from './Fields';
 
-const formValidator = (form, fields, data) => {
+const formValidator = (form) => {
+  const data = form.data();
   const errors = {};
   let invalid = false;
   if (data.firstName === 'Vitalii') {
@@ -53,7 +54,10 @@ class Form extends React.Component {
   }
 
   onLoad = (model) => {
+    console.log('onLoad', model);
+    console.log(model.forms());
     this.form = model;
+    this.onChange(this.form);
   };
 
   onSubmit = (values) => {
@@ -61,9 +65,10 @@ class Form extends React.Component {
   };
 
   onChange = (model) => {
-    const firstName = model.fields.field('firstName');
-    const firstNameUppercase = model.fields.field('firstNameUppercase');
-    const firstNameLowercase = model.fields.field('firstNameLowercase');
+    const fields = model.fields();
+    const firstName = fields.firstName;
+    const firstNameUppercase = fields.firstNameUppercase;
+    const firstNameLowercase = fields.firstNameLowercase;
     firstNameUppercase.setValue(firstName.value.toUpperCase());
     firstNameUppercase.reload();
     firstNameLowercase.setValue(firstName.value.toLowerCase());
