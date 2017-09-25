@@ -89,6 +89,13 @@ module.exports = { "default": __webpack_require__("../node_modules/babel-runtime
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/core-js/object/define-property.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/fn/object/define-property.js"), __esModule: true };
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/core-js/object/entries.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -131,6 +138,13 @@ module.exports = { "default": __webpack_require__("../node_modules/babel-runtime
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/core-js/weak-map.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/fn/weak-map.js"), __esModule: true };
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/helpers/classCallCheck.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -144,6 +158,40 @@ exports.default = function (instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 };
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/helpers/createClass.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__("../node_modules/babel-runtime/core-js/object/define-property.js");
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      (0, _defineProperty2.default)(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
 
 /***/ }),
 
@@ -319,6 +367,17 @@ module.exports = function create(P, D){
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/fn/object/define-property.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.define-property.js");
+var $Object = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_core.js").Object;
+module.exports = function defineProperty(it, key, desc){
+  return $Object.defineProperty(it, key, desc);
+};
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/node_modules/core-js/library/fn/object/entries.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -371,6 +430,16 @@ module.exports = __webpack_require__("../node_modules/babel-runtime/node_modules
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/fn/weak-map.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.to-string.js");
+__webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/web.dom.iterable.js");
+__webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/es6.weak-map.js");
+module.exports = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_core.js").WeakMap;
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_a-function.js":
 /***/ (function(module, exports) {
 
@@ -385,6 +454,17 @@ module.exports = function(it){
 /***/ (function(module, exports) {
 
 module.exports = function(){ /* empty */ };
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_an-instance.js":
+/***/ (function(module, exports) {
+
+module.exports = function(it, Constructor, name, forbiddenField){
+  if(!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)){
+    throw TypeError(name + ': incorrect invocation!');
+  } return it;
+};
 
 /***/ }),
 
@@ -426,6 +506,90 @@ module.exports = function(IS_INCLUDES){
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-methods.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 0 -> Array#forEach
+// 1 -> Array#map
+// 2 -> Array#filter
+// 3 -> Array#some
+// 4 -> Array#every
+// 5 -> Array#find
+// 6 -> Array#findIndex
+var ctx      = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_ctx.js")
+  , IObject  = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_iobject.js")
+  , toObject = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_to-object.js")
+  , toLength = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_to-length.js")
+  , asc      = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-species-create.js");
+module.exports = function(TYPE, $create){
+  var IS_MAP        = TYPE == 1
+    , IS_FILTER     = TYPE == 2
+    , IS_SOME       = TYPE == 3
+    , IS_EVERY      = TYPE == 4
+    , IS_FIND_INDEX = TYPE == 6
+    , NO_HOLES      = TYPE == 5 || IS_FIND_INDEX
+    , create        = $create || asc;
+  return function($this, callbackfn, that){
+    var O      = toObject($this)
+      , self   = IObject(O)
+      , f      = ctx(callbackfn, that, 3)
+      , length = toLength(self.length)
+      , index  = 0
+      , result = IS_MAP ? create($this, length) : IS_FILTER ? create($this, 0) : undefined
+      , val, res;
+    for(;length > index; index++)if(NO_HOLES || index in self){
+      val = self[index];
+      res = f(val, index, O);
+      if(TYPE){
+        if(IS_MAP)result[index] = res;            // map
+        else if(res)switch(TYPE){
+          case 3: return true;                    // some
+          case 5: return val;                     // find
+          case 6: return index;                   // findIndex
+          case 2: result.push(val);               // filter
+        } else if(IS_EVERY)return false;          // every
+      }
+    }
+    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
+  };
+};
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-species-constructor.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_is-object.js")
+  , isArray  = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_is-array.js")
+  , SPECIES  = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_wks.js")('species');
+
+module.exports = function(original){
+  var C;
+  if(isArray(original)){
+    C = original.constructor;
+    // cross-realm fallback
+    if(typeof C == 'function' && (C === Array || isArray(C.prototype)))C = undefined;
+    if(isObject(C)){
+      C = C[SPECIES];
+      if(C === null)C = undefined;
+    }
+  } return C === undefined ? Array : C;
+};
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-species-create.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 9.4.2.3 ArraySpeciesCreate(originalArray, length)
+var speciesConstructor = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-species-constructor.js");
+
+module.exports = function(original, length){
+  return new (speciesConstructor(original))(length);
+};
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_classof.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -462,6 +626,162 @@ var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
+};
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_collection-weak.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var redefineAll       = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_redefine-all.js")
+  , getWeak           = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_meta.js").getWeak
+  , anObject          = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_an-object.js")
+  , isObject          = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_is-object.js")
+  , anInstance        = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_an-instance.js")
+  , forOf             = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_for-of.js")
+  , createArrayMethod = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-methods.js")
+  , $has              = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_has.js")
+  , arrayFind         = createArrayMethod(5)
+  , arrayFindIndex    = createArrayMethod(6)
+  , id                = 0;
+
+// fallback for uncaught frozen keys
+var uncaughtFrozenStore = function(that){
+  return that._l || (that._l = new UncaughtFrozenStore);
+};
+var UncaughtFrozenStore = function(){
+  this.a = [];
+};
+var findUncaughtFrozen = function(store, key){
+  return arrayFind(store.a, function(it){
+    return it[0] === key;
+  });
+};
+UncaughtFrozenStore.prototype = {
+  get: function(key){
+    var entry = findUncaughtFrozen(this, key);
+    if(entry)return entry[1];
+  },
+  has: function(key){
+    return !!findUncaughtFrozen(this, key);
+  },
+  set: function(key, value){
+    var entry = findUncaughtFrozen(this, key);
+    if(entry)entry[1] = value;
+    else this.a.push([key, value]);
+  },
+  'delete': function(key){
+    var index = arrayFindIndex(this.a, function(it){
+      return it[0] === key;
+    });
+    if(~index)this.a.splice(index, 1);
+    return !!~index;
+  }
+};
+
+module.exports = {
+  getConstructor: function(wrapper, NAME, IS_MAP, ADDER){
+    var C = wrapper(function(that, iterable){
+      anInstance(that, C, NAME, '_i');
+      that._i = id++;      // collection id
+      that._l = undefined; // leak store for uncaught frozen objects
+      if(iterable != undefined)forOf(iterable, IS_MAP, that[ADDER], that);
+    });
+    redefineAll(C.prototype, {
+      // 23.3.3.2 WeakMap.prototype.delete(key)
+      // 23.4.3.3 WeakSet.prototype.delete(value)
+      'delete': function(key){
+        if(!isObject(key))return false;
+        var data = getWeak(key);
+        if(data === true)return uncaughtFrozenStore(this)['delete'](key);
+        return data && $has(data, this._i) && delete data[this._i];
+      },
+      // 23.3.3.4 WeakMap.prototype.has(key)
+      // 23.4.3.4 WeakSet.prototype.has(value)
+      has: function has(key){
+        if(!isObject(key))return false;
+        var data = getWeak(key);
+        if(data === true)return uncaughtFrozenStore(this).has(key);
+        return data && $has(data, this._i);
+      }
+    });
+    return C;
+  },
+  def: function(that, key, value){
+    var data = getWeak(anObject(key), true);
+    if(data === true)uncaughtFrozenStore(that).set(key, value);
+    else data[that._i] = value;
+    return that;
+  },
+  ufstore: uncaughtFrozenStore
+};
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_collection.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global         = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_global.js")
+  , $export        = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_export.js")
+  , meta           = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_meta.js")
+  , fails          = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_fails.js")
+  , hide           = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_hide.js")
+  , redefineAll    = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_redefine-all.js")
+  , forOf          = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_for-of.js")
+  , anInstance     = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_an-instance.js")
+  , isObject       = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_is-object.js")
+  , setToStringTag = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_set-to-string-tag.js")
+  , dP             = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_object-dp.js").f
+  , each           = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-methods.js")(0)
+  , DESCRIPTORS    = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_descriptors.js");
+
+module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
+  var Base  = global[NAME]
+    , C     = Base
+    , ADDER = IS_MAP ? 'set' : 'add'
+    , proto = C && C.prototype
+    , O     = {};
+  if(!DESCRIPTORS || typeof C != 'function' || !(IS_WEAK || proto.forEach && !fails(function(){
+    new C().entries().next();
+  }))){
+    // create collection constructor
+    C = common.getConstructor(wrapper, NAME, IS_MAP, ADDER);
+    redefineAll(C.prototype, methods);
+    meta.NEED = true;
+  } else {
+    C = wrapper(function(target, iterable){
+      anInstance(target, C, NAME, '_c');
+      target._c = new Base;
+      if(iterable != undefined)forOf(iterable, IS_MAP, target[ADDER], target);
+    });
+    each('add,clear,delete,forEach,get,has,set,keys,values,entries,toJSON'.split(','),function(KEY){
+      var IS_ADDER = KEY == 'add' || KEY == 'set';
+      if(KEY in proto && !(IS_WEAK && KEY == 'clear'))hide(C.prototype, KEY, function(a, b){
+        anInstance(this, C, KEY);
+        if(!IS_ADDER && IS_WEAK && !isObject(a))return KEY == 'get' ? undefined : false;
+        var result = this._c[KEY](a === 0 ? 0 : a, b);
+        return IS_ADDER ? this : result;
+      });
+    });
+    if('size' in proto)dP(C.prototype, 'size', {
+      get: function(){
+        return this._c.size;
+      }
+    });
+  }
+
+  setToStringTag(C, NAME);
+
+  O[NAME] = C;
+  $export($export.G + $export.W + $export.F, O);
+
+  if(!IS_WEAK)common.setStrong(C, NAME, IS_MAP);
+
+  return C;
 };
 
 /***/ }),
@@ -657,6 +977,37 @@ module.exports = function(exec){
     return true;
   }
 };
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_for-of.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var ctx         = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_ctx.js")
+  , call        = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_iter-call.js")
+  , isArrayIter = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_is-array-iter.js")
+  , anObject    = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_an-object.js")
+  , toLength    = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_to-length.js")
+  , getIterFn   = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/core.get-iterator-method.js")
+  , BREAK       = {}
+  , RETURN      = {};
+var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
+  var iterFn = ITERATOR ? function(){ return iterable; } : getIterFn(iterable)
+    , f      = ctx(fn, that, entries ? 2 : 1)
+    , index  = 0
+    , length, step, iterator, result;
+  if(typeof iterFn != 'function')throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if(isArrayIter(iterFn))for(length = toLength(iterable.length); length > index; index++){
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if(result === BREAK || result === RETURN)return result;
+  } else for(iterator = iterFn.call(iterable); !(step = iterator.next()).done; ){
+    result = call(iterator, f, step.value, entries);
+    if(result === BREAK || result === RETURN)return result;
+  }
+};
+exports.BREAK  = BREAK;
+exports.RETURN = RETURN;
 
 /***/ }),
 
@@ -1306,6 +1657,19 @@ module.exports = function(bitmap, value){
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_redefine-all.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var hide = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_hide.js");
+module.exports = function(target, src, safe){
+  for(var key in src){
+    if(safe && target[key])target[key] = src[key];
+    else hide(target, key, src[key]);
+  } return target;
+};
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/_redefine.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1650,6 +2014,15 @@ $export($export.S, 'Object', {create: __webpack_require__("../node_modules/babel
 
 /***/ }),
 
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.define-property.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_export.js");
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !__webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_descriptors.js"), 'Object', {defineProperty: __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_object-dp.js").f});
+
+/***/ }),
+
 /***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/es6.object.keys.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1944,6 +2317,69 @@ setToStringTag($Symbol, 'Symbol');
 setToStringTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setToStringTag(global.JSON, 'JSON', true);
+
+/***/ }),
+
+/***/ "../node_modules/babel-runtime/node_modules/core-js/library/modules/es6.weak-map.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var each         = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_array-methods.js")(0)
+  , redefine     = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_redefine.js")
+  , meta         = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_meta.js")
+  , assign       = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_object-assign.js")
+  , weak         = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_collection-weak.js")
+  , isObject     = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_is-object.js")
+  , getWeak      = meta.getWeak
+  , isExtensible = Object.isExtensible
+  , uncaughtFrozenStore = weak.ufstore
+  , tmp          = {}
+  , InternalMap;
+
+var wrapper = function(get){
+  return function WeakMap(){
+    return get(this, arguments.length > 0 ? arguments[0] : undefined);
+  };
+};
+
+var methods = {
+  // 23.3.3.3 WeakMap.prototype.get(key)
+  get: function get(key){
+    if(isObject(key)){
+      var data = getWeak(key);
+      if(data === true)return uncaughtFrozenStore(this).get(key);
+      return data ? data[this._i] : undefined;
+    }
+  },
+  // 23.3.3.5 WeakMap.prototype.set(key, value)
+  set: function set(key, value){
+    return weak.def(this, key, value);
+  }
+};
+
+// 23.3 WeakMap Objects
+var $WeakMap = module.exports = __webpack_require__("../node_modules/babel-runtime/node_modules/core-js/library/modules/_collection.js")('WeakMap', wrapper, methods, weak, true, true);
+
+// IE11 WeakMap frozen keys fix
+if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
+  InternalMap = weak.getConstructor(wrapper);
+  assign(InternalMap.prototype, methods);
+  meta.NEED = true;
+  each(['delete', 'has', 'get', 'set'], function(key){
+    var proto  = $WeakMap.prototype
+      , method = proto[key];
+    redefine(proto, key, function(a, b){
+      // store frozen objects on internal weakmap shim
+      if(isObject(a) && !isExtensible(a)){
+        if(!this._f)this._f = new InternalMap;
+        var result = this._f[key](a, b);
+        return key == 'set' ? this : result;
+      // store all the rest on native weakmap
+      } return method.call(this, a, b);
+    });
+  });
+}
 
 /***/ }),
 
@@ -77211,6 +77647,10 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
 
+var _FieldModelPublic = __webpack_require__("../src/FormsV1/Form/public/FieldModelPublic.js");
+
+var _FieldModelPublic2 = _interopRequireDefault(_FieldModelPublic);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var FieldModel = function () {
@@ -77224,6 +77664,10 @@ var FieldModel = function () {
         reload = _ref.reload,
         excluded = _ref.excluded;
     (0, _classCallCheck3.default)(this, FieldModel);
+
+    this.getPublic = function () {
+      return _this.__getPublic__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
 
     this.setValidator = function () {
       return _this.__setValidator__REACT_HOT_LOADER__.apply(_this, arguments);
@@ -77296,7 +77740,12 @@ var FieldModel = function () {
     this.setValidator(validator);
     this.reset();
     this.submissionErrors = [];
+    this.public = new _FieldModelPublic2.default(this);
   }
+
+  FieldModel.prototype.__getPublic__REACT_HOT_LOADER__ = function __getPublic__REACT_HOT_LOADER__() {
+    return this.public;
+  };
 
   FieldModel.prototype.__setValidator__REACT_HOT_LOADER__ = function __setValidator__REACT_HOT_LOADER__(validator) {
     this.validator = validator || function () {
@@ -77402,9 +77851,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldModel, 'FieldModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldModel.js');
+  __REACT_HOT_LOADER__.register(FieldModel, 'FieldModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldModel.js');
 }();
 
 ;
@@ -77505,6 +77954,10 @@ var FieldsModel = function () {
 
     this.errors = function () {
       return _this.__errors__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.getPublic = function () {
+      return _this.__getPublic__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
     this.fields = {};
@@ -77623,6 +78076,14 @@ var FieldsModel = function () {
     return errors;
   };
 
+  FieldsModel.prototype.__getPublic__REACT_HOT_LOADER__ = function __getPublic__REACT_HOT_LOADER__() {
+    var fields = {};
+    this.list().forEach(function (field) {
+      return fields[field.name] = field.getPublic();
+    });
+    return fields;
+  };
+
   return FieldsModel;
 }();
 
@@ -77635,9 +78096,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldsModel, 'FieldsModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldsModel.js');
+  __REACT_HOT_LOADER__.register(FieldsModel, 'FieldsModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldsModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldsModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldsModel.js');
 }();
 
 ;
@@ -77760,7 +78221,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormItem, 'FormItem', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormItem.js');
+  __REACT_HOT_LOADER__.register(FormItem, 'FormItem', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormItem.js');
 }();
 
 ;
@@ -77798,6 +78259,10 @@ var _FormsModel = __webpack_require__("../src/FormsV1/Form/FormsModel.js");
 
 var _FormsModel2 = _interopRequireDefault(_FormsModel);
 
+var _FormItemModelPublic = __webpack_require__("../src/FormsV1/Form/public/FormItemModelPublic.js");
+
+var _FormItemModelPublic2 = _interopRequireDefault(_FormItemModelPublic);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var FormItemModel = function () {
@@ -77806,6 +78271,10 @@ var FormItemModel = function () {
 
     var excluded = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     (0, _classCallCheck3.default)(this, FormItemModel);
+
+    this.getPublic = function () {
+      return _this.__getPublic__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
 
     this.validate = function () {
       return _this.__validate__REACT_HOT_LOADER__.apply(_this, arguments);
@@ -77843,6 +78312,10 @@ var FormItemModel = function () {
       return _this.__makeSubmitted__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
+    this.data = function () {
+      return _this.__data__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
     this.values = function () {
       return _this.__values__REACT_HOT_LOADER__.apply(_this, arguments);
     };
@@ -77859,7 +78332,12 @@ var FormItemModel = function () {
     };
     this.fields = new _FieldsModel2.default();
     this.forms = new _FormsModel2.default();
+    this.public = new _FormItemModelPublic2.default(this);
   }
+
+  FormItemModel.prototype.__getPublic__REACT_HOT_LOADER__ = function __getPublic__REACT_HOT_LOADER__() {
+    return this.public;
+  };
 
   FormItemModel.prototype.__validate__REACT_HOT_LOADER__ = function __validate__REACT_HOT_LOADER__() {
     this.fields.validate();
@@ -77915,6 +78393,10 @@ var FormItemModel = function () {
     this.forms.makeSubmitted();
   };
 
+  FormItemModel.prototype.__data__REACT_HOT_LOADER__ = function __data__REACT_HOT_LOADER__() {
+    return (0, _extends3.default)({}, this.fields.data(), this.forms.data());
+  };
+
   FormItemModel.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
     return (0, _extends3.default)({}, this.fields.values(), this.forms.values());
   };
@@ -77937,7 +78419,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormItemModel, 'FormItemModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormItemModel.js');
+  __REACT_HOT_LOADER__.register(FormItemModel, 'FormItemModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormItemModel.js');
 }();
 
 ;
@@ -77977,6 +78459,10 @@ var _FormsModel = __webpack_require__("../src/FormsV1/Form/FormsModel.js");
 
 var _FormsModel2 = _interopRequireDefault(_FormsModel);
 
+var _FormModelPublic = __webpack_require__("../src/FormsV1/Form/public/FormModelPublic.js");
+
+var _FormModelPublic2 = _interopRequireDefault(_FormModelPublic);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var FormModel = function () {
@@ -77984,6 +78470,10 @@ var FormModel = function () {
     var _this = this;
 
     (0, _classCallCheck3.default)(this, FormModel);
+
+    this.getPublic = function () {
+      return _this.__getPublic__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
 
     this.completed = function () {
       return _this.__completed__REACT_HOT_LOADER__.apply(_this, arguments);
@@ -78029,6 +78519,10 @@ var FormModel = function () {
       return _this.__isTouched__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
+    this.data = function () {
+      return _this.__data__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
     this.values = function () {
       return _this.__values__REACT_HOT_LOADER__.apply(_this, arguments);
     };
@@ -78063,11 +78557,15 @@ var FormModel = function () {
     this.forms = new _FormsModel2.default();
     this.errors = [];
     this.onChange = onChange || function () {};
+    this.public = new _FormModelPublic2.default(this);
   }
+
+  FormModel.prototype.__getPublic__REACT_HOT_LOADER__ = function __getPublic__REACT_HOT_LOADER__() {
+    return this.public;
+  };
 
   FormModel.prototype.__completed__REACT_HOT_LOADER__ = function __completed__REACT_HOT_LOADER__() {
     this.initialized = true;
-    this.validate();
   };
 
   FormModel.prototype.__willDelete__REACT_HOT_LOADER__ = function __willDelete__REACT_HOT_LOADER__() {
@@ -78083,13 +78581,15 @@ var FormModel = function () {
   };
 
   FormModel.prototype.__refresh__REACT_HOT_LOADER__ = function __refresh__REACT_HOT_LOADER__() {
-    var errors = this.validator(this, this.fields, this.fields.data());
+    var errors = this.validator(this.getPublic());
     this.updateErrors(errors['']);
     this.fields.addErrors(errors);
     this.forms.addErrors(errors);
     this.reload();
     this.publish();
-    this.onChange(this);
+    if (this.initialized) {
+      this.onChange(this.getPublic());
+    }
   };
 
   FormModel.prototype.__reload__REACT_HOT_LOADER__ = function __reload__REACT_HOT_LOADER__() {
@@ -78139,6 +78639,10 @@ var FormModel = function () {
     return this.fields.isTouched() || this.forms.isTouched();
   };
 
+  FormModel.prototype.__data__REACT_HOT_LOADER__ = function __data__REACT_HOT_LOADER__() {
+    return (0, _extends3.default)({}, this.fields.data(), this.forms.data());
+  };
+
   FormModel.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
     return (0, _extends3.default)({}, this.fields.values(), this.forms.values());
   };
@@ -78173,7 +78677,7 @@ var FormModel = function () {
   };
 
   FormModel.prototype.__publish__REACT_HOT_LOADER__ = function __publish__REACT_HOT_LOADER__() {
-    this.subscribers.publish(this.fields.errors(), this.errors);
+    this.subscribers.publish();
   };
 
   return FormModel;
@@ -78187,7 +78691,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormModel, 'FormModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormModel.js');
+  __REACT_HOT_LOADER__.register(FormModel, 'FormModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormModel.js');
 }();
 
 ;
@@ -78272,6 +78776,10 @@ var FormsModel = function () {
       return _this.__isTouched__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
+    this.data = function () {
+      return _this.__data__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
     this.values = function () {
       return _this.__values__REACT_HOT_LOADER__.apply(_this, arguments);
     };
@@ -78282,6 +78790,10 @@ var FormsModel = function () {
 
     this.list = function () {
       return _this.__list__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.getPublic = function () {
+      return _this.__getPublic__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
     this.forms = {};
@@ -78395,13 +78907,33 @@ var FormsModel = function () {
     });
   };
 
-  FormsModel.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
+  FormsModel.prototype.__data__REACT_HOT_LOADER__ = function __data__REACT_HOT_LOADER__() {
     var _this4 = this;
 
     var values = {};
     (0, _keys2.default)(this.forms).reduce(function (prev, key) {
       if (Array.isArray(_this4.forms[key])) {
-        prev[key] = _this4.forms[key].filter(function (form) {
+        prev[key] = _this4.forms[key].map(function (form) {
+          return form.data();
+        });
+        if (!prev[key].length) {
+          delete prev[key];
+        }
+      } else {
+        prev[key] = _this4.forms[key].data();
+      }
+      return prev;
+    }, values);
+    return values;
+  };
+
+  FormsModel.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
+    var _this5 = this;
+
+    var values = {};
+    (0, _keys2.default)(this.forms).reduce(function (prev, key) {
+      if (Array.isArray(_this5.forms[key])) {
+        prev[key] = _this5.forms[key].filter(function (form) {
           return !form.excluded;
         }).map(function (form) {
           return form.values();
@@ -78409,8 +78941,8 @@ var FormsModel = function () {
         if (!prev[key].length) {
           delete prev[key];
         }
-      } else if (!_this4.forms[key].excluded) {
-        prev[key] = _this4.forms[key].values();
+      } else if (!_this5.forms[key].excluded) {
+        prev[key] = _this5.forms[key].values();
       }
       return prev;
     }, values);
@@ -78418,17 +78950,17 @@ var FormsModel = function () {
   };
 
   FormsModel.prototype.__errors__REACT_HOT_LOADER__ = function __errors__REACT_HOT_LOADER__() {
-    var _this5 = this;
+    var _this6 = this;
 
     var errors = {};
     (0, _keys2.default)(this.forms).forEach(function (key) {
-      if (Array.isArray(_this5.forms[key])) {
+      if (Array.isArray(_this6.forms[key])) {
         errors[key] = [];
-        return _this5.forms[key].forEach(function (form) {
+        return _this6.forms[key].forEach(function (form) {
           errors[key].push(form.getErrors());
         });
       }
-      errors[key] = _this5.forms[key].getErrors();
+      errors[key] = _this6.forms[key].getErrors();
     });
     return errors;
   };
@@ -78444,147 +78976,23 @@ var FormsModel = function () {
     }, []);
   };
 
-  return FormsModel;
-}();
-
-var FormsModel1 = function () {
-  function FormsModel1() {
-    var _this6 = this;
-
-    (0, _classCallCheck3.default)(this, FormsModel1);
-
-    this.add = function () {
-      return _this6.__add__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.validate = function () {
-      return _this6.__validate__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.makeDirty = function () {
-      return _this6.__makeDirty__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.reset = function () {
-      return _this6.__reset__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.reload = function () {
-      return _this6.__reload__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.publish = function () {
-      return _this6.__publish__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.init = function () {
-      return _this6.__init__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.isTouched = function () {
-      return _this6.__isTouched__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.isValid = function () {
-      return _this6.__isValid__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.values = function () {
-      return _this6.__values__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.list = function () {
-      return _this6.__list__REACT_HOT_LOADER__.apply(_this6, arguments);
-    };
-
-    this.forms = {};
-  }
-
-  FormsModel1.prototype.__add__REACT_HOT_LOADER__ = function __add__REACT_HOT_LOADER__(model, asList) {
-    if (asList) {
-      if (!this.forms[model.name]) {
-        this.forms[model.name] = [];
-        this.forms[model.name].push(model);
-      }
-    } else {
-      this.forms[model.name] = model;
-    }
-  };
-
-  FormsModel1.prototype.__validate__REACT_HOT_LOADER__ = function __validate__REACT_HOT_LOADER__() {
-    this.list().forEach(function (form) {
-      return form.validate();
-    });
-  };
-
-  FormsModel1.prototype.__makeDirty__REACT_HOT_LOADER__ = function __makeDirty__REACT_HOT_LOADER__() {
-    this.list().forEach(function (form) {
-      return form.makeDirty();
-    });
-  };
-
-  FormsModel1.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
-    this.list().forEach(function (form) {
-      return form.reset();
-    });
-  };
-
-  FormsModel1.prototype.__reload__REACT_HOT_LOADER__ = function __reload__REACT_HOT_LOADER__() {
-    this.list().forEach(function (form) {
-      return form.reload();
-    });
-  };
-
-  FormsModel1.prototype.__publish__REACT_HOT_LOADER__ = function __publish__REACT_HOT_LOADER__() {
-    this.list().forEach(function (form) {
-      return form.publish();
-    });
-  };
-
-  FormsModel1.prototype.__init__REACT_HOT_LOADER__ = function __init__REACT_HOT_LOADER__() {
+  FormsModel.prototype.__getPublic__REACT_HOT_LOADER__ = function __getPublic__REACT_HOT_LOADER__() {
     var _this7 = this;
 
-    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
+    var forms = {};
     (0, _keys2.default)(this.forms).forEach(function (key) {
       if (Array.isArray(_this7.forms[key])) {
-        var formsValues = data[key] || [];
-        return _this7.forms[key].forEach(function (form, index) {
-          return form.init(formsValues[index]);
+        forms[key] = [];
+        return _this7.forms[key].forEach(function (form) {
+          forms[key].push(form.getPublic());
         });
       }
-      return _this7.forms[key].init(data[key]);
+      forms[key] = _this7.forms[key].getPublic();
     });
+    return forms;
   };
 
-  FormsModel1.prototype.__isTouched__REACT_HOT_LOADER__ = function __isTouched__REACT_HOT_LOADER__() {
-    return this.list().some(function (form) {
-      return form.isTouched();
-    });
-  };
-
-  FormsModel1.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
-    return this.list().every(function (form) {
-      return form.isValid();
-    });
-  };
-
-  FormsModel1.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
-    return {};
-  };
-
-  FormsModel1.prototype.__list__REACT_HOT_LOADER__ = function __list__REACT_HOT_LOADER__() {
-    return (0, _values2.default)(this.forms).reduce(function (list, current) {
-      if (Array.isArray(current)) {
-        list = [].concat(list, current);
-      } else {
-        list.push(current);
-      }
-      return list;
-    }, []);
-  };
-
-  return FormsModel1;
+  return FormsModel;
 }();
 
 var _default = FormsModel;
@@ -78596,11 +79004,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormsModel, 'FormsModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
+  __REACT_HOT_LOADER__.register(FormsModel, 'FormsModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormsModel.js');
 
-  __REACT_HOT_LOADER__.register(FormsModel1, 'FormsModel1', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
-
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormsModel.js');
 }();
 
 ;
@@ -78668,7 +79074,7 @@ var connectForm = function connectForm(WrappedComponent) {
     };
 
     HOC.prototype.render = function render() {
-      return _react2.default.createElement(WrappedComponent, { form: this.context.formModel });
+      return _react2.default.createElement(WrappedComponent, { form: this.context.formModel.getPublic() });
     };
 
     return HOC;
@@ -78687,7 +79093,7 @@ var _temp2 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(connectForm, 'connectForm', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/decorator.js');
+  __REACT_HOT_LOADER__.register(connectForm, 'connectForm', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/decorator.js');
 }();
 
 ;
@@ -78762,8 +79168,9 @@ var VBForm = function (_React$PureComponent) {
   };
 
   VBForm.prototype.componentDidMount = function componentDidMount() {
+    this.model.validate();
     this.model.completed();
-    this.props.onLoad(this.model);
+    this.props.onLoad(this.model.getPublic());
   };
 
   VBForm.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {};
@@ -78780,7 +79187,7 @@ var VBForm = function (_React$PureComponent) {
     e.preventDefault();
     if (this.model.isValid()) {
       this.model.makeSubmitted();
-      this.props.onSubmit(this.model.values(), this.model);
+      this.props.onSubmit(this.model.values(), this.model.getPublic());
     }
   };
 
@@ -78838,7 +79245,479 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(VBForm, 'VBForm', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/index.js');
+  __REACT_HOT_LOADER__.register(VBForm, 'VBForm', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/index.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "../src/FormsV1/Form/public/FieldModelPublic.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__("../node_modules/babel-runtime/helpers/createClass.js");
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _weakMap = __webpack_require__("../node_modules/babel-runtime/core-js/weak-map.js");
+
+var _weakMap2 = _interopRequireDefault(_weakMap);
+
+var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var privateModel = new _weakMap2.default();
+
+var FieldModelPublic = function () {
+  function FieldModelPublic(model) {
+    var _this = this;
+
+    (0, _classCallCheck3.default)(this, FieldModelPublic);
+
+    this.setValue = function () {
+      return _this.__setValue__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.errors = function () {
+      return _this.__errors__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.isValid = function () {
+      return _this.__isValid__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.isExcluded = function () {
+      return _this.__isExcluded__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.validate = function () {
+      return _this.__validate__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.reload = function () {
+      return _this.__reload__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    privateModel.set(this, model);
+    this.name = (0, _lodash.cloneDeep)(model.name);
+  }
+
+  FieldModelPublic.prototype.__setValue__REACT_HOT_LOADER__ = function __setValue__REACT_HOT_LOADER__(value) {
+    var model = privateModel.get(this);
+    return model.setValue(value);
+  };
+
+  FieldModelPublic.prototype.__errors__REACT_HOT_LOADER__ = function __errors__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.getErrors();
+  };
+
+  FieldModelPublic.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isValid();
+  };
+
+  FieldModelPublic.prototype.__isExcluded__REACT_HOT_LOADER__ = function __isExcluded__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isExcluded();
+  };
+
+  FieldModelPublic.prototype.__validate__REACT_HOT_LOADER__ = function __validate__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.validate();
+  };
+
+  FieldModelPublic.prototype.__reload__REACT_HOT_LOADER__ = function __reload__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.reload();
+  };
+
+  (0, _createClass3.default)(FieldModelPublic, [{
+    key: 'value',
+    get: function get() {
+      var model = privateModel.get(this);
+      return (0, _lodash.cloneDeep)(model.value);
+    }
+  }, {
+    key: 'focused',
+    get: function get() {
+      var model = privateModel.get(this);
+      return (0, _lodash.cloneDeep)(model.focused);
+    }
+  }, {
+    key: 'touched',
+    get: function get() {
+      var model = privateModel.get(this);
+      return (0, _lodash.cloneDeep)(model.touched);
+    }
+  }, {
+    key: 'dirty',
+    get: function get() {
+      var model = privateModel.get(this);
+      return (0, _lodash.cloneDeep)(model.dirty);
+    }
+  }]);
+  return FieldModelPublic;
+}();
+
+var _default = FieldModelPublic;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+
+  __REACT_HOT_LOADER__.register(FieldModelPublic, 'FieldModelPublic', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "../src/FormsV1/Form/public/FormItemModelPublic.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _weakMap = __webpack_require__("../node_modules/babel-runtime/core-js/weak-map.js");
+
+var _weakMap2 = _interopRequireDefault(_weakMap);
+
+var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var privateModel = new _weakMap2.default();
+
+var FormItemModelPublic = function () {
+  function FormItemModelPublic(model) {
+    var _this = this;
+
+    (0, _classCallCheck3.default)(this, FormItemModelPublic);
+
+    this.reset = function () {
+      return _this.__reset__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.reload = function () {
+      return _this.__reload__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.init = function () {
+      return _this.__init__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.makeDirty = function () {
+      return _this.__makeDirty__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.data = function () {
+      return _this.__data__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.values = function () {
+      return _this.__values__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.isValid = function () {
+      return _this.__isValid__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.isTouched = function () {
+      return _this.__isTouched__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.errors = function () {
+      return _this.__errors__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.forms = function () {
+      return _this.__forms__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.fields = function () {
+      return _this.__fields__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    privateModel.set(this, model);
+    this.id = (0, _lodash.cloneDeep)(model.id);
+    this.name = (0, _lodash.cloneDeep)(model.name);
+  }
+
+  FormItemModelPublic.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.reset();
+  };
+
+  FormItemModelPublic.prototype.__reload__REACT_HOT_LOADER__ = function __reload__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.reload();
+  };
+
+  FormItemModelPublic.prototype.__init__REACT_HOT_LOADER__ = function __init__REACT_HOT_LOADER__() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var makeDirty = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var model = privateModel.get(this);
+    return model.init(data, makeDirty);
+  };
+
+  FormItemModelPublic.prototype.__makeDirty__REACT_HOT_LOADER__ = function __makeDirty__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.makeDirty();
+  };
+
+  FormItemModelPublic.prototype.__data__REACT_HOT_LOADER__ = function __data__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.data();
+  };
+
+  FormItemModelPublic.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.values();
+  };
+
+  FormItemModelPublic.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isValid();
+  };
+
+  FormItemModelPublic.prototype.__isTouched__REACT_HOT_LOADER__ = function __isTouched__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isTouched();
+  };
+
+  FormItemModelPublic.prototype.__errors__REACT_HOT_LOADER__ = function __errors__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return (0, _lodash.cloneDeep)(model.getErrors());
+  };
+
+  FormItemModelPublic.prototype.__forms__REACT_HOT_LOADER__ = function __forms__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.forms.getPublic();
+  };
+
+  FormItemModelPublic.prototype.__fields__REACT_HOT_LOADER__ = function __fields__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.fields.getPublic();
+  };
+
+  return FormItemModelPublic;
+}();
+
+var _default = FormItemModelPublic;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+
+  __REACT_HOT_LOADER__.register(FormItemModelPublic, 'FormItemModelPublic', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "../src/FormsV1/Form/public/FormModelPublic.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _weakMap = __webpack_require__("../node_modules/babel-runtime/core-js/weak-map.js");
+
+var _weakMap2 = _interopRequireDefault(_weakMap);
+
+var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var privateModel = new _weakMap2.default();
+
+var FormModelPublic = function () {
+  function FormModelPublic(model) {
+    var _this = this;
+
+    (0, _classCallCheck3.default)(this, FormModelPublic);
+
+    this.refresh = function () {
+      return _this.__refresh__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.reload = function () {
+      return _this.__reload__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.reset = function () {
+      return _this.__reset__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.init = function () {
+      return _this.__init__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.makeDirty = function () {
+      return _this.__makeDirty__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.makeSubmitted = function () {
+      return _this.__makeSubmitted__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.data = function () {
+      return _this.__data__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.values = function () {
+      return _this.__values__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.isValid = function () {
+      return _this.__isValid__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.isTouched = function () {
+      return _this.__isTouched__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.errors = function () {
+      return _this.__errors__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.forms = function () {
+      return _this.__forms__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    this.fields = function () {
+      return _this.__fields__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    privateModel.set(this, model);
+    this.id = (0, _lodash.cloneDeep)(model.id);
+    this.name = (0, _lodash.cloneDeep)(model.name);
+  }
+
+  FormModelPublic.prototype.__refresh__REACT_HOT_LOADER__ = function __refresh__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.refresh();
+  };
+
+  FormModelPublic.prototype.__reload__REACT_HOT_LOADER__ = function __reload__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.reload();
+  };
+
+  FormModelPublic.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.reset();
+  };
+
+  FormModelPublic.prototype.__init__REACT_HOT_LOADER__ = function __init__REACT_HOT_LOADER__() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var makeDirty = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    var model = privateModel.get(this);
+    return model.init(data, makeDirty);
+  };
+
+  FormModelPublic.prototype.__makeDirty__REACT_HOT_LOADER__ = function __makeDirty__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.makeDirty();
+  };
+
+  FormModelPublic.prototype.__makeSubmitted__REACT_HOT_LOADER__ = function __makeSubmitted__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.makeSubmitted();
+  };
+
+  FormModelPublic.prototype.__data__REACT_HOT_LOADER__ = function __data__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.data();
+  };
+
+  FormModelPublic.prototype.__values__REACT_HOT_LOADER__ = function __values__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.values();
+  };
+
+  FormModelPublic.prototype.__isValid__REACT_HOT_LOADER__ = function __isValid__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isValid();
+  };
+
+  FormModelPublic.prototype.__isTouched__REACT_HOT_LOADER__ = function __isTouched__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isTouched();
+  };
+
+  FormModelPublic.prototype.__errors__REACT_HOT_LOADER__ = function __errors__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return (0, _lodash.cloneDeep)(model.getErrors());
+  };
+
+  FormModelPublic.prototype.__forms__REACT_HOT_LOADER__ = function __forms__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.forms.getPublic();
+  };
+
+  FormModelPublic.prototype.__fields__REACT_HOT_LOADER__ = function __fields__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.fields.getPublic();
+  };
+
+  return FormModelPublic;
+}();
+
+var _default = FormModelPublic;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+
+  __REACT_HOT_LOADER__.register(FormModelPublic, 'FormModelPublic', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
 }();
 
 ;
@@ -78929,9 +79808,9 @@ var FieldErrors = function (_PureComponent) {
         field = this.formModel.fields.field(name);
       }
       return _react2.default.createElement(component, (0, _extends3.default)({
-        form: this.formModel,
-        formItem: this.formItemModel,
-        field: field
+        form: this.formModel.getPublic(),
+        formItem: this.formItemModel && this.formItemModel.getPublic(),
+        field: field && field.getPublic()
       }, other));
     }
     return null;
@@ -78960,7 +79839,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldErrors, 'FieldErrors', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/FieldErrors.js');
+  __REACT_HOT_LOADER__.register(FieldErrors, 'FieldErrors', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/FieldErrors.js');
 }();
 
 ;
@@ -79051,7 +79930,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldErrorsComponent, 'FieldErrorsComponent', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/FieldErrorsComponent.js');
+  __REACT_HOT_LOADER__.register(FieldErrorsComponent, 'FieldErrorsComponent', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/FieldErrorsComponent.js');
 }();
 
 ;
@@ -79097,9 +79976,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(isFieldProp, 'isFieldProp', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/getElementProps.js');
+  __REACT_HOT_LOADER__.register(isFieldProp, 'isFieldProp', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/getElementProps.js');
 
-  __REACT_HOT_LOADER__.register(getElementProps, 'getElementProps', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/getElementProps.js');
+  __REACT_HOT_LOADER__.register(getElementProps, 'getElementProps', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/getElementProps.js');
 }();
 
 ;
@@ -79161,10 +80040,6 @@ var FormField = function (_PureComponent) {
       return _this.__handleReload__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
-    _this.onInit = function () {
-      return _this.__onInit__REACT_HOT_LOADER__.apply(_this, arguments);
-    };
-
     _this.onChange = function () {
       return _this.__onChange__REACT_HOT_LOADER__.apply(_this, arguments);
     };
@@ -79214,11 +80089,9 @@ var FormField = function (_PureComponent) {
 
   FormField.prototype.__handleReload__REACT_HOT_LOADER__ = function __handleReload__REACT_HOT_LOADER__() {
     this.forceUpdate();
-    this.props.onUpdate(this.model);
-    this.props.onFieldChange(this.model);
+    this.props.onUpdate(this.model.getPublic());
+    this.props.onFieldChange(this.model.getPublic());
   };
-
-  FormField.prototype.__onInit__REACT_HOT_LOADER__ = function __onInit__REACT_HOT_LOADER__() {};
 
   FormField.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__() {
     var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -79231,7 +80104,7 @@ var FormField = function (_PureComponent) {
     this.model.validate();
     this.formModel.refresh();
 
-    this.props.onChange(this.model);
+    this.props.onChange(this.model.getPublic());
   };
 
   FormField.prototype.__onFocus__REACT_HOT_LOADER__ = function __onFocus__REACT_HOT_LOADER__() {
@@ -79239,7 +80112,7 @@ var FormField = function (_PureComponent) {
     this.model.validate();
     this.formModel.refresh();
 
-    this.props.onFocus(this.model);
+    this.props.onFocus(this.model.getPublic());
   };
 
   FormField.prototype.__onBlur__REACT_HOT_LOADER__ = function __onBlur__REACT_HOT_LOADER__() {
@@ -79248,7 +80121,7 @@ var FormField = function (_PureComponent) {
     this.model.validate();
     this.formModel.refresh();
 
-    this.props.onBlur(this.model);
+    this.props.onBlur(this.model.getPublic());
   };
 
   FormField.prototype.render = function render() {
@@ -79264,7 +80137,7 @@ var FormField = function (_PureComponent) {
       onBlur: this.onBlur
     });
     if (includeModel) {
-      props.model = this.model;
+      props.model = this.model.getPublic();
     }
     return _react2.default.createElement(component, props);
   };
@@ -79298,7 +80171,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormField, 'FormField', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/index.js');
+  __REACT_HOT_LOADER__.register(FormField, 'FormField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/index.js');
 }();
 
 ;
@@ -79374,9 +80247,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(PubSub, "PubSub", "E:/Projects/React/git/vb-react-form/src/FormsV1/PubSub.js");
+  __REACT_HOT_LOADER__.register(PubSub, "PubSub", "/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/PubSub.js");
 
-  __REACT_HOT_LOADER__.register(_default, "default", "E:/Projects/React/git/vb-react-form/src/FormsV1/PubSub.js");
+  __REACT_HOT_LOADER__.register(_default, "default", "/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/PubSub.js");
 }();
 
 ;
@@ -79483,19 +80356,19 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(requiredValidator, 'requiredValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(requiredValidator, 'requiredValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(emailValidator, 'emailValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(emailValidator, 'emailValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(equalValidator, 'equalValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(equalValidator, 'equalValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(regexValidator, 'regexValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(regexValidator, 'regexValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(passwordValidator, 'passwordValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(passwordValidator, 'passwordValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(minLengthValidator, 'minLengthValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(minLengthValidator, 'minLengthValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(maxLengthValidator, 'maxLengthValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(maxLengthValidator, 'maxLengthValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
 }();
 
 ;
@@ -79602,7 +80475,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(validators, 'validators', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/validators.js');
+  __REACT_HOT_LOADER__.register(validators, 'validators', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/validators.js');
 }();
 
 ;
@@ -79798,9 +80671,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(App, 'App', 'E:/Projects/React/git/vb-react-form/demo/containers/App/index.js');
+  __REACT_HOT_LOADER__.register(App, 'App', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/App/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/App/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/App/index.js');
 }();
 
 ;
@@ -79878,7 +80751,7 @@ var RBField = function RBField(_ref2) {
       props = (0, _objectWithoutProperties3.default)(_ref2, ['model', 'inputComponent']);
 
   var invalid = model.touched && !model.isValid();
-  var errors = model.getErrors();
+  var errors = model.errors();
   var Component = inputComponent || InputField;
   return _react2.default.createElement(
     _reactBootstrap.FormGroup,
@@ -80034,11 +80907,11 @@ var ErrorComponent = function ErrorComponent(_ref3) {
   var errors = [];
   var invalid = false;
   if (field) {
-    errors = field.getErrors();
+    errors = field.errors();
     invalid = field.touched && !field.isValid();
   } else {
-    errors = form.errors;
-    invalid = form.isTouched() && form.errors.length;
+    errors = form.errors().form;
+    invalid = form.isTouched() && errors.length;
   }
   return _react2.default.createElement(
     'div',
@@ -80069,17 +80942,17 @@ var _temp3 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Actions, 'Actions', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(Actions, 'Actions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(RBField, 'RBField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(RBField, 'RBField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(InputField, 'InputField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(InputField, 'InputField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(ColorField, 'ColorField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(ColorField, 'ColorField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
 }();
 
 ;
@@ -80134,8 +81007,9 @@ var required = function required(name, value) {
 
 var formValidator = function formValidator(form) {
   var errors = { '': [] };
-  var cars = form.forms.get('cars', []).map(function (form) {
-    return form.fields.get('name').value;
+  var forms = form.forms();
+  var cars = (forms.cars || []).map(function (form) {
+    return form.fields().name.value;
   }).filter(function (value) {
     return !!value;
   });
@@ -80271,6 +81145,10 @@ var FormList = function (_React$Component2) {
 
     var _this3 = (0, _possibleConstructorReturn3.default)(this, _React$Component2.call(this, props));
 
+    _this3.onLoad = function () {
+      return _this3.__onLoad__REACT_HOT_LOADER__.apply(_this3, arguments);
+    };
+
     _this3.onSubmit = function () {
       return _this3.__onSubmit__REACT_HOT_LOADER__.apply(_this3, arguments);
     };
@@ -80280,6 +81158,12 @@ var FormList = function (_React$Component2) {
     };
     return _this3;
   }
+
+  FormList.prototype.__onLoad__REACT_HOT_LOADER__ = function __onLoad__REACT_HOT_LOADER__(form) {
+    console.log(form);
+    console.log(form.fields());
+    console.log(form.forms());
+  };
 
   FormList.prototype.__onSubmit__REACT_HOT_LOADER__ = function __onSubmit__REACT_HOT_LOADER__(values) {
     this.setState(function () {
@@ -80364,15 +81248,672 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(required, 'required', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(required, 'required', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(CarItems, 'CarItems', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(CarItems, 'CarItems', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(FormList, 'FormList', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(FormList, 'FormList', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "./containers/FormV1/Fields.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.RBField = exports.ErrorComponent = exports.InputField = exports.PasswordField = exports.FormFieldWrapper = exports.FormActions = undefined;
+
+var _objectWithoutProperties2 = __webpack_require__("../node_modules/babel-runtime/helpers/objectWithoutProperties.js");
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _extends2 = __webpack_require__("../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = __webpack_require__("../node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__("../node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__("../node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactBootstrap = __webpack_require__("../node_modules/react-bootstrap/es/index.js");
+
+var _FormsV = __webpack_require__("../src/FormsV1/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Actions = function Actions(_ref) {
+  var form = _ref.form;
+
+  var isValid = form.isValid();
+  return _react2.default.createElement(
+    _reactBootstrap.Button,
+    { type: 'submit', bsStyle: 'success', disabled: !isValid },
+    isValid ? 'Submit' : 'Not Valid'
+  );
+};
+Actions.propTypes = {
+  form: _propTypes2.default.object.isRequired
+};
+
+var FormActions = (0, _FormsV.connectForm)(Actions);
+
+var FormFieldWrapper = function (_React$Component) {
+  (0, _inherits3.default)(FormFieldWrapper, _React$Component);
+
+  function FormFieldWrapper() {
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, FormFieldWrapper);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = {
+      invalid: false
+    }, _this.onFieldChange = function () {
+      var _this2;
+
+      return (_this2 = _this).__onFieldChange__REACT_HOT_LOADER__.apply(_this2, arguments);
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  FormFieldWrapper.prototype.__onFieldChange__REACT_HOT_LOADER__ = function __onFieldChange__REACT_HOT_LOADER__(model) {
+    this.setState(function () {
+      return {
+        invalid: model.touched && !model.isValid(),
+        errors: model.errors()
+      };
+    });
+  };
+
+  FormFieldWrapper.prototype.render = function render() {
+    var _props = this.props,
+        id = _props.id,
+        label = _props.label;
+    var _state = this.state,
+        invalid = _state.invalid,
+        errors = _state.errors;
+
+    return _react2.default.createElement(
+      _reactBootstrap.FormGroup,
+      { controlId: id, validationState: invalid ? 'error' : null },
+      label && _react2.default.createElement(
+        _reactBootstrap.ControlLabel,
+        null,
+        label
+      ),
+      _react2.default.createElement(_FormsV.VBForm.Field, (0, _extends3.default)({}, this.props, { onFieldChange: this.onFieldChange })),
+      invalid && _react2.default.createElement(
+        _reactBootstrap.HelpBlock,
+        null,
+        errors.map(function (error) {
+          return _react2.default.createElement(
+            'div',
+            { key: error },
+            error
+          );
+        })
+      )
+    );
+  };
+
+  return FormFieldWrapper;
+}(_react2.default.Component);
+
+var PasswordField = function PasswordField(_ref2) {
+  var model = _ref2.model,
+      props = (0, _objectWithoutProperties3.default)(_ref2, ['model']);
+
+  var invalid = model.touched && !model.isValid();
+  var errors = model.errors();
+  return _react2.default.createElement(
+    _reactBootstrap.FormGroup,
+    { controlId: props.id, validationState: invalid ? 'error' : null },
+    props.label && _react2.default.createElement(
+      _reactBootstrap.ControlLabel,
+      null,
+      props.label
+    ),
+    _react2.default.createElement(InputField, props),
+    invalid && _react2.default.createElement(
+      _reactBootstrap.HelpBlock,
+      null,
+      errors.map(function (error) {
+        return _react2.default.createElement(
+          'div',
+          { key: error },
+          error
+        );
+      })
+    )
+  );
+};
+
+var RBField = function RBField(_ref3) {
+  var model = _ref3.model,
+      props = (0, _objectWithoutProperties3.default)(_ref3, ['model']);
+
+  var invalid = model.touched && !model.isValid();
+  var errors = model.errors();
+  return _react2.default.createElement(
+    _reactBootstrap.FormGroup,
+    { controlId: props.id, validationState: invalid ? 'error' : null },
+    props.label && _react2.default.createElement(
+      _reactBootstrap.ControlLabel,
+      null,
+      props.label
+    ),
+    _react2.default.createElement(InputField, props),
+    invalid && _react2.default.createElement(
+      _reactBootstrap.HelpBlock,
+      null,
+      errors.map(function (error) {
+        return _react2.default.createElement(
+          'div',
+          { key: error },
+          error
+        );
+      })
+    )
+  );
+};
+
+var InputField = function (_React$PureComponent) {
+  (0, _inherits3.default)(InputField, _React$PureComponent);
+
+  function InputField() {
+    var _temp2, _this3, _ret2;
+
+    (0, _classCallCheck3.default)(this, InputField);
+
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return _ret2 = (_temp2 = (_this3 = (0, _possibleConstructorReturn3.default)(this, _React$PureComponent.call.apply(_React$PureComponent, [this].concat(args))), _this3), _this3.onChange = function () {
+      var _this4;
+
+      return (_this4 = _this3).__onChange__REACT_HOT_LOADER__.apply(_this4, arguments);
+    }, _temp2), (0, _possibleConstructorReturn3.default)(_this3, _ret2);
+  }
+
+  InputField.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__(event) {
+    event.preventDefault();
+    this.props.onChange(event.target.value);
+  };
+
+  InputField.prototype.render = function render() {
+    return _react2.default.createElement(_reactBootstrap.FormControl, (0, _extends3.default)({}, this.props, { onChange: this.onChange }));
+  };
+
+  return InputField;
+}(_react2.default.PureComponent);
+
+var ErrorComponent = function ErrorComponent(_ref4) {
+  var form = _ref4.form,
+      field = _ref4.field;
+
+  var errors = [];
+  var invalid = false;
+  if (field) {
+    errors = field.errors();
+    invalid = field.touched && !field.isValid();
+  } else {
+    errors = form.errors().form;
+    invalid = form.isTouched() && errors.length;
+  }
+  return _react2.default.createElement(
+    'div',
+    null,
+    invalid ? _react2.default.createElement(
+      _reactBootstrap.Alert,
+      { bsStyle: 'danger' },
+      errors.map(function (error) {
+        return _react2.default.createElement(
+          'div',
+          { key: error },
+          error
+        );
+      })
+    ) : null
+  );
+};
+
+exports.FormActions = FormActions;
+exports.FormFieldWrapper = FormFieldWrapper;
+exports.PasswordField = PasswordField;
+exports.InputField = InputField;
+exports.ErrorComponent = ErrorComponent;
+exports.RBField = RBField;
+;
+
+var _temp3 = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(Actions, 'Actions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+
+  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+
+  __REACT_HOT_LOADER__.register(FormFieldWrapper, 'FormFieldWrapper', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+
+  __REACT_HOT_LOADER__.register(PasswordField, 'PasswordField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+
+  __REACT_HOT_LOADER__.register(RBField, 'RBField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+
+  __REACT_HOT_LOADER__.register(InputField, 'InputField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+
+  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "./containers/FormV1/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = __webpack_require__("../node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__("../node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = __webpack_require__("../node_modules/react-bootstrap/es/index.js");
+
+var _FormsV = __webpack_require__("../src/FormsV1/index.js");
+
+var _Fields = __webpack_require__("./containers/FormV1/Fields.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var formValidator = function formValidator(form) {
+  var data = form.data();
+  var errors = {};
+  var invalid = false;
+  if (data.firstName === 'Vitalii') {
+    invalid = true;
+    errors.firstName = ['This value is not valid.'];
+  }
+  if (data.password1 !== data.password2) {
+    invalid = true;
+    errors.password2 = ['Passwords are not equal.'];
+  }
+  if (invalid) {
+    errors[''] = 'Form is not valid.';
+  }
+  errors['profile1'] = { city: ['City error'] };
+  return errors;
+};
+
+var profileValidator = function profileValidator() {
+  return {
+    city1: ['Error']
+  };
+};
+
+var Form = function (_React$Component) {
+  (0, _inherits3.default)(Form, _React$Component);
+
+  function Form(props) {
+    (0, _classCallCheck3.default)(this, Form);
+
+    var _this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call(this, props));
+
+    _this.onLoad = function () {
+      return _this.__onLoad__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.onSubmit = function () {
+      return _this.__onSubmit__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.onChange = function () {
+      return _this.__onChange__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.reset = function () {
+      return _this.__reset__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.init = function () {
+      return _this.__init__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.initAndDirty = function () {
+      return _this.__initAndDirty__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.dirty = function () {
+      return _this.__dirty__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.toggleLastName = function () {
+      return _this.__toggleLastName__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
+    _this.validators = {
+      firstName: function firstName(name, value) {
+        return (0, _FormsV.requiredValidator)(value);
+      },
+      required: function required(name, value) {
+        return (0, _FormsV.requiredValidator)(value);
+      },
+      password: function password(name, value) {
+        return (0, _FormsV.passwordValidator)(value);
+      }
+    };
+
+    _this.state = {
+      user: {
+        firstName: 'Vitalii',
+        profile: {}
+      }
+    };
+    return _this;
+  }
+
+  Form.prototype.__onLoad__REACT_HOT_LOADER__ = function __onLoad__REACT_HOT_LOADER__(model) {
+    console.log('onLoad', model);
+    console.log(model.forms());
+    this.form = model;
+    this.onChange(this.form);
+  };
+
+  Form.prototype.__onSubmit__REACT_HOT_LOADER__ = function __onSubmit__REACT_HOT_LOADER__(values) {
+    console.log(1111111, values);
+  };
+
+  Form.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__(model) {
+    var fields = model.fields();
+    var firstName = fields.firstName;
+    var firstNameUppercase = fields.firstNameUppercase;
+    var firstNameLowercase = fields.firstNameLowercase;
+    firstNameUppercase.setValue(firstName.value.toUpperCase());
+    firstNameUppercase.reload();
+    firstNameLowercase.setValue(firstName.value.toLowerCase());
+    firstNameLowercase.reload();
+  };
+
+  Form.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    this.form.reset();
+  };
+
+  Form.prototype.__init__REACT_HOT_LOADER__ = function __init__REACT_HOT_LOADER__() {
+    this.form.init({
+      firstName: 'V',
+      profile: {
+        city: 'Chernivtsi'
+      }
+    });
+  };
+
+  Form.prototype.__initAndDirty__REACT_HOT_LOADER__ = function __initAndDirty__REACT_HOT_LOADER__() {
+    this.form.init({
+      firstName: 'Vitalii1',
+      password1: 'aaaAAA111!',
+      password2: 'aaaAAA111!',
+      profile: {
+        city: 'Chernivtsi',
+        address: 'Chernivtsi',
+        profileChild: [{
+          city: 'Chernivtsi',
+          address: 'Chernivtsi'
+        }]
+      }
+    }, true);
+  };
+
+  Form.prototype.__dirty__REACT_HOT_LOADER__ = function __dirty__REACT_HOT_LOADER__() {
+    this.form.makeDirty();
+  };
+
+  Form.prototype.__toggleLastName__REACT_HOT_LOADER__ = function __toggleLastName__REACT_HOT_LOADER__() {
+    this.setState(function (prev) {
+      return {
+        showLastName: !prev.showLastName
+      };
+    });
+  };
+
+  Form.prototype.render = function render() {
+    var _state = this.state,
+        user = _state.user,
+        showLastName = _state.showLastName;
+
+    return _react2.default.createElement(
+      _reactBootstrap.Row,
+      null,
+      _react2.default.createElement(
+        _reactBootstrap.Col,
+        { xs: 12 },
+        _react2.default.createElement(
+          'h3',
+          { className: 'page-header' },
+          'Form V1'
+        ),
+        _react2.default.createElement(
+          _FormsV.VBForm,
+          {
+            onSubmit: this.onSubmit,
+            onChange: this.onChange,
+            onLoad: this.onLoad,
+            validator: formValidator
+          },
+          _react2.default.createElement(_FormsV.VBForm.Errors, { component: _Fields.ErrorComponent }),
+          _react2.default.createElement(_Fields.FormFieldWrapper, {
+            name: 'firstName',
+            value: user.firstName,
+            label: 'First Name',
+            component: _Fields.InputField,
+            validator: this.validators.firstName
+          }),
+          _react2.default.createElement(_FormsV.VBForm.Errors, { name: 'firstName', component: _Fields.ErrorComponent }),
+          _react2.default.createElement(_FormsV.VBForm.Field, {
+            name: 'firstNameUppercase',
+            label: 'First Name Uppercase',
+            component: _Fields.InputField,
+            placeholder: 'First Name Uppercase',
+            readOnly: true,
+            excluded: true
+          }),
+          _react2.default.createElement(_FormsV.VBForm.Field, {
+            name: 'firstNameLowercase',
+            component: _Fields.InputField,
+            placeholder: 'First Name Lowercase',
+            disabled: true,
+            excluded: true
+          }),
+          showLastName ? _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_FormsV.VBForm.Field, {
+              name: 'lastName',
+              component: _Fields.InputField,
+              placeholder: 'Last Name',
+              validator: this.validators.required
+            }),
+            _react2.default.createElement(_FormsV.VBForm.Errors, { name: 'lastName', component: _Fields.ErrorComponent }),
+            _react2.default.createElement(
+              _reactBootstrap.Button,
+              { onClick: this.toggleLastName },
+              'Remove Last Name'
+            )
+          ) : _react2.default.createElement(
+            _reactBootstrap.Button,
+            { onClick: this.toggleLastName },
+            'Add Last Name'
+          ),
+          _react2.default.createElement('hr', null),
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Profile'
+          ),
+          _react2.default.createElement(
+            _FormsV.VBForm.Item,
+            { name: 'profile', validator1: profileValidator },
+            _react2.default.createElement(_FormsV.VBForm.Field, {
+              name: 'city',
+              value: user.profile.city,
+              label: 'City',
+              component: _Fields.PasswordField,
+              validator: this.validators.required,
+              includeModel: true
+            }),
+            _react2.default.createElement(_FormsV.VBForm.Field, {
+              name: 'address',
+              value: user.profile.address,
+              label: 'Address',
+              component: _Fields.PasswordField,
+              validator: this.validators.required,
+              includeModel: true
+            }),
+            _react2.default.createElement(
+              _FormsV.VBForm.Item,
+              { name: 'profileChild', validator: profileValidator, asChild: true, asList: true, excluded: false },
+              _react2.default.createElement(_FormsV.VBForm.Field, {
+                name: 'city',
+                value: user.profile.city,
+                label: 'City',
+                component: _Fields.PasswordField,
+                validator: this.validators.required,
+                includeModel: true
+              }),
+              _react2.default.createElement(_FormsV.VBForm.Errors, { name: 'city', component: _Fields.ErrorComponent }),
+              _react2.default.createElement(_FormsV.VBForm.Field, {
+                name: 'address',
+                value: user.profile.address,
+                label: 'Address',
+                component: _Fields.PasswordField,
+                validator: this.validators.required,
+                includeModel: true
+              })
+            )
+          ),
+          _react2.default.createElement('hr', null),
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Password'
+          ),
+          _react2.default.createElement(_Fields.FormFieldWrapper, {
+            name: 'password1',
+            type: 'password',
+            value: user.password1,
+            label: 'Password',
+            component: _Fields.InputField,
+            validator: this.validators.password
+          }),
+          _react2.default.createElement(_FormsV.VBForm.Field, {
+            name: 'password2',
+            type: 'password',
+            value: user.password2,
+            label: 'Repeat Password',
+            component: _Fields.PasswordField,
+            validator: this.validators.password,
+            includeModel: true
+          }),
+          _react2.default.createElement(_Fields.FormActions, null),
+          _react2.default.createElement(
+            _reactBootstrap.Button,
+            { type: 'submit' },
+            'Submit'
+          )
+        ),
+        _react2.default.createElement('br', null)
+      ),
+      _react2.default.createElement(
+        _reactBootstrap.Col,
+        { xs: 12 },
+        _react2.default.createElement(
+          _reactBootstrap.Button,
+          { onClick: this.reset },
+          'Reset'
+        ),
+        '\xA0',
+        _react2.default.createElement(
+          _reactBootstrap.Button,
+          { onClick: this.init },
+          'Init'
+        ),
+        '\xA0',
+        _react2.default.createElement(
+          _reactBootstrap.Button,
+          { onClick: this.initAndDirty },
+          'Init and Dirty'
+        ),
+        '\xA0',
+        _react2.default.createElement(
+          _reactBootstrap.Button,
+          { onClick: this.dirty },
+          'Dirty'
+        )
+      )
+    );
+  };
+
+  return Form;
+}(_react2.default.Component);
+
+var _default = Form;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+
+  __REACT_HOT_LOADER__.register(profileValidator, 'profileValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+
+  __REACT_HOT_LOADER__.register(Form, 'Form', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
 }();
 
 ;
@@ -80472,9 +82013,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Home, 'Home', 'E:/Projects/React/git/vb-react-form/demo/containers/Home/index.js');
+  __REACT_HOT_LOADER__.register(Home, 'Home', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/Home/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/Home/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/Home/index.js');
 }();
 
 ;
@@ -80493,6 +82034,10 @@ var _default = [{
   path: '/',
   component: __webpack_require__("./containers/Home/index.js").default
 }, {
+  label: 'Form V1',
+  path: '/form-v1',
+  component: __webpack_require__("./containers/FormV1/index.js").default
+}, {
   label: 'Form List',
   path: '/form-list',
   component: __webpack_require__("./containers/FormList/index.js").default
@@ -80505,7 +82050,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/routes.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/routes.js');
 }();
 
 ;
@@ -80576,7 +82121,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(render, 'render', 'E:/Projects/React/git/vb-react-form/demo/index.js');
+  __REACT_HOT_LOADER__.register(render, 'render', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/index.js');
 }();
 
 ;
