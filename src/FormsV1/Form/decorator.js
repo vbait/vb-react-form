@@ -24,7 +24,7 @@ const connectForm = (WrappedComponent) => {
     }
 
     render() {
-      return <WrappedComponent form={this.context.formModel.getPublic()} />;
+      return <WrappedComponent {...this.props} form={this.context.formModel.getPublic()} />;
     }
   };
 

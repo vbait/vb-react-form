@@ -79022,6 +79022,10 @@ var _temp = function () {
 exports.__esModule = true;
 exports.connectForm = undefined;
 
+var _extends2 = __webpack_require__("../node_modules/babel-runtime/helpers/extends.js");
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -79074,7 +79078,7 @@ var connectForm = function connectForm(WrappedComponent) {
     };
 
     HOC.prototype.render = function render() {
-      return _react2.default.createElement(WrappedComponent, { form: this.context.formModel.getPublic() });
+      return _react2.default.createElement(WrappedComponent, (0, _extends3.default)({}, this.props, { form: this.context.formModel.getPublic() }));
     };
 
     return HOC;
