@@ -20,7 +20,7 @@ Actions.propTypes = {
 const FormActions = connectForm(Actions);
 
 const RBField = ({ model, inputComponent, ...props }) => {
-  const invalid = model.touched && !model.isValid();
+  let invalid = (model.submitted || model.touched) && !model.isValid();
   const errors = model.errors();
   const Component = inputComponent || InputField;
   return (

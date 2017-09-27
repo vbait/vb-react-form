@@ -43,11 +43,10 @@ class VBForm extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log(22222, nextProps);
   }
 
   componentDidUpdate() {
-    this.model.refresh();
+    // this.model.refresh();
   }
 
   componentWillUnmount() {

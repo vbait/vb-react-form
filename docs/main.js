@@ -79191,9 +79191,7 @@ var VBForm = function (_React$PureComponent) {
 
   VBForm.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {};
 
-  VBForm.prototype.componentDidUpdate = function componentDidUpdate() {
-    this.model.refresh();
-  };
+  VBForm.prototype.componentDidUpdate = function componentDidUpdate() {};
 
   VBForm.prototype.componentWillUnmount = function componentWillUnmount() {
     this.model.willDelete();
@@ -80781,7 +80779,7 @@ var RBField = function RBField(_ref2) {
       inputComponent = _ref2.inputComponent,
       props = (0, _objectWithoutProperties3.default)(_ref2, ['model', 'inputComponent']);
 
-  var invalid = model.touched && !model.isValid();
+  var invalid = (model.submitted || model.touched) && !model.isValid();
   var errors = model.errors();
   var Component = inputComponent || InputField;
   return _react2.default.createElement(
