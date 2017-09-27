@@ -78648,7 +78648,7 @@ var FormModel = function () {
   };
 
   FormModel.prototype.__isSubmitted__REACT_HOT_LOADER__ = function __isSubmitted__REACT_HOT_LOADER__() {
-    return this.fields.isTouched() || this.forms.isTouched();
+    return this.submitted;
   };
 
   FormModel.prototype.__data__REACT_HOT_LOADER__ = function __data__REACT_HOT_LOADER__() {

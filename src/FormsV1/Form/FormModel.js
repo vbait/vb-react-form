@@ -100,7 +100,7 @@ class FormModel {
   };
 
   isSubmitted = () => {
-    return this.fields.isTouched() || this.forms.isTouched();
+    return this.submitted;
   };
 
   data = () => {
