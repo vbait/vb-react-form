@@ -103,6 +103,11 @@ class FormList extends React.Component {
     console.log(form);
     console.log(form.fields());
     console.log(form.forms());
+    // this.props.onChange(form);
+  };
+
+  onChange = (form) => {
+    // this.props.onChange(form);
   };
 
   onSubmit = (values) => {

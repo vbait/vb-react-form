@@ -78447,6 +78447,8 @@ var _v = __webpack_require__("../node_modules/uuid/v1.js");
 
 var _v2 = _interopRequireDefault(_v);
 
+var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
+
 var _PubSub = __webpack_require__("../src/FormsV1/PubSub.js");
 
 var _PubSub2 = _interopRequireDefault(_PubSub);
@@ -78563,6 +78565,7 @@ var FormModel = function () {
     this.errors = [];
     this.onChange = onChange || function () {};
     this.public = new _FormModelPublic2.default(this);
+    this.refreshDebounce = (0, _lodash.debounce)(this.refresh, 100);
   }
 
   FormModel.prototype.__getPublic__REACT_HOT_LOADER__ = function __getPublic__REACT_HOT_LOADER__() {
@@ -80047,6 +80050,8 @@ var _propTypes = __webpack_require__("../node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
+
 var _FormModel = __webpack_require__("../src/FormsV1/Form/FormModel.js");
 
 var _FormItemModel = __webpack_require__("../src/FormsV1/Form/FormItemModel.js");
@@ -80103,6 +80108,11 @@ var FormField = function (_PureComponent) {
 
   FormField.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
     this.model.setSubmissionErrors(nextProps.submissionErrors);
+    if (!(0, _lodash.isEqual)(this.props.submissionErrors, nextProps.submissionErrors)) {
+      if (this.formModel.initialized) {
+        this.formModel.refreshDebounce();
+      }
+    }
   };
 
   FormField.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
@@ -81178,6 +81188,10 @@ var FormList = function (_React$Component2) {
       return _this3.__onLoad__REACT_HOT_LOADER__.apply(_this3, arguments);
     };
 
+    _this3.onChange = function () {
+      return _this3.__onChange__REACT_HOT_LOADER__.apply(_this3, arguments);
+    };
+
     _this3.onSubmit = function () {
       return _this3.__onSubmit__REACT_HOT_LOADER__.apply(_this3, arguments);
     };
@@ -81193,6 +81207,8 @@ var FormList = function (_React$Component2) {
     console.log(form.fields());
     console.log(form.forms());
   };
+
+  FormList.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__(form) {};
 
   FormList.prototype.__onSubmit__REACT_HOT_LOADER__ = function __onSubmit__REACT_HOT_LOADER__(values) {
     this.setState(function () {
@@ -81286,6 +81302,89 @@ var _temp = function () {
   __REACT_HOT_LOADER__.register(FormList, 'FormList', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
 
   __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+}();
+
+;
+
+/***/ }),
+
+/***/ "./containers/FormList/wrapper.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = __webpack_require__("../node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__("../node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__("../node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ = __webpack_require__("./containers/FormList/index.js");
+
+var _2 = _interopRequireDefault(_);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Wrapper = function (_React$Component) {
+  (0, _inherits3.default)(Wrapper, _React$Component);
+
+  function Wrapper() {
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, Wrapper);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, _React$Component.call.apply(_React$Component, [this].concat(args))), _this), _this.state = { index: 1 }, _this.onChange = function () {
+      var _this2;
+
+      return (_this2 = _this).__onChange__REACT_HOT_LOADER__.apply(_this2, arguments);
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  Wrapper.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__() {
+    console.log(11111111);
+    this.setState(function (prev) {
+      return {
+        index: prev.index + 1
+      };
+    });
+  };
+
+  Wrapper.prototype.render = function render() {
+    return _react2.default.createElement(_2.default, { onChange: this.onChange });
+  };
+
+  return Wrapper;
+}(_react2.default.Component);
+
+var _default = Wrapper;
+exports.default = _default;
+;
+
+var _temp2 = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(Wrapper, 'Wrapper', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/wrapper.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/wrapper.js');
 }();
 
 ;
@@ -82069,7 +82168,7 @@ var _default = [{
 }, {
   label: 'Form List',
   path: '/form-list',
-  component: __webpack_require__("./containers/FormList/index.js").default
+  component: __webpack_require__("./containers/FormList/wrapper.js").default
 }];
 exports.default = _default;
 ;

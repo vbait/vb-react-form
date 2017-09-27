@@ -12,7 +12,7 @@ export default [
   {
     label: 'Form List',
     path: '/form-list',
-    component: require('./FormList').default,
+    component: require('./FormList/wrapper').default,
   },
   // {
   //   label: 'Validators',

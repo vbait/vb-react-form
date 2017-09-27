@@ -1,4 +1,5 @@
 import uuid from 'uuid/v1';
+import { debounce } from 'lodash';
 import PubSub from '../PubSub';
 import FieldsModel from './FieldsModel';
 import FormsModel from './FormsModel';
@@ -18,6 +19,7 @@ class FormModel {
     this.errors = [];
     this.onChange = onChange || (() => {});
     this.public = new FormModelPublic(this);
+    this.refreshDebounce = debounce(this.refresh, 100);
   }
 
   getPublic = () => {

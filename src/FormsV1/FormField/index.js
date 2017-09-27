@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
 import { FormModel } from '../Form/FormModel';
 import { FormItemModel } from '../Form/FormItemModel';
 import { FieldErrors } from './FieldErrors';
@@ -49,6 +50,11 @@ class FormField extends PureComponent {
   componentWillReceiveProps(nextProps) {
     // console.log(33333, nextProps);
     this.model.setSubmissionErrors(nextProps.submissionErrors);
+    if (!isEqual(this.props.submissionErrors, nextProps.submissionErrors)) {
+      if (this.formModel.initialized) {
+        this.formModel.refreshDebounce();
+      }
+    }
   }
 
   shouldComponentUpdate() {
