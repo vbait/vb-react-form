@@ -11,6 +11,7 @@ class FormModel {
     this.name = name;
     this.validator = validator;
     this.initialized = false;
+    this.submitted = false;
     this.subscribers = new PubSub();
     this.fields = new FieldsModel();
     this.forms = new FormsModel();
@@ -57,12 +58,14 @@ class FormModel {
   };
 
   reset = () => {
+    this.submitted = false;
     this.fields.reset();
     this.forms.reset();
     this.validate();
   };
 
   init = (data = {}, makeDirty = false) => {
+    this.submitted = false;
     this.fields.reset();
     this.forms.reset();
     this.fields.init(data);
@@ -81,6 +84,7 @@ class FormModel {
   };
 
   makeSubmitted = () => {
+    this.submitted = true;
     this.fields.makeSubmitted();
     this.forms.makeSubmitted();
     this.reload();
@@ -92,6 +96,10 @@ class FormModel {
   };
 
   isTouched = () => {
+    return this.fields.isTouched() || this.forms.isTouched();
+  };
+
+  isSubmitted = () => {
     return this.fields.isTouched() || this.forms.isTouched();
   };
 

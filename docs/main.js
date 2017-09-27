@@ -78519,6 +78519,10 @@ var FormModel = function () {
       return _this.__isTouched__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
+    this.isSubmitted = function () {
+      return _this.__isSubmitted__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
     this.data = function () {
       return _this.__data__REACT_HOT_LOADER__.apply(_this, arguments);
     };
@@ -78552,6 +78556,7 @@ var FormModel = function () {
     this.name = name;
     this.validator = validator;
     this.initialized = false;
+    this.submitted = false;
     this.subscribers = new _PubSub2.default();
     this.fields = new _FieldsModel2.default();
     this.forms = new _FormsModel2.default();
@@ -78598,6 +78603,7 @@ var FormModel = function () {
   };
 
   FormModel.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
+    this.submitted = false;
     this.fields.reset();
     this.forms.reset();
     this.validate();
@@ -78607,6 +78613,7 @@ var FormModel = function () {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var makeDirty = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
+    this.submitted = false;
     this.fields.reset();
     this.forms.reset();
     this.fields.init(data);
@@ -78625,6 +78632,7 @@ var FormModel = function () {
   };
 
   FormModel.prototype.__makeSubmitted__REACT_HOT_LOADER__ = function __makeSubmitted__REACT_HOT_LOADER__() {
+    this.submitted = true;
     this.fields.makeSubmitted();
     this.forms.makeSubmitted();
     this.reload();
@@ -78636,6 +78644,10 @@ var FormModel = function () {
   };
 
   FormModel.prototype.__isTouched__REACT_HOT_LOADER__ = function __isTouched__REACT_HOT_LOADER__() {
+    return this.fields.isTouched() || this.forms.isTouched();
+  };
+
+  FormModel.prototype.__isSubmitted__REACT_HOT_LOADER__ = function __isSubmitted__REACT_HOT_LOADER__() {
     return this.fields.isTouched() || this.forms.isTouched();
   };
 
@@ -79626,6 +79638,10 @@ var FormModelPublic = function () {
       return _this.__isTouched__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
+    this.isSubmitted = function () {
+      return _this.__isSubmitted__REACT_HOT_LOADER__.apply(_this, arguments);
+    };
+
     this.errors = function () {
       return _this.__errors__REACT_HOT_LOADER__.apply(_this, arguments);
     };
@@ -79694,6 +79710,11 @@ var FormModelPublic = function () {
   FormModelPublic.prototype.__isTouched__REACT_HOT_LOADER__ = function __isTouched__REACT_HOT_LOADER__() {
     var model = privateModel.get(this);
     return model.isTouched();
+  };
+
+  FormModelPublic.prototype.__isSubmitted__REACT_HOT_LOADER__ = function __isSubmitted__REACT_HOT_LOADER__() {
+    var model = privateModel.get(this);
+    return model.isSubmitted();
   };
 
   FormModelPublic.prototype.__errors__REACT_HOT_LOADER__ = function __errors__REACT_HOT_LOADER__() {

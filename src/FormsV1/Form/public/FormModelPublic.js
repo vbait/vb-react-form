@@ -59,6 +59,11 @@ export default class FormModelPublic {
     return model.isTouched();
   };
 
+  isSubmitted = () => {
+    const model = privateModel.get(this);
+    return model.isSubmitted();
+  };
+
   errors = () => {
     const model = privateModel.get(this);
     return cloneDeep(model.getErrors());
