@@ -79370,6 +79370,12 @@ var FieldModelPublic = function () {
       var model = privateModel.get(this);
       return (0, _lodash.cloneDeep)(model.dirty);
     }
+  }, {
+    key: 'submitted',
+    get: function get() {
+      var model = privateModel.get(this);
+      return (0, _lodash.cloneDeep)(model.submitted);
+    }
   }]);
   return FieldModelPublic;
 }();

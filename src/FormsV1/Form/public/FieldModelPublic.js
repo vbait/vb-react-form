@@ -28,6 +28,11 @@ export default class FieldModelPublic {
     return cloneDeep(model.dirty);
   }
 
+  get submitted() {
+    const model = privateModel.get(this);
+    return cloneDeep(model.submitted);
+  }
+
   setValue = (value) => {
     const model = privateModel.get(this);
     return model.setValue(value);
