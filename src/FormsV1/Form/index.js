@@ -10,16 +10,16 @@ class VBForm extends React.PureComponent {
     name: PropTypes.string,
     validator: PropTypes.func,
     children: PropTypes.any.isRequired,
-    onLoad: PropTypes.func,
-    onChange: PropTypes.func,
+    onLoadForm: PropTypes.func,
+    onChangeForm: PropTypes.func,
     onSubmit: PropTypes.func,
   };
 
   static defaultProps = {
     name: null,
     validator: () => ({}),
-    onLoad: () => {},
-    onChange: () => {},
+    onLoadForm: () => {},
+    onChangeForm: () => {},
     onSubmit: () => {},
   };
 
@@ -29,7 +29,7 @@ class VBForm extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.model = new FormModel(props.name, props.validator, props.onChange);
+    this.model = new FormModel(props.name, props.validator, props.onChangeForm);
   }
 
   getChildContext() {
@@ -39,7 +39,7 @@ class VBForm extends React.PureComponent {
   componentDidMount() {
     this.model.validate();
     this.model.completed();
-    this.props.onLoad(this.model.getPublic());
+    this.props.onLoadForm(this.model.getPublic());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,7 +62,7 @@ class VBForm extends React.PureComponent {
   };
 
   render() {
-    const { children, onSubmit, onChange, validator, ...other } = this.props;
+    const { children, onSubmit, onChangeForm, onLoadForm, validator, ...other } = this.props;
     return (
       <form onSubmit={this.onSubmit} {...other}>{children}</form>
     );

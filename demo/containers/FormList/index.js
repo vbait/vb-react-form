@@ -123,8 +123,8 @@ class FormList extends React.Component {
           <h3 className="page-header">Cars</h3>
           <VBForm
             onSubmit={this.onSubmit}
-            onChange={this.onChange}
-            onLoad={this.onLoad}
+            onChangeForm={this.onChange}
+            onLoadForm={this.onLoad}
             validator={formValidator}
           >
             <Row>

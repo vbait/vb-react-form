@@ -77851,9 +77851,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldModel, 'FieldModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldModel.js');
+  __REACT_HOT_LOADER__.register(FieldModel, 'FieldModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldModel.js');
 }();
 
 ;
@@ -78096,9 +78096,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldsModel, 'FieldsModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldsModel.js');
+  __REACT_HOT_LOADER__.register(FieldsModel, 'FieldsModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldsModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FieldsModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldsModel.js');
 }();
 
 ;
@@ -78221,7 +78221,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormItem, 'FormItem', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormItem.js');
+  __REACT_HOT_LOADER__.register(FormItem, 'FormItem', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormItem.js');
 }();
 
 ;
@@ -78419,7 +78419,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormItemModel, 'FormItemModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormItemModel.js');
+  __REACT_HOT_LOADER__.register(FormItemModel, 'FormItemModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormItemModel.js');
 }();
 
 ;
@@ -78706,7 +78706,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormModel, 'FormModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormModel.js');
+  __REACT_HOT_LOADER__.register(FormModel, 'FormModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormModel.js');
 }();
 
 ;
@@ -79019,9 +79019,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormsModel, 'FormsModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormsModel.js');
+  __REACT_HOT_LOADER__.register(FormsModel, 'FormsModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/FormsModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
 }();
 
 ;
@@ -79112,7 +79112,7 @@ var _temp2 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(connectForm, 'connectForm', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/decorator.js');
+  __REACT_HOT_LOADER__.register(connectForm, 'connectForm', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/decorator.js');
 }();
 
 ;
@@ -79178,7 +79178,7 @@ var VBForm = function (_React$PureComponent) {
       return _this.__onSubmit__REACT_HOT_LOADER__.apply(_this, arguments);
     };
 
-    _this.model = new _FormModel.FormModel(props.name, props.validator, props.onChange);
+    _this.model = new _FormModel.FormModel(props.name, props.validator, props.onChangeForm);
     return _this;
   }
 
@@ -79189,7 +79189,7 @@ var VBForm = function (_React$PureComponent) {
   VBForm.prototype.componentDidMount = function componentDidMount() {
     this.model.validate();
     this.model.completed();
-    this.props.onLoad(this.model.getPublic());
+    this.props.onLoadForm(this.model.getPublic());
   };
 
   VBForm.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {};
@@ -79212,9 +79212,10 @@ var VBForm = function (_React$PureComponent) {
     var _props = this.props,
         children = _props.children,
         onSubmit = _props.onSubmit,
-        onChange = _props.onChange,
+        onChangeForm = _props.onChangeForm,
+        onLoadForm = _props.onLoadForm,
         validator = _props.validator,
-        other = (0, _objectWithoutProperties3.default)(_props, ['children', 'onSubmit', 'onChange', 'validator']);
+        other = (0, _objectWithoutProperties3.default)(_props, ['children', 'onSubmit', 'onChangeForm', 'onLoadForm', 'validator']);
 
     return _react2.default.createElement(
       'form',
@@ -79230,8 +79231,8 @@ VBForm.propTypes = {
   name: _propTypes2.default.string,
   validator: _propTypes2.default.func,
   children: _propTypes2.default.any.isRequired,
-  onLoad: _propTypes2.default.func,
-  onChange: _propTypes2.default.func,
+  onLoadForm: _propTypes2.default.func,
+  onChangeForm: _propTypes2.default.func,
   onSubmit: _propTypes2.default.func
 };
 VBForm.defaultProps = {
@@ -79239,8 +79240,8 @@ VBForm.defaultProps = {
   validator: function validator() {
     return {};
   },
-  onLoad: function onLoad() {},
-  onChange: function onChange() {},
+  onLoadForm: function onLoadForm() {},
+  onChangeForm: function onChangeForm() {},
   onSubmit: function onSubmit() {}
 };
 VBForm.childContextTypes = {
@@ -79262,7 +79263,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(VBForm, 'VBForm', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/index.js');
+  __REACT_HOT_LOADER__.register(VBForm, 'VBForm', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/index.js');
 }();
 
 ;
@@ -79402,11 +79403,11 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(FieldModelPublic, 'FieldModelPublic', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+  __REACT_HOT_LOADER__.register(FieldModelPublic, 'FieldModelPublic', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
 }();
 
 ;
@@ -79560,11 +79561,11 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(FormItemModelPublic, 'FormItemModelPublic', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+  __REACT_HOT_LOADER__.register(FormItemModelPublic, 'FormItemModelPublic', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
 }();
 
 ;
@@ -79745,11 +79746,11 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(FormModelPublic, 'FormModelPublic', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+  __REACT_HOT_LOADER__.register(FormModelPublic, 'FormModelPublic', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
 }();
 
 ;
@@ -79871,7 +79872,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldErrors, 'FieldErrors', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/FieldErrors.js');
+  __REACT_HOT_LOADER__.register(FieldErrors, 'FieldErrors', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/FieldErrors.js');
 }();
 
 ;
@@ -79962,7 +79963,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldErrorsComponent, 'FieldErrorsComponent', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/FieldErrorsComponent.js');
+  __REACT_HOT_LOADER__.register(FieldErrorsComponent, 'FieldErrorsComponent', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/FieldErrorsComponent.js');
 }();
 
 ;
@@ -80008,9 +80009,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(isFieldProp, 'isFieldProp', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/getElementProps.js');
+  __REACT_HOT_LOADER__.register(isFieldProp, 'isFieldProp', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/getElementProps.js');
 
-  __REACT_HOT_LOADER__.register(getElementProps, 'getElementProps', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/getElementProps.js');
+  __REACT_HOT_LOADER__.register(getElementProps, 'getElementProps', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/getElementProps.js');
 }();
 
 ;
@@ -80210,7 +80211,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormField, 'FormField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/FormField/index.js');
+  __REACT_HOT_LOADER__.register(FormField, 'FormField', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/index.js');
 }();
 
 ;
@@ -80286,9 +80287,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(PubSub, "PubSub", "/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/PubSub.js");
+  __REACT_HOT_LOADER__.register(PubSub, "PubSub", "E:/Projects/React/git/vb-react-form/src/FormsV1/PubSub.js");
 
-  __REACT_HOT_LOADER__.register(_default, "default", "/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/PubSub.js");
+  __REACT_HOT_LOADER__.register(_default, "default", "E:/Projects/React/git/vb-react-form/src/FormsV1/PubSub.js");
 }();
 
 ;
@@ -80395,19 +80396,19 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(requiredValidator, 'requiredValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(requiredValidator, 'requiredValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(emailValidator, 'emailValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(emailValidator, 'emailValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(equalValidator, 'equalValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(equalValidator, 'equalValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(regexValidator, 'regexValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(regexValidator, 'regexValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(passwordValidator, 'passwordValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(passwordValidator, 'passwordValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(minLengthValidator, 'minLengthValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(minLengthValidator, 'minLengthValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(maxLengthValidator, 'maxLengthValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(maxLengthValidator, 'maxLengthValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
 }();
 
 ;
@@ -80514,7 +80515,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(validators, 'validators', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/src/FormsV1/Validators/validators.js');
+  __REACT_HOT_LOADER__.register(validators, 'validators', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/validators.js');
 }();
 
 ;
@@ -80710,9 +80711,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(App, 'App', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/App/index.js');
+  __REACT_HOT_LOADER__.register(App, 'App', 'E:/Projects/React/git/vb-react-form/demo/containers/App/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/App/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/App/index.js');
 }();
 
 ;
@@ -80981,17 +80982,17 @@ var _temp3 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Actions, 'Actions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(Actions, 'Actions', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(RBField, 'RBField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(RBField, 'RBField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(InputField, 'InputField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(InputField, 'InputField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(ColorField, 'ColorField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(ColorField, 'ColorField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
 
-  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/Fields.js');
+  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/Fields.js');
 }();
 
 ;
@@ -81235,8 +81236,8 @@ var FormList = function (_React$Component2) {
           _FormsV.VBForm,
           {
             onSubmit: this.onSubmit,
-            onChange: this.onChange,
-            onLoad: this.onLoad,
+            onChangeForm: this.onChange,
+            onLoadForm: this.onLoad,
             validator: formValidator
           },
           _react2.default.createElement(
@@ -81293,15 +81294,15 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(required, 'required', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(required, 'required', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(CarItems, 'CarItems', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(CarItems, 'CarItems', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(FormList, 'FormList', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(FormList, 'FormList', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/index.js');
 }();
 
 ;
@@ -81382,9 +81383,9 @@ var _temp2 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Wrapper, 'Wrapper', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/wrapper.js');
+  __REACT_HOT_LOADER__.register(Wrapper, 'Wrapper', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/wrapper.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormList/wrapper.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/FormList/wrapper.js');
 }();
 
 ;
@@ -81646,19 +81647,19 @@ var _temp3 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Actions, 'Actions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(Actions, 'Actions', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 
-  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(FormActions, 'FormActions', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 
-  __REACT_HOT_LOADER__.register(FormFieldWrapper, 'FormFieldWrapper', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(FormFieldWrapper, 'FormFieldWrapper', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 
-  __REACT_HOT_LOADER__.register(PasswordField, 'PasswordField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(PasswordField, 'PasswordField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 
-  __REACT_HOT_LOADER__.register(RBField, 'RBField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(RBField, 'RBField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 
-  __REACT_HOT_LOADER__.register(InputField, 'InputField', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(InputField, 'InputField', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 
-  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/Fields.js');
+  __REACT_HOT_LOADER__.register(ErrorComponent, 'ErrorComponent', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/Fields.js');
 }();
 
 ;
@@ -81866,8 +81867,8 @@ var Form = function (_React$Component) {
           _FormsV.VBForm,
           {
             onSubmit: this.onSubmit,
-            onChange: this.onChange,
-            onLoad: this.onLoad,
+            onChangeForm: this.onChange,
+            onLoadForm: this.onLoad,
             validator: formValidator
           },
           _react2.default.createElement(_FormsV.VBForm.Errors, { component: _Fields.ErrorComponent }),
@@ -82035,13 +82036,13 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+  __REACT_HOT_LOADER__.register(formValidator, 'formValidator', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/index.js');
 
-  __REACT_HOT_LOADER__.register(profileValidator, 'profileValidator', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+  __REACT_HOT_LOADER__.register(profileValidator, 'profileValidator', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/index.js');
 
-  __REACT_HOT_LOADER__.register(Form, 'Form', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+  __REACT_HOT_LOADER__.register(Form, 'Form', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/FormV1/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/FormV1/index.js');
 }();
 
 ;
@@ -82141,9 +82142,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Home, 'Home', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/Home/index.js');
+  __REACT_HOT_LOADER__.register(Home, 'Home', 'E:/Projects/React/git/vb-react-form/demo/containers/Home/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/Home/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/Home/index.js');
 }();
 
 ;
@@ -82178,7 +82179,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/containers/routes.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/routes.js');
 }();
 
 ;
@@ -82249,7 +82250,7 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(render, 'render', '/Users/flamps/Documents/React/github/Flamps/vb-react-form/demo/index.js');
+  __REACT_HOT_LOADER__.register(render, 'render', 'E:/Projects/React/git/vb-react-form/demo/index.js');
 }();
 
 ;
