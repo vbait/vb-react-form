@@ -77735,7 +77735,7 @@ var FieldModel = function () {
     this.component = component;
     this.name = name;
     this.excluded = !!excluded;
-    this.initialValue = value || '';
+    this.initialValue = value;
     this.handleReload = reload || function () {};
     this.setValidator(validator);
     this.reset();
@@ -77753,9 +77753,7 @@ var FieldModel = function () {
     };
   };
 
-  FieldModel.prototype.__setValue__REACT_HOT_LOADER__ = function __setValue__REACT_HOT_LOADER__() {
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
+  FieldModel.prototype.__setValue__REACT_HOT_LOADER__ = function __setValue__REACT_HOT_LOADER__(value) {
     this.value = value;
   };
 
@@ -77799,7 +77797,7 @@ var FieldModel = function () {
   };
 
   FieldModel.prototype.__reset__REACT_HOT_LOADER__ = function __reset__REACT_HOT_LOADER__() {
-    this.value = (0, _lodash.cloneDeep)(this.initialValue);
+    this.setValue((0, _lodash.cloneDeep)(this.initialValue));
     this.focused = false;
     this.touched = false;
     this.dirty = false;
@@ -80841,7 +80839,11 @@ var InputField = function (_React$PureComponent) {
   };
 
   InputField.prototype.render = function render() {
-    return _react2.default.createElement(_reactBootstrap.FormControl, (0, _extends3.default)({}, this.props, { onChange: this.onChange }));
+    var _props = this.props,
+        value = _props.value,
+        other = (0, _objectWithoutProperties3.default)(_props, ['value']);
+
+    return _react2.default.createElement(_reactBootstrap.FormControl, (0, _extends3.default)({ value: value || '' }, other, { onChange: this.onChange }));
   };
 
   return InputField;
@@ -81598,7 +81600,11 @@ var InputField = function (_React$PureComponent) {
   };
 
   InputField.prototype.render = function render() {
-    return _react2.default.createElement(_reactBootstrap.FormControl, (0, _extends3.default)({}, this.props, { onChange: this.onChange }));
+    var _props2 = this.props,
+        value = _props2.value,
+        other = (0, _objectWithoutProperties3.default)(_props2, ['value']);
+
+    return _react2.default.createElement(_reactBootstrap.FormControl, (0, _extends3.default)({ value: value || '' }, other, { onChange: this.onChange }));
   };
 
   return InputField;

@@ -9,7 +9,7 @@ class FieldModel {
     this.component = component;
     this.name = name;
     this.excluded = !!excluded;
-    this.initialValue = value || '';
+    this.initialValue = value;
     this.handleReload = reload || (() => {});
     this.setValidator(validator);
     this.reset();
@@ -25,7 +25,7 @@ class FieldModel {
     this.validator = validator || (() => ([]));
   };
 
-  setValue = (value = '') => {
+  setValue = (value) => {
     this.value = value;
   };
 
@@ -69,7 +69,7 @@ class FieldModel {
   };
 
   reset = () => {
-    this.value = cloneDeep(this.initialValue);
+    this.setValue(cloneDeep(this.initialValue));
     this.focused = false;
     this.touched = false;
     this.dirty = false;

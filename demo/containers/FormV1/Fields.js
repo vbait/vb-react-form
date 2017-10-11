@@ -91,8 +91,9 @@ class InputField extends React.PureComponent {
   };
 
   render() {
+    const { value, ...other } = this.props;
     return (
-      <FormControl {...this.props} onChange={this.onChange} />
+      <FormControl value={value || ''} {...other} onChange={this.onChange} />
     )
   }
 }

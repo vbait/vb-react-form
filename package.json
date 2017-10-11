@@ -1,6 +1,6 @@
 {
   "name": "vb-react-form",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "private": false,
   "description": "React form components",
   "main": "lib/index.js",
