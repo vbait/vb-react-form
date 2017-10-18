@@ -2,9 +2,9 @@ import uuid from 'uuid/v1';
 import React from 'react';
 import { uniq } from 'lodash';
 import { Button, Row, Col } from 'react-bootstrap';
-import ReactJsonSyntaxHighlighter from 'react-json-syntax-highlighter'
 import { VBForm, requiredValidator } from '../../../src/FormsV1';
 import { RBField, ColorField, FormActions, ErrorComponent } from './Fields';
+import JSONPretty from 'react-json-pretty';
 
 const required = (name, value) => {
   return requiredValidator(value);
@@ -152,7 +152,7 @@ class FormList extends React.Component {
           <br />
         </Col>
         <Col xs={12}>
-          <ReactJsonSyntaxHighlighter obj={values} />
+          <JSONPretty json={values} />
         </Col>
       </Row>
     );

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
 import { FormModel } from '../Form/FormModel';
@@ -6,7 +6,7 @@ import { FormItemModel } from '../Form/FormItemModel';
 import { FieldErrors } from './FieldErrors';
 import { getElementProps } from './getElementProps';
 
-class FormField extends PureComponent {
+class FormField extends Component {
   static propTypes = {
     onFocus: PropTypes.func,
     onChange: PropTypes.func,
