@@ -16,11 +16,11 @@ class FieldErrorsComponent extends Component {
     let errors = [];
     let invalid = false;
     if (field) {
-      errors = field.getErrors();
+      errors = field.errors();
       invalid = field.touched && !field.isValid();
     } else {
-      errors = form.errors;
-      invalid = form.isTouched() && form.errors.length;
+      errors = form.errors().form;
+      invalid = form.isTouched() && errors.length;
     }
     return (
       <div>
