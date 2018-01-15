@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Alert } from 'react-bootstrap';
-import { VBForm, connectForm } from '../../../src/FormsV1';
+import { VBForm, connectForm } from '../../../src/Forms';
 
 const Actions = ({ form }) => {
   const isValid = form.isValid();

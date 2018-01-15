@@ -2,7 +2,7 @@ import uuid from 'uuid/v1';
 import React from 'react';
 import { uniq } from 'lodash';
 import { Button, Row, Col } from 'react-bootstrap';
-import { VBForm, requiredValidator } from '../../../src/FormsV1';
+import { VBForm, requiredValidator } from '../../../src/Forms';
 import { RBField, ColorField, FormActions, ErrorComponent } from './Fields';
 import JSONPretty from 'react-json-pretty';
 
@@ -26,7 +26,7 @@ class CarItems extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cars: []
+      cars: [],
     };
   }
 
@@ -95,7 +95,8 @@ class FormList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: {}
+      values: {},
+      disabled: true,
     };
   }
 
@@ -110,17 +111,22 @@ class FormList extends React.Component {
     // this.props.onChange(form);
   };
 
+  handleTest = () => {
+    this.setState(prev => ({ disabled: !prev.disabled }));
+  };
+
   onSubmit = (values) => {
     this.setState(() => ({ values }));
   };
 
   render() {
-    const { values } = this.state;
+    const { values, disabled } = this.state;
 
     return (
       <Row>
         <Col xs={12}>
           <h3 className="page-header">Cars</h3>
+          <Button onClick={this.handleTest}>Test</Button>
           <VBForm
             onSubmit={this.onSubmit}
             onChangeForm={this.onChange}
@@ -140,6 +146,7 @@ class FormList extends React.Component {
                   validator={required}
                   component={RBField}
                   includeModel
+                  disabled={disabled}
                 />
                 <hr />
               </Col>

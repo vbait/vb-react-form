@@ -5509,6 +5509,10 @@ react-overlays@^0.7.4:
     prop-types-extra "^1.0.1"
     warning "^3.0.0"
 
+react-prism@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-prism/-/react-prism-4.3.1.tgz#cf6ce5d77ee5d9cb91eed02801e3af7547d19214"
+
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-3.0.0-alpha.1.tgz#4400426bcfa80caa6724c7755695315209fa4b07"

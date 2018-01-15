@@ -57,8 +57,8 @@ class FormField extends Component {
     }
   }
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(getElementProps(nextProps), getElementProps(this.props));
   }
 
   componentWillUnmount() {
@@ -123,14 +123,6 @@ class FormField extends Component {
       props.model = this.model.getPublic();
     }
     return React.createElement(component, props);
-    // return React.createElement(component, {
-    //   value: this.model.value,
-    //   model: this.model,
-    //   fieldProps: getElementProps(this.props),
-    //   onFocus: this.onFocus,
-    //   onChange: this.onChange,
-    //   onBlur: this.onBlur,
-    // });
   }
 }
 

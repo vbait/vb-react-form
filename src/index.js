@@ -19,7 +19,7 @@
 // export { FormErrors } from './form-errors';
 // export { Form, formConnector } from './form';
 
-export { VBForm, connectForm } from './FormsV1';
+export { VBForm, connectForm } from './Forms';
 export {
   validators,
   requiredValidator,
@@ -29,4 +29,4 @@ export {
   passwordValidator,
   minLengthValidator,
   maxLengthValidator,
-} from './FormsV1/Validators';
+} from './Forms/Validators';

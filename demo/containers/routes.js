@@ -5,8 +5,13 @@ export default [
     component: require('./Home').default,
   },
   {
-    label: 'Form V1',
-    path: '/form-v1',
+    label: 'Docs',
+    path: '/docs',
+    component: require('./Docs').default,
+  },
+  {
+    label: 'Form Example',
+    path: '/form-example',
     component: require('./FormV1').default,
   },
   {

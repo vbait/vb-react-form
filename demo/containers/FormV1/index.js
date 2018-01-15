@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { Button, Row, Col } from 'react-bootstrap';
-import { VBForm, requiredValidator, passwordValidator } from '../../../src/FormsV1';
+import { VBForm, requiredValidator, passwordValidator } from '../../../src/Forms';
 import { FormActions, FormFieldWrapper, InputField, PasswordField, ErrorComponent } from './Fields';
 
 const formValidator = (form) => {
@@ -136,7 +136,6 @@ class Form extends React.Component {
               component={InputField}
               validator={this.validators.firstName}
             />
-            <VBForm.Errors name="firstName" component={ErrorComponent} />
             <VBForm.Field
               name="firstNameUppercase"
               label="First Name Uppercase"
@@ -152,6 +151,7 @@ class Form extends React.Component {
               disabled
               excluded
             />
+            <hr />
             {showLastName ? (
               <div>
                 <VBForm.Field

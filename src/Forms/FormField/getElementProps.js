@@ -1,11 +1,15 @@
 const isFieldProp = propName => (
+  propName === 'value' ||
   propName === 'component' ||
   propName === 'validator' ||
   propName === 'excluded' ||
   propName === 'onUpdate' ||
   propName === 'onFieldChange' ||
   propName === 'includeModel' ||
-  propName === 'submissionErrors'
+  propName === 'submissionErrors' ||
+  propName === 'onFocus' ||
+  propName === 'onChange' ||
+  propName === 'onBlur'
 );
 
 export const getElementProps = (props) => {

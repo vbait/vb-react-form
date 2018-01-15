@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Alert } from 'react-bootstrap';
 import reactCSS from 'reactcss';
 import { SketchPicker } from 'react-color';
-import { connectForm } from '../../../src/FormsV1';
+import { connectForm } from '../../../src/Forms';
 
 const Actions = ({ form }) => {
   const isValid = form.isValid();
