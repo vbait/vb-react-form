@@ -7331,4 +7331,8 @@ Code Mirror
 .prop-table {
   background-color: #fff; }
 
+:not(pre) > code[class*=language-] {
+  padding: 1em;
+  display: block; }
+
 /*# sourceMappingURL=styles.css.map*/

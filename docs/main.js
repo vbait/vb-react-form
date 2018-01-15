@@ -68460,6 +68460,199 @@ module.exports = exports['default'];
 
 /***/ }),
 
+/***/ "../node_modules/react-prism/lib/components/PrismCode.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true,
+})
+
+var _createClass = (function() {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i]
+      descriptor.enumerable = descriptor.enumerable || false
+      descriptor.configurable = true
+      if ("value" in descriptor) descriptor.writable = true
+      Object.defineProperty(target, descriptor.key, descriptor)
+    }
+  }
+  return function(Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps)
+    if (staticProps) defineProperties(Constructor, staticProps)
+    return Constructor
+  }
+})()
+
+var _react = __webpack_require__("../node_modules/react/index.js")
+
+var _react2 = _interopRequireDefault(_react)
+
+var _propTypes = __webpack_require__("../node_modules/prop-types/index.js")
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj }
+}
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function")
+  }
+}
+
+function _possibleConstructorReturn(self, call) {
+  if (!self) {
+    throw new ReferenceError(
+      "this hasn't been initialised - super() hasn't been called"
+    )
+  }
+  return call && (typeof call === "object" || typeof call === "function")
+    ? call
+    : self
+}
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError(
+      "Super expression must either be null or a function, not " +
+        typeof superClass
+    )
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true,
+    },
+  })
+  if (superClass)
+    Object.setPrototypeOf
+      ? Object.setPrototypeOf(subClass, superClass)
+      : (subClass.__proto__ = superClass)
+} /* global Prism */
+
+var PrismCode = (function(_PureComponent) {
+  _inherits(PrismCode, _PureComponent)
+
+  function PrismCode() {
+    var _ref
+
+    var _temp, _this, _ret
+
+    _classCallCheck(this, PrismCode)
+
+    for (
+      var _len = arguments.length, args = Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
+      args[_key] = arguments[_key]
+    }
+
+    return (
+      (_ret = ((_temp = ((_this = _possibleConstructorReturn(
+        this,
+        (_ref =
+          PrismCode.__proto__ || Object.getPrototypeOf(PrismCode)).call.apply(
+          _ref,
+          [this].concat(args)
+        )
+      )),
+      _this)),
+      (_this._handleRefMount = function(domNode) {
+        _this._domNode = domNode
+      }),
+      _temp)),
+      _possibleConstructorReturn(_this, _ret)
+    )
+  }
+
+  _createClass(PrismCode, [
+    {
+      key: "componentDidMount",
+      value: function componentDidMount() {
+        this._hightlight()
+      },
+    },
+    {
+      key: "componentDidUpdate",
+      value: function componentDidUpdate() {
+        this._hightlight()
+      },
+    },
+    {
+      key: "_hightlight",
+      value: function _hightlight() {
+        Prism.highlightElement(this._domNode, this.props.async)
+      },
+    },
+    {
+      key: "render",
+      value: function render() {
+        var _props = this.props,
+          className = _props.className,
+          Wrapper = _props.component,
+          children = _props.children
+
+        return _react2.default.createElement(
+          Wrapper,
+          { ref: this._handleRefMount, className: className },
+          children
+        )
+      },
+    },
+  ])
+
+  return PrismCode
+})(_react.PureComponent)
+
+PrismCode.propTypes = {
+  async: _propTypes.PropTypes.bool,
+  className: _propTypes.PropTypes.string,
+  children: _propTypes.PropTypes.any,
+  component: _propTypes.PropTypes.node,
+}
+PrismCode.defaultProps = {
+  component: "code",
+}
+exports.default = PrismCode
+
+
+/***/ }),
+
+/***/ "../node_modules/react-prism/lib/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _PrismCode = __webpack_require__("../node_modules/react-prism/lib/components/PrismCode.js");
+
+Object.defineProperty(exports, "PrismCode", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_PrismCode).default;
+  }
+});
+Object.defineProperty(exports, "default", {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_PrismCode).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
 /***/ "../node_modules/react-router-dom/es/BrowserRouter.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -77026,7 +77219,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/FieldModel.js":
+/***/ "../src/Forms/Form/FieldModel.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77040,7 +77233,7 @@ var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
 var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
 
-var _FieldModelPublic = __webpack_require__("../src/FormsV1/Form/public/FieldModelPublic.js");
+var _FieldModelPublic = __webpack_require__("../src/Forms/Form/public/FieldModelPublic.js");
 
 var _FieldModelPublic2 = _interopRequireDefault(_FieldModelPublic);
 
@@ -77306,16 +77499,16 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldModel, 'FieldModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldModel.js');
+  __REACT_HOT_LOADER__.register(FieldModel, 'FieldModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FieldModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FieldModel.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/FieldsModel.js":
+/***/ "../src/Forms/Form/FieldsModel.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77331,7 +77524,7 @@ var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helper
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _FieldModel = __webpack_require__("../src/FormsV1/Form/FieldModel.js");
+var _FieldModel = __webpack_require__("../src/Forms/Form/FieldModel.js");
 
 var _FieldModel2 = _interopRequireDefault(_FieldModel);
 
@@ -77623,16 +77816,16 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldsModel, 'FieldsModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldsModel.js');
+  __REACT_HOT_LOADER__.register(FieldsModel, 'FieldsModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FieldsModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FieldsModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FieldsModel.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/FormItem.js":
+/***/ "../src/Forms/Form/FormItem.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77661,9 +77854,9 @@ var _propTypes = __webpack_require__("../node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _FormModel = __webpack_require__("../src/FormsV1/Form/FormModel.js");
+var _FormModel = __webpack_require__("../src/Forms/Form/FormModel.js");
 
-var _FormItemModel = __webpack_require__("../src/FormsV1/Form/FormItemModel.js");
+var _FormItemModel = __webpack_require__("../src/Forms/Form/FormItemModel.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -77748,14 +77941,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormItem, 'FormItem', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormItem.js');
+  __REACT_HOT_LOADER__.register(FormItem, 'FormItem', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FormItem.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/FormItemModel.js":
+/***/ "../src/Forms/Form/FormItemModel.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77778,15 +77971,15 @@ var _v2 = _interopRequireDefault(_v);
 
 var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
 
-var _FieldsModel = __webpack_require__("../src/FormsV1/Form/FieldsModel.js");
+var _FieldsModel = __webpack_require__("../src/Forms/Form/FieldsModel.js");
 
 var _FieldsModel2 = _interopRequireDefault(_FieldsModel);
 
-var _FormsModel = __webpack_require__("../src/FormsV1/Form/FormsModel.js");
+var _FormsModel = __webpack_require__("../src/Forms/Form/FormsModel.js");
 
 var _FormsModel2 = _interopRequireDefault(_FormsModel);
 
-var _FormItemModelPublic = __webpack_require__("../src/FormsV1/Form/public/FormItemModelPublic.js");
+var _FormItemModelPublic = __webpack_require__("../src/Forms/Form/public/FormItemModelPublic.js");
 
 var _FormItemModelPublic2 = _interopRequireDefault(_FormItemModelPublic);
 
@@ -77998,14 +78191,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormItemModel, 'FormItemModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormItemModel.js');
+  __REACT_HOT_LOADER__.register(FormItemModel, 'FormItemModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FormItemModel.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/FormModel.js":
+/***/ "../src/Forms/Form/FormModel.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78028,19 +78221,19 @@ var _v2 = _interopRequireDefault(_v);
 
 var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
 
-var _PubSub = __webpack_require__("../src/FormsV1/PubSub.js");
+var _PubSub = __webpack_require__("../src/Forms/PubSub.js");
 
 var _PubSub2 = _interopRequireDefault(_PubSub);
 
-var _FieldsModel = __webpack_require__("../src/FormsV1/Form/FieldsModel.js");
+var _FieldsModel = __webpack_require__("../src/Forms/Form/FieldsModel.js");
 
 var _FieldsModel2 = _interopRequireDefault(_FieldsModel);
 
-var _FormsModel = __webpack_require__("../src/FormsV1/Form/FormsModel.js");
+var _FormsModel = __webpack_require__("../src/Forms/Form/FormsModel.js");
 
 var _FormsModel2 = _interopRequireDefault(_FormsModel);
 
-var _FormModelPublic = __webpack_require__("../src/FormsV1/Form/public/FormModelPublic.js");
+var _FormModelPublic = __webpack_require__("../src/Forms/Form/public/FormModelPublic.js");
 
 var _FormModelPublic2 = _interopRequireDefault(_FormModelPublic);
 
@@ -78365,14 +78558,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormModel, 'FormModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormModel.js');
+  __REACT_HOT_LOADER__.register(FormModel, 'FormModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FormModel.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/FormsModel.js":
+/***/ "../src/Forms/Form/FormsModel.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78392,7 +78585,7 @@ var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helper
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
-var _FormItemModel = __webpack_require__("../src/FormsV1/Form/FormItemModel.js");
+var _FormItemModel = __webpack_require__("../src/Forms/Form/FormItemModel.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78746,16 +78939,16 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormsModel, 'FormsModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
+  __REACT_HOT_LOADER__.register(FormsModel, 'FormsModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FormsModel.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/FormsModel.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/FormsModel.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/decorator.js":
+/***/ "../src/Forms/Form/decorator.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78788,7 +78981,7 @@ var _propTypes = __webpack_require__("../node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _FormModel = __webpack_require__("../src/FormsV1/Form/FormModel.js");
+var _FormModel = __webpack_require__("../src/Forms/Form/FormModel.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78839,14 +79032,14 @@ var _temp2 = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(connectForm, 'connectForm', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/decorator.js');
+  __REACT_HOT_LOADER__.register(connectForm, 'connectForm', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/decorator.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/index.js":
+/***/ "../src/Forms/Form/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78883,13 +79076,13 @@ var _propTypes = __webpack_require__("../node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _FormModel = __webpack_require__("../src/FormsV1/Form/FormModel.js");
+var _FormModel = __webpack_require__("../src/Forms/Form/FormModel.js");
 
-var _FormItem = __webpack_require__("../src/FormsV1/Form/FormItem.js");
+var _FormItem = __webpack_require__("../src/Forms/Form/FormItem.js");
 
-var _FormField = __webpack_require__("../src/FormsV1/FormField/index.js");
+var _FormField = __webpack_require__("../src/Forms/FormField/index.js");
 
-var _decorator = __webpack_require__("../src/FormsV1/Form/decorator.js");
+var _decorator = __webpack_require__("../src/Forms/Form/decorator.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -78994,14 +79187,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(VBForm, 'VBForm', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/index.js');
+  __REACT_HOT_LOADER__.register(VBForm, 'VBForm', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/index.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/public/FieldModelPublic.js":
+/***/ "../src/Forms/Form/public/FieldModelPublic.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79158,18 +79351,18 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FieldModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(FieldModelPublic, 'FieldModelPublic', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+  __REACT_HOT_LOADER__.register(FieldModelPublic, 'FieldModelPublic', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FieldModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FieldModelPublic.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FieldModelPublic.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/public/FormItemModelPublic.js":
+/***/ "../src/Forms/Form/public/FormItemModelPublic.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79360,18 +79553,18 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FormItemModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(FormItemModelPublic, 'FormItemModelPublic', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+  __REACT_HOT_LOADER__.register(FormItemModelPublic, 'FormItemModelPublic', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FormItemModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormItemModelPublic.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FormItemModelPublic.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Form/public/FormModelPublic.js":
+/***/ "../src/Forms/Form/public/FormModelPublic.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79601,18 +79794,18 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+  __REACT_HOT_LOADER__.register(privateModel, 'privateModel', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FormModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(FormModelPublic, 'FormModelPublic', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+  __REACT_HOT_LOADER__.register(FormModelPublic, 'FormModelPublic', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FormModelPublic.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Form/public/FormModelPublic.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/src/Forms/Form/public/FormModelPublic.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/FormField/FieldErrors.js":
+/***/ "../src/Forms/FormField/FieldErrors.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79649,11 +79842,11 @@ var _propTypes = __webpack_require__("../node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _FormModel = __webpack_require__("../src/FormsV1/Form/FormModel.js");
+var _FormModel = __webpack_require__("../src/Forms/Form/FormModel.js");
 
-var _FormItemModel = __webpack_require__("../src/FormsV1/Form/FormItemModel.js");
+var _FormItemModel = __webpack_require__("../src/Forms/Form/FormItemModel.js");
 
-var _FieldErrorsComponent = __webpack_require__("../src/FormsV1/FormField/FieldErrorsComponent.js");
+var _FieldErrorsComponent = __webpack_require__("../src/Forms/FormField/FieldErrorsComponent.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -79727,14 +79920,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldErrors, 'FieldErrors', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/FieldErrors.js');
+  __REACT_HOT_LOADER__.register(FieldErrors, 'FieldErrors', 'E:/Projects/React/git/vb-react-form/src/Forms/FormField/FieldErrors.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/FormField/FieldErrorsComponent.js":
+/***/ "../src/Forms/FormField/FieldErrorsComponent.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79818,14 +80011,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FieldErrorsComponent, 'FieldErrorsComponent', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/FieldErrorsComponent.js');
+  __REACT_HOT_LOADER__.register(FieldErrorsComponent, 'FieldErrorsComponent', 'E:/Projects/React/git/vb-react-form/src/Forms/FormField/FieldErrorsComponent.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/FormField/getElementProps.js":
+/***/ "../src/Forms/FormField/getElementProps.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79841,7 +80034,7 @@ var _entries2 = _interopRequireDefault(_entries);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var isFieldProp = function isFieldProp(propName) {
-  return propName === 'component' || propName === 'validator' || propName === 'excluded' || propName === 'onUpdate' || propName === 'onFieldChange' || propName === 'includeModel' || propName === 'submissionErrors';
+  return propName === 'value' || propName === 'component' || propName === 'validator' || propName === 'excluded' || propName === 'onUpdate' || propName === 'onFieldChange' || propName === 'includeModel' || propName === 'submissionErrors' || propName === 'onFocus' || propName === 'onChange' || propName === 'onBlur';
 };
 
 var getElementProps = exports.getElementProps = function getElementProps(props) {
@@ -79864,16 +80057,16 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(isFieldProp, 'isFieldProp', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/getElementProps.js');
+  __REACT_HOT_LOADER__.register(isFieldProp, 'isFieldProp', 'E:/Projects/React/git/vb-react-form/src/Forms/FormField/getElementProps.js');
 
-  __REACT_HOT_LOADER__.register(getElementProps, 'getElementProps', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/getElementProps.js');
+  __REACT_HOT_LOADER__.register(getElementProps, 'getElementProps', 'E:/Projects/React/git/vb-react-form/src/Forms/FormField/getElementProps.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/FormField/index.js":
+/***/ "../src/Forms/FormField/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79908,13 +80101,13 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
 
-var _FormModel = __webpack_require__("../src/FormsV1/Form/FormModel.js");
+var _FormModel = __webpack_require__("../src/Forms/Form/FormModel.js");
 
-var _FormItemModel = __webpack_require__("../src/FormsV1/Form/FormItemModel.js");
+var _FormItemModel = __webpack_require__("../src/Forms/Form/FormItemModel.js");
 
-var _FieldErrors = __webpack_require__("../src/FormsV1/FormField/FieldErrors.js");
+var _FieldErrors = __webpack_require__("../src/Forms/FormField/FieldErrors.js");
 
-var _getElementProps = __webpack_require__("../src/FormsV1/FormField/getElementProps.js");
+var _getElementProps = __webpack_require__("../src/Forms/FormField/getElementProps.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -79987,8 +80180,8 @@ var FormField = function (_Component) {
     }
   };
 
-  FormField.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
-    return false;
+  FormField.prototype.shouldComponentUpdate = function shouldComponentUpdate(nextProps) {
+    return !(0, _lodash.isEqual)((0, _getElementProps.getElementProps)(nextProps), (0, _getElementProps.getElementProps)(this.props));
   };
 
   FormField.prototype.componentWillUnmount = function componentWillUnmount() {
@@ -80082,14 +80275,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(FormField, 'FormField', 'E:/Projects/React/git/vb-react-form/src/FormsV1/FormField/index.js');
+  __REACT_HOT_LOADER__.register(FormField, 'FormField', 'E:/Projects/React/git/vb-react-form/src/Forms/FormField/index.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/PubSub.js":
+/***/ "../src/Forms/PubSub.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80158,16 +80351,16 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(PubSub, "PubSub", "E:/Projects/React/git/vb-react-form/src/FormsV1/PubSub.js");
+  __REACT_HOT_LOADER__.register(PubSub, "PubSub", "E:/Projects/React/git/vb-react-form/src/Forms/PubSub.js");
 
-  __REACT_HOT_LOADER__.register(_default, "default", "E:/Projects/React/git/vb-react-form/src/FormsV1/PubSub.js");
+  __REACT_HOT_LOADER__.register(_default, "default", "E:/Projects/React/git/vb-react-form/src/Forms/PubSub.js");
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Validators/index.js":
+/***/ "../src/Forms/Validators/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80176,7 +80369,7 @@ var _temp = function () {
 exports.__esModule = true;
 exports.maxLengthValidator = exports.minLengthValidator = exports.passwordValidator = exports.regexValidator = exports.equalValidator = exports.emailValidator = exports.requiredValidator = exports.validators = undefined;
 
-var _validators = __webpack_require__("../src/FormsV1/Validators/validators.js");
+var _validators = __webpack_require__("../src/Forms/Validators/validators.js");
 
 var requiredValidator = function requiredValidator() {
   var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -80267,26 +80460,26 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(requiredValidator, 'requiredValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(requiredValidator, 'requiredValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(emailValidator, 'emailValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(emailValidator, 'emailValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(equalValidator, 'equalValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(equalValidator, 'equalValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(regexValidator, 'regexValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(regexValidator, 'regexValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(passwordValidator, 'passwordValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(passwordValidator, 'passwordValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(minLengthValidator, 'minLengthValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(minLengthValidator, 'minLengthValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 
-  __REACT_HOT_LOADER__.register(maxLengthValidator, 'maxLengthValidator', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/index.js');
+  __REACT_HOT_LOADER__.register(maxLengthValidator, 'maxLengthValidator', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/index.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/Validators/validators.js":
+/***/ "../src/Forms/Validators/validators.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80386,14 +80579,14 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(validators, 'validators', 'E:/Projects/React/git/vb-react-form/src/FormsV1/Validators/validators.js');
+  __REACT_HOT_LOADER__.register(validators, 'validators', 'E:/Projects/React/git/vb-react-form/src/Forms/Validators/validators.js');
 }();
 
 ;
 
 /***/ }),
 
-/***/ "../src/FormsV1/index.js":
+/***/ "../src/Forms/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80401,7 +80594,7 @@ var _temp = function () {
 
 exports.__esModule = true;
 
-var _Form = __webpack_require__("../src/FormsV1/Form/index.js");
+var _Form = __webpack_require__("../src/Forms/Form/index.js");
 
 Object.defineProperty(exports, 'VBForm', {
   enumerable: true,
@@ -80416,7 +80609,7 @@ Object.defineProperty(exports, 'connectForm', {
   }
 });
 
-var _Validators = __webpack_require__("../src/FormsV1/Validators/index.js");
+var _Validators = __webpack_require__("../src/Forms/Validators/index.js");
 
 Object.defineProperty(exports, 'validators', {
   enumerable: true,
@@ -80591,6 +80784,99 @@ var _temp = function () {
 
 /***/ }),
 
+/***/ "./containers/Docs/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _classCallCheck2 = __webpack_require__("../node_modules/babel-runtime/helpers/classCallCheck.js");
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = __webpack_require__("../node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__("../node_modules/babel-runtime/helpers/inherits.js");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__("../node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = __webpack_require__("../node_modules/react-bootstrap/es/index.js");
+
+var _reactPrism = __webpack_require__("../node_modules/react-prism/lib/index.js");
+
+var _reactPrism2 = _interopRequireDefault(_reactPrism);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Docs = function (_React$Component) {
+  (0, _inherits3.default)(Docs, _React$Component);
+
+  function Docs() {
+    (0, _classCallCheck3.default)(this, Docs);
+    return (0, _possibleConstructorReturn3.default)(this, _React$Component.apply(this, arguments));
+  }
+
+  Docs.prototype.render = function render() {
+    return _react2.default.createElement(
+      _reactBootstrap.Row,
+      null,
+      _react2.default.createElement(
+        _reactBootstrap.Col,
+        { xs: 12 },
+        _react2.default.createElement(
+          'h2',
+          { className: 'page-header' },
+          'Documentation'
+        ),
+        _react2.default.createElement(
+          'h3',
+          { className: 'page-header' },
+          'Form'
+        ),
+        _react2.default.createElement(
+          _reactPrism2.default,
+          { component: 'pre', className: 'language-html' },
+          '\n              <VBForm\n                onSubmit={...}\n                onChangeForm={...}\n                onLoadForm={...}\n                validator={...}\n              >...</VBForm>\n            '
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _reactPrism2.default,
+          { component: 'pre', className: 'language-javascript' },
+          '\n              onSubmit = (values, form) => {...};\n              onChangeForm = (form) => {...};\n              onLoadForm = (form) => {...};\n              validator\n            '
+        )
+      )
+    );
+  };
+
+  return Docs;
+}(_react2.default.Component);
+
+var _default = Docs;
+exports.default = _default;
+;
+
+var _temp = function () {
+  if (typeof __REACT_HOT_LOADER__ === 'undefined') {
+    return;
+  }
+
+  __REACT_HOT_LOADER__.register(Docs, 'Docs', 'E:/Projects/React/git/vb-react-form/demo/containers/Docs/index.js');
+
+  __REACT_HOT_LOADER__.register(_default, 'default', 'E:/Projects/React/git/vb-react-form/demo/containers/Docs/index.js');
+}();
+
+;
+
+/***/ }),
+
 /***/ "./containers/FormList/Fields.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -80636,7 +80922,7 @@ var _reactcss2 = _interopRequireDefault(_reactcss);
 
 var _reactColor = __webpack_require__("../node_modules/react-color/lib/index.js");
 
-var _FormsV = __webpack_require__("../src/FormsV1/index.js");
+var _Forms = __webpack_require__("../src/Forms/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80654,7 +80940,7 @@ Actions.propTypes = {
   form: _propTypes2.default.object.isRequired
 };
 
-var FormActions = (0, _FormsV.connectForm)(Actions);
+var FormActions = (0, _Forms.connectForm)(Actions);
 
 var RBField = function RBField(_ref2) {
   var model = _ref2.model,
@@ -80922,7 +81208,7 @@ var _lodash = __webpack_require__("../node_modules/lodash/lodash.js");
 
 var _reactBootstrap = __webpack_require__("../node_modules/react-bootstrap/es/index.js");
 
-var _FormsV = __webpack_require__("../src/FormsV1/index.js");
+var _Forms = __webpack_require__("../src/Forms/index.js");
 
 var _Fields = __webpack_require__("./containers/FormList/Fields.js");
 
@@ -80933,7 +81219,7 @@ var _reactJsonPretty2 = _interopRequireDefault(_reactJsonPretty);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var required = function required(name, value) {
-  return (0, _FormsV.requiredValidator)(value);
+  return (0, _Forms.requiredValidator)(value);
 };
 
 var formValidator = function formValidator(form) {
@@ -81027,7 +81313,7 @@ var CarItems = function (_React$Component) {
       ),
       cars.map(function (car, index) {
         return _react2.default.createElement(
-          _FormsV.VBForm.Item,
+          _Forms.VBForm.Item,
           { key: car.id, name: name, asChild: true, asList: true },
           _react2.default.createElement(
             _reactBootstrap.Row,
@@ -81035,7 +81321,7 @@ var CarItems = function (_React$Component) {
             _react2.default.createElement(
               _reactBootstrap.Col,
               { xs: 5 },
-              _react2.default.createElement(_FormsV.VBForm.Field, {
+              _react2.default.createElement(_Forms.VBForm.Field, {
                 name: 'name',
                 value: car.name,
                 label: 'Car Name',
@@ -81047,7 +81333,7 @@ var CarItems = function (_React$Component) {
             _react2.default.createElement(
               _reactBootstrap.Col,
               { xs: 5 },
-              _react2.default.createElement(_FormsV.VBForm.Field, {
+              _react2.default.createElement(_Forms.VBForm.Field, {
                 name: 'color',
                 value: car.color,
                 label: 'Car color',
@@ -81092,18 +81378,27 @@ var FormList = function (_React$Component2) {
       return _this3.__onChange__REACT_HOT_LOADER__.apply(_this3, arguments);
     };
 
+    _this3.handleTest = function () {
+      return _this3.__handleTest__REACT_HOT_LOADER__.apply(_this3, arguments);
+    };
+
     _this3.onSubmit = function () {
       return _this3.__onSubmit__REACT_HOT_LOADER__.apply(_this3, arguments);
     };
 
     _this3.state = {
-      values: {}
+      values: {},
+      disabled: true
     };
     return _this3;
   }
 
   FormList.prototype.__onSubmit__REACT_HOT_LOADER__ = function __onSubmit__REACT_HOT_LOADER__() {
     return this.__onSubmit__REACT_HOT_LOADER__.apply(this, arguments);
+  };
+
+  FormList.prototype.__handleTest__REACT_HOT_LOADER__ = function __handleTest__REACT_HOT_LOADER__() {
+    return this.__handleTest__REACT_HOT_LOADER__.apply(this, arguments);
   };
 
   FormList.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__() {
@@ -81122,6 +81417,12 @@ var FormList = function (_React$Component2) {
 
   FormList.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__(form) {};
 
+  FormList.prototype.__handleTest__REACT_HOT_LOADER__ = function __handleTest__REACT_HOT_LOADER__() {
+    this.setState(function (prev) {
+      return { disabled: !prev.disabled };
+    });
+  };
+
   FormList.prototype.__onSubmit__REACT_HOT_LOADER__ = function __onSubmit__REACT_HOT_LOADER__(values) {
     this.setState(function () {
       return { values: values };
@@ -81129,7 +81430,9 @@ var FormList = function (_React$Component2) {
   };
 
   FormList.prototype.render = function render() {
-    var values = this.state.values;
+    var _state = this.state,
+        values = _state.values,
+        disabled = _state.disabled;
 
 
     return _react2.default.createElement(
@@ -81144,7 +81447,12 @@ var FormList = function (_React$Component2) {
           'Cars'
         ),
         _react2.default.createElement(
-          _FormsV.VBForm,
+          _reactBootstrap.Button,
+          { onClick: this.handleTest },
+          'Test'
+        ),
+        _react2.default.createElement(
+          _Forms.VBForm,
           {
             onSubmit: this.onSubmit,
             onChangeForm: this.onChange,
@@ -81157,7 +81465,7 @@ var FormList = function (_React$Component2) {
             _react2.default.createElement(
               _reactBootstrap.Col,
               { xs: 12 },
-              _react2.default.createElement(_FormsV.VBForm.Errors, { component: _Fields.ErrorComponent })
+              _react2.default.createElement(_Forms.VBForm.Errors, { component: _Fields.ErrorComponent })
             )
           ),
           _react2.default.createElement(
@@ -81166,12 +81474,13 @@ var FormList = function (_React$Component2) {
             _react2.default.createElement(
               _reactBootstrap.Col,
               { xs: 12 },
-              _react2.default.createElement(_FormsV.VBForm.Field, {
+              _react2.default.createElement(_Forms.VBForm.Field, {
                 name: 'fullName',
                 label: 'Full Name',
                 validator: required,
                 component: _Fields.RBField,
-                includeModel: true
+                includeModel: true,
+                disabled: disabled
               }),
               _react2.default.createElement('hr', null)
             )
@@ -81274,7 +81583,6 @@ var Wrapper = function (_React$Component) {
   };
 
   Wrapper.prototype.__onChange__REACT_HOT_LOADER__ = function __onChange__REACT_HOT_LOADER__() {
-    console.log(11111111);
     this.setState(function (prev) {
       return {
         index: prev.index + 1
@@ -81346,7 +81654,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _reactBootstrap = __webpack_require__("../node_modules/react-bootstrap/es/index.js");
 
-var _FormsV = __webpack_require__("../src/FormsV1/index.js");
+var _Forms = __webpack_require__("../src/Forms/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -81364,7 +81672,7 @@ Actions.propTypes = {
   form: _propTypes2.default.object.isRequired
 };
 
-var FormActions = (0, _FormsV.connectForm)(Actions);
+var FormActions = (0, _Forms.connectForm)(Actions);
 
 var FormFieldWrapper = function (_React$Component) {
   (0, _inherits3.default)(FormFieldWrapper, _React$Component);
@@ -81416,7 +81724,7 @@ var FormFieldWrapper = function (_React$Component) {
         null,
         label
       ),
-      _react2.default.createElement(_FormsV.VBForm.Field, (0, _extends3.default)({}, this.props, { onFieldChange: this.onFieldChange })),
+      _react2.default.createElement(_Forms.VBForm.Field, (0, _extends3.default)({}, this.props, { onFieldChange: this.onFieldChange })),
       invalid && _react2.default.createElement(
         _reactBootstrap.HelpBlock,
         null,
@@ -81619,7 +81927,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__("../node_modules/react-bootstrap/es/index.js");
 
-var _FormsV = __webpack_require__("../src/FormsV1/index.js");
+var _Forms = __webpack_require__("../src/Forms/index.js");
 
 var _Fields = __webpack_require__("./containers/FormV1/Fields.js");
 
@@ -81692,13 +82000,13 @@ var Form = function (_React$Component) {
 
     _this.validators = {
       firstName: function firstName(name, value) {
-        return (0, _FormsV.requiredValidator)(value);
+        return (0, _Forms.requiredValidator)(value);
       },
       required: function required(name, value) {
-        return (0, _FormsV.requiredValidator)(value);
+        return (0, _Forms.requiredValidator)(value);
       },
       password: function password(name, value) {
-        return (0, _FormsV.passwordValidator)(value);
+        return (0, _Forms.passwordValidator)(value);
       }
     };
 
@@ -81823,14 +82131,14 @@ var Form = function (_React$Component) {
           'Form V1'
         ),
         _react2.default.createElement(
-          _FormsV.VBForm,
+          _Forms.VBForm,
           {
             onSubmit: this.onSubmit,
             onChangeForm: this.onChange,
             onLoadForm: this.onLoad,
             validator: formValidator
           },
-          _react2.default.createElement(_FormsV.VBForm.Errors, { component: _Fields.ErrorComponent }),
+          _react2.default.createElement(_Forms.VBForm.Errors, { component: _Fields.ErrorComponent }),
           _react2.default.createElement(_Fields.FormFieldWrapper, {
             name: 'firstName',
             value: user.firstName,
@@ -81838,8 +82146,7 @@ var Form = function (_React$Component) {
             component: _Fields.InputField,
             validator: this.validators.firstName
           }),
-          _react2.default.createElement(_FormsV.VBForm.Errors, { name: 'firstName', component: _Fields.ErrorComponent }),
-          _react2.default.createElement(_FormsV.VBForm.Field, {
+          _react2.default.createElement(_Forms.VBForm.Field, {
             name: 'firstNameUppercase',
             label: 'First Name Uppercase',
             component: _Fields.InputField,
@@ -81847,23 +82154,24 @@ var Form = function (_React$Component) {
             readOnly: true,
             excluded: true
           }),
-          _react2.default.createElement(_FormsV.VBForm.Field, {
+          _react2.default.createElement(_Forms.VBForm.Field, {
             name: 'firstNameLowercase',
             component: _Fields.InputField,
             placeholder: 'First Name Lowercase',
             disabled: true,
             excluded: true
           }),
+          _react2.default.createElement('hr', null),
           showLastName ? _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(_FormsV.VBForm.Field, {
+            _react2.default.createElement(_Forms.VBForm.Field, {
               name: 'lastName',
               component: _Fields.InputField,
               placeholder: 'Last Name',
               validator: this.validators.required
             }),
-            _react2.default.createElement(_FormsV.VBForm.Errors, { name: 'lastName', component: _Fields.ErrorComponent }),
+            _react2.default.createElement(_Forms.VBForm.Errors, { name: 'lastName', component: _Fields.ErrorComponent }),
             _react2.default.createElement(
               _reactBootstrap.Button,
               { onClick: this.toggleLastName },
@@ -81881,9 +82189,9 @@ var Form = function (_React$Component) {
             'Profile'
           ),
           _react2.default.createElement(
-            _FormsV.VBForm.Item,
+            _Forms.VBForm.Item,
             { name: 'profile', validator1: profileValidator },
-            _react2.default.createElement(_FormsV.VBForm.Field, {
+            _react2.default.createElement(_Forms.VBForm.Field, {
               name: 'city',
               value: user.profile.city,
               label: 'City',
@@ -81891,7 +82199,7 @@ var Form = function (_React$Component) {
               validator: this.validators.required,
               includeModel: true
             }),
-            _react2.default.createElement(_FormsV.VBForm.Field, {
+            _react2.default.createElement(_Forms.VBForm.Field, {
               name: 'address',
               value: user.profile.address,
               label: 'Address',
@@ -81900,9 +82208,9 @@ var Form = function (_React$Component) {
               includeModel: true
             }),
             _react2.default.createElement(
-              _FormsV.VBForm.Item,
+              _Forms.VBForm.Item,
               { name: 'profileChild', validator: profileValidator, asChild: true, asList: true, excluded: false },
-              _react2.default.createElement(_FormsV.VBForm.Field, {
+              _react2.default.createElement(_Forms.VBForm.Field, {
                 name: 'city',
                 value: user.profile.city,
                 label: 'City',
@@ -81910,8 +82218,8 @@ var Form = function (_React$Component) {
                 validator: this.validators.required,
                 includeModel: true
               }),
-              _react2.default.createElement(_FormsV.VBForm.Errors, { name: 'city', component: _Fields.ErrorComponent }),
-              _react2.default.createElement(_FormsV.VBForm.Field, {
+              _react2.default.createElement(_Forms.VBForm.Errors, { name: 'city', component: _Fields.ErrorComponent }),
+              _react2.default.createElement(_Forms.VBForm.Field, {
                 name: 'address',
                 value: user.profile.address,
                 label: 'Address',
@@ -81935,7 +82243,7 @@ var Form = function (_React$Component) {
             component: _Fields.InputField,
             validator: this.validators.password
           }),
-          _react2.default.createElement(_FormsV.VBForm.Field, {
+          _react2.default.createElement(_Forms.VBForm.Field, {
             name: 'password2',
             type: 'password',
             value: user.password2,
@@ -82122,8 +82430,12 @@ var _default = [{
   path: '/',
   component: __webpack_require__("./containers/Home/index.js").default
 }, {
-  label: 'Form V1',
-  path: '/form-v1',
+  label: 'Docs',
+  path: '/docs',
+  component: __webpack_require__("./containers/Docs/index.js").default
+}, {
+  label: 'Form Example',
+  path: '/form-example',
   component: __webpack_require__("./containers/FormV1/index.js").default
 }, {
   label: 'Form List',
